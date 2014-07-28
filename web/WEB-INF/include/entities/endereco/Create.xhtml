@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="EnderecoCreateDlg" widgetVar="EnderecoCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="#{myBundle.CreateEnderecoTitle}" closeOnEscape="true">
+
+            <h:form id="EnderecoCreateForm">
+
+                <h:panelGroup id="display" rendered="#{enderecoController.selected != null}">
+                    <p:panelGrid columns="2" columnClasses="column">
+
+                        <p:outputLabel value="#{myBundle.CreateEnderecoLabel_idLogradouro}" for="idLogradouro" />
+                        <p:inputText id="idLogradouro" value="#{enderecoController.selected.idLogradouro}" title="#{myBundle.CreateEnderecoTitle_idLogradouro}" required="true" requiredMessage="#{myBundle.CreateEnderecoRequiredMessage_idLogradouro}"/>
+
+                        <p:outputLabel value="#{myBundle.CreateEnderecoLabel_estadoIdEstado}" for="estadoIdEstado" />
+                        <p:inputText id="estadoIdEstado" value="#{enderecoController.selected.estadoIdEstado}" title="#{myBundle.CreateEnderecoTitle_estadoIdEstado}" required="true" requiredMessage="#{myBundle.CreateEnderecoRequiredMessage_estadoIdEstado}"/>
+
+                        <p:outputLabel value="#{myBundle.CreateEnderecoLabel_bairro}" for="bairro" />
+                        <p:inputText id="bairro" value="#{enderecoController.selected.bairro}" title="#{myBundle.CreateEnderecoTitle_bairro}" required="true" requiredMessage="#{myBundle.CreateEnderecoRequiredMessage_bairro}" size="50" maxlength="50"/>
+
+                        <p:outputLabel value="#{myBundle.CreateEnderecoLabel_cep}" for="cep" />
+                        <p:inputText id="cep" value="#{enderecoController.selected.cep}" title="#{myBundle.CreateEnderecoTitle_cep}" size="20" maxlength="20"/>
+
+                        <p:outputLabel value="#{myBundle.CreateEnderecoLabel_numero}" for="numero" />
+                        <p:inputText id="numero" value="#{enderecoController.selected.numero}" title="#{myBundle.CreateEnderecoTitle_numero}" size="15" maxlength="15"/>
+
+                        <p:outputLabel value="#{myBundle.CreateEnderecoLabel_idPais}" for="idPais" />
+                        <p:selectOneMenu id="idPais" value="#{enderecoController.selected.idPais}" required="true" requiredMessage="#{myBundle.CreateEnderecoRequiredMessage_idPais}" converter="paisConverter">
+                            <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
+                            <f:selectItems value="#{paisController.items}"
+                                           var="idPaisItem"
+                                           itemValue="#{idPaisItem}"
+                                           itemLabel="#{idPaisItem.idPais.toString()}"
+                                           />
+
+                        </p:selectOneMenu>
+
+                        <p:outputLabel value="#{myBundle.CreateEnderecoLabel_idEstado}" for="idEstado" />
+                        <p:selectOneMenu id="idEstado" value="#{enderecoController.selected.idEstado}" required="true" requiredMessage="#{myBundle.CreateEnderecoRequiredMessage_idEstado}" converter="estadoConverter">
+                            <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
+                            <f:selectItems value="#{estadoController.items}"
+                                           var="idEstadoItem"
+                                           itemValue="#{idEstadoItem}"
+                                           itemLabel="#{idEstadoItem.idEstado.toString()}"
+                                           />
+
+                        </p:selectOneMenu>
+
+                        <p:outputLabel value="#{myBundle.CreateEnderecoLabel_idCidade}" for="idCidade" />
+                        <p:selectOneMenu id="idCidade" value="#{enderecoController.selected.idCidade}" required="true" requiredMessage="#{myBundle.CreateEnderecoRequiredMessage_idCidade}" converter="cidadeConverter">
+                            <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
+                            <f:selectItems value="#{cidadeController.items}"
+                                           var="idCidadeItem"
+                                           itemValue="#{idCidadeItem}"
+                                           itemLabel="#{idCidadeItem.idCidade.toString()}"
+                                           />
+
+                        </p:selectOneMenu>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{enderecoController.saveNew}" value="#{myBundle.Save}" update="display,:EnderecoListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,EnderecoCreateDialog);">
+                        <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmCreateMessage}" icon="ui-icon-alert"/>
+                    </p:commandButton>
+
+                    <p:commandButton value="#{myBundle.Cancel}" onclick="EnderecoCreateDialog.hide()"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

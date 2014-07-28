@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="DetNotaViewDlg" widgetVar="DetNotaViewDialog" modal="true" resizable="false"  appendTo="@(body)" header="#{myBundle.ViewDetNotaTitle}" closeOnEscape="true">
+
+            <h:form id="DetNotaViewForm">
+
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" columnClasses="column" rendered="#{detNotaController.selected != null}">
+
+                        <h:outputText value="#{myBundle.ViewDetNotaLabel_idDetalheNota}"/>
+                        <h:outputText value="#{detNotaController.selected.idDetalheNota}" title="#{myBundle.ViewDetNotaTitle_idDetalheNota}"/>
+
+                        <h:outputText value="#{myBundle.ViewDetNotaLabel_numNota}"/>
+                        <h:outputText value="#{detNotaController.selected.numNota}" title="#{myBundle.ViewDetNotaTitle_numNota}"/>
+
+                        <h:outputText value="#{myBundle.ViewDetNotaLabel_dtPedido}"/>
+                        <h:outputText value="#{detNotaController.selected.dtPedido}" title="#{myBundle.ViewDetNotaTitle_dtPedido}">
+                            <f:convertDateTime pattern="MM/dd/yyyy" />
+                        </h:outputText>
+
+                        <h:outputText value="#{myBundle.ViewDetNotaLabel_valorTotal}"/>
+                        <h:outputText value="#{detNotaController.selected.valorTotal}" title="#{myBundle.ViewDetNotaTitle_valorTotal}"/>
+
+                        <h:outputText value="#{myBundle.ViewDetNotaLabel_idFornecedor}"/>
+                        <h:outputText value="#{detNotaController.selected.idFornecedor}" title="#{myBundle.ViewDetNotaTitle_idFornecedor}"/>
+
+                        <h:outputText value="#{myBundle.ViewDetNotaLabel_idTipoEquipamento}"/>
+                        <h:outputText value="#{detNotaController.selected.idTipoEquipamento}" title="#{myBundle.ViewDetNotaTitle_idTipoEquipamento}"/>
+
+                        <h:outputText value="#{myBundle.ViewDetNotaLabel_valorUnitario}"/>
+                        <h:outputText value="#{detNotaController.selected.valorUnitario}" title="#{myBundle.ViewDetNotaTitle_valorUnitario}"/>
+
+                        <h:outputText value="#{myBundle.ViewDetNotaLabel_tipoEquipamentoIdTipoEquipamento}"/>
+                        <h:outputText value="#{detNotaController.selected.tipoEquipamentoIdTipoEquipamento.idTipoEquipamento}"/>
+
+                        <h:outputText value="#{myBundle.ViewDetNotaLabel_idProduto}"/>
+                        <h:outputText value="#{detNotaController.selected.idProduto.idProduto}"/>
+
+                        <h:outputText value="#{myBundle.ViewDetNotaLabel_fornecedorIdFornecedor}"/>
+                        <h:outputText value="#{detNotaController.selected.fornecedorIdFornecedor.idFornecedor}"/>
+                    </p:panelGrid>
+                    <p:commandButton value="#{myBundle.Close}" onclick="DetNotaViewDialog.hide()"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

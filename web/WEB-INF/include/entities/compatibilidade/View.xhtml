@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="CompatibilidadeViewDlg" widgetVar="CompatibilidadeViewDialog" modal="true" resizable="false"  appendTo="@(body)" header="#{myBundle.ViewCompatibilidadeTitle}" closeOnEscape="true">
+
+            <h:form id="CompatibilidadeViewForm">
+
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" columnClasses="column" rendered="#{compatibilidadeController.selected != null}">
+
+                        <h:outputText value="#{myBundle.ViewCompatibilidadeLabel_idCompatibilidade}"/>
+                        <h:outputText value="#{compatibilidadeController.selected.idCompatibilidade}" title="#{myBundle.ViewCompatibilidadeTitle_idCompatibilidade}"/>
+
+                        <h:outputText value="#{myBundle.ViewCompatibilidadeLabel_grupoCompatibilidade}"/>
+                        <h:outputText value="#{compatibilidadeController.selected.grupoCompatibilidade}" title="#{myBundle.ViewCompatibilidadeTitle_grupoCompatibilidade}"/>
+
+                        <h:outputText value="#{myBundle.ViewCompatibilidadeLabel_descCompatibilidade}"/>
+                        <h:outputText value="#{compatibilidadeController.selected.descCompatibilidade}" title="#{myBundle.ViewCompatibilidadeTitle_descCompatibilidade}"/>
+
+                        <h:outputText value="#{myBundle.ViewCompatibilidadeLabel_codClassifi}"/>
+                        <h:outputText value="#{compatibilidadeController.selected.codClassifi}" title="#{myBundle.ViewCompatibilidadeTitle_codClassifi}"/>
+
+                        <h:outputText value="#{myBundle.ViewCompatibilidadeLabel_idLegendaCompatibilidade}"/>
+                        <h:outputText value="#{compatibilidadeController.selected.idLegendaCompatibilidade.idLegendaCompatibilidade}"/>
+                    </p:panelGrid>
+                    <p:commandButton value="#{myBundle.Close}" onclick="CompatibilidadeViewDialog.hide()"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

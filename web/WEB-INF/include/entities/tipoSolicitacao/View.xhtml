@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="TipoSolicitacaoViewDlg" widgetVar="TipoSolicitacaoViewDialog" modal="true" resizable="false"  appendTo="@(body)" header="#{myBundle.ViewTipoSolicitacaoTitle}" closeOnEscape="true">
+
+            <h:form id="TipoSolicitacaoViewForm">
+
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" columnClasses="column" rendered="#{tipoSolicitacaoController.selected != null}">
+
+                        <h:outputText value="#{myBundle.ViewTipoSolicitacaoLabel_idTipoSolicitacao}"/>
+                        <h:outputText value="#{tipoSolicitacaoController.selected.idTipoSolicitacao}" title="#{myBundle.ViewTipoSolicitacaoTitle_idTipoSolicitacao}"/>
+
+                        <h:outputText value="#{myBundle.ViewTipoSolicitacaoLabel_tipoSolicitacao}"/>
+                        <h:outputText value="#{tipoSolicitacaoController.selected.tipoSolicitacao}" title="#{myBundle.ViewTipoSolicitacaoTitle_tipoSolicitacao}"/>
+
+                        <h:outputText value="#{myBundle.ViewTipoSolicitacaoLabel_especTipoSolicitacao}"/>
+                        <h:outputText value="#{tipoSolicitacaoController.selected.especTipoSolicitacao}" title="#{myBundle.ViewTipoSolicitacaoTitle_especTipoSolicitacao}"/>
+
+                        <h:outputText value="#{myBundle.ViewTipoSolicitacaoLabel_idFornecedor}"/>
+                        <h:outputText value="#{tipoSolicitacaoController.selected.idFornecedor}" title="#{myBundle.ViewTipoSolicitacaoTitle_idFornecedor}"/>
+
+                        <h:outputText value="#{myBundle.ViewTipoSolicitacaoLabel_solicitante}"/>
+                        <h:outputText value="#{tipoSolicitacaoController.selected.solicitante}" title="#{myBundle.ViewTipoSolicitacaoTitle_solicitante}"/>
+
+                        <h:outputText value="#{myBundle.ViewTipoSolicitacaoLabel_idFuncionario}"/>
+                        <h:outputText value="#{tipoSolicitacaoController.selected.idFuncionario.idFuncionario}"/>
+
+                        <h:outputText value="#{myBundle.ViewTipoSolicitacaoLabel_fornecedorIdFornecedor}"/>
+                        <h:outputText value="#{tipoSolicitacaoController.selected.fornecedorIdFornecedor.idFornecedor}"/>
+
+                        <h:outputText value="#{myBundle.ViewTipoSolicitacaoLabel_idArmazem}"/>
+                        <h:outputText value="#{tipoSolicitacaoController.selected.idArmazem.idArmazem}"/>
+                    </p:panelGrid>
+                    <p:commandButton value="#{myBundle.Close}" onclick="TipoSolicitacaoViewDialog.hide()"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

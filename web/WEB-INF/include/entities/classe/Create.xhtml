@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="ClasseCreateDlg" widgetVar="ClasseCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="#{myBundle.CreateClasseTitle}" closeOnEscape="true">
+
+            <h:form id="ClasseCreateForm">
+
+                <h:panelGroup id="display" rendered="#{classeController.selected != null}">
+                    <p:panelGrid columns="2" columnClasses="column">
+
+                        <p:outputLabel value="#{myBundle.CreateClasseLabel_numClasse}" for="numClasse" />
+                        <p:inputText id="numClasse" value="#{classeController.selected.numClasse}" title="#{myBundle.CreateClasseTitle_numClasse}" required="true" requiredMessage="#{myBundle.CreateClasseRequiredMessage_numClasse}"/>
+
+                        <p:outputLabel value="#{myBundle.CreateClasseLabel_numSubclasse}" for="numSubclasse" />
+                        <p:inputText id="numSubclasse" value="#{classeController.selected.numSubclasse}" title="#{myBundle.CreateClasseTitle_numSubclasse}" required="true" requiredMessage="#{myBundle.CreateClasseRequiredMessage_numSubclasse}"/>
+
+                        <p:outputLabel value="#{myBundle.CreateClasseLabel_especClasse}" for="especClasse" />
+                        <p:inputText id="especClasse" value="#{classeController.selected.especClasse}" title="#{myBundle.CreateClasseTitle_especClasse}" required="true" requiredMessage="#{myBundle.CreateClasseRequiredMessage_especClasse}" size="50" maxlength="50"/>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{classeController.saveNew}" value="#{myBundle.Save}" update="display,:ClasseListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,ClasseCreateDialog);">
+                        <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmCreateMessage}" icon="ui-icon-alert"/>
+                    </p:commandButton>
+
+                    <p:commandButton value="#{myBundle.Cancel}" onclick="ClasseCreateDialog.hide()"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

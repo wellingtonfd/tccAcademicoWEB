@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="EstadoViewDlg" widgetVar="EstadoViewDialog" modal="true" resizable="false"  appendTo="@(body)" header="#{myBundle.ViewEstadoTitle}" closeOnEscape="true">
+
+            <h:form id="EstadoViewForm">
+
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" columnClasses="column" rendered="#{estadoController.selected != null}">
+
+                        <h:outputText value="#{myBundle.ViewEstadoLabel_idEstado}"/>
+                        <h:outputText value="#{estadoController.selected.idEstado}" title="#{myBundle.ViewEstadoTitle_idEstado}"/>
+
+                        <h:outputText value="#{myBundle.ViewEstadoLabel_nomeEstado}"/>
+                        <h:outputText value="#{estadoController.selected.nomeEstado}" title="#{myBundle.ViewEstadoTitle_nomeEstado}"/>
+
+                        <h:outputText value="#{myBundle.ViewEstadoLabel_siglaEstado}"/>
+                        <h:outputText value="#{estadoController.selected.siglaEstado}" title="#{myBundle.ViewEstadoTitle_siglaEstado}"/>
+                    </p:panelGrid>
+                    <p:commandButton value="#{myBundle.Close}" onclick="EstadoViewDialog.hide()"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="MovimentacaoViewDlg" widgetVar="MovimentacaoViewDialog" modal="true" resizable="false"  appendTo="@(body)" header="#{myBundle.ViewMovimentacaoTitle}" closeOnEscape="true">
+
+            <h:form id="MovimentacaoViewForm">
+
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" columnClasses="column" rendered="#{movimentacaoController.selected != null}">
+
+                        <h:outputText value="#{myBundle.ViewMovimentacaoLabel_idMovimentacao}"/>
+                        <h:outputText value="#{movimentacaoController.selected.idMovimentacao}" title="#{myBundle.ViewMovimentacaoTitle_idMovimentacao}"/>
+
+                        <h:outputText value="#{myBundle.ViewMovimentacaoLabel_dtPrevista}"/>
+                        <h:outputText value="#{movimentacaoController.selected.dtPrevista}" title="#{myBundle.ViewMovimentacaoTitle_dtPrevista}">
+                            <f:convertDateTime pattern="MM/dd/yyyy" />
+                        </h:outputText>
+
+                        <h:outputText value="#{myBundle.ViewMovimentacaoLabel_dtEntrega}"/>
+                        <h:outputText value="#{movimentacaoController.selected.dtEntrega}" title="#{myBundle.ViewMovimentacaoTitle_dtEntrega}">
+                            <f:convertDateTime pattern="MM/dd/yyyy" />
+                        </h:outputText>
+
+                        <h:outputText value="#{myBundle.ViewMovimentacaoLabel_dtSaida}"/>
+                        <h:outputText value="#{movimentacaoController.selected.dtSaida}" title="#{myBundle.ViewMovimentacaoTitle_dtSaida}">
+                            <f:convertDateTime pattern="MM/dd/yyyy" />
+                        </h:outputText>
+
+                        <h:outputText value="#{myBundle.ViewMovimentacaoLabel_quantFuncionarios}"/>
+                        <h:outputText value="#{movimentacaoController.selected.quantFuncionarios}" title="#{myBundle.ViewMovimentacaoTitle_quantFuncionarios}"/>
+
+                        <h:outputText value="#{myBundle.ViewMovimentacaoLabel_responsavel}"/>
+                        <h:outputText value="#{movimentacaoController.selected.responsavel}" title="#{myBundle.ViewMovimentacaoTitle_responsavel}"/>
+
+                        <h:outputText value="#{myBundle.ViewMovimentacaoLabel_tempoPrevisto}"/>
+                        <h:outputText value="#{movimentacaoController.selected.tempoPrevisto}" title="#{myBundle.ViewMovimentacaoTitle_tempoPrevisto}">
+                            <f:convertDateTime pattern="HH:mm:ss" />
+                        </h:outputText>
+
+                        <h:outputText value="#{myBundle.ViewMovimentacaoLabel_duracao}"/>
+                        <h:outputText value="#{movimentacaoController.selected.duracao}" title="#{myBundle.ViewMovimentacaoTitle_duracao}">
+                            <f:convertDateTime pattern="HH:mm:ss" />
+                        </h:outputText>
+
+                        <h:outputText value="#{myBundle.ViewMovimentacaoLabel_idTipoSolicitacao}"/>
+                        <h:outputText value="#{movimentacaoController.selected.idTipoSolicitacao.idTipoSolicitacao}"/>
+
+                        <h:outputText value="#{myBundle.ViewMovimentacaoLabel_idTipoEquipamento}"/>
+                        <h:outputText value="#{movimentacaoController.selected.idTipoEquipamento.idTipoEquipamento}"/>
+
+                        <h:outputText value="#{myBundle.ViewMovimentacaoLabel_idProduto}"/>
+                        <h:outputText value="#{movimentacaoController.selected.idProduto.idProduto}"/>
+
+                        <h:outputText value="#{myBundle.ViewMovimentacaoLabel_idFuncionario}"/>
+                        <h:outputText value="#{movimentacaoController.selected.idFuncionario.idFuncionario}"/>
+
+                        <h:outputText value="#{myBundle.ViewMovimentacaoLabel_idEndarmazem}"/>
+                        <h:outputText value="#{movimentacaoController.selected.idEndarmazem.idEndarmazem}"/>
+
+                        <h:outputText value="#{myBundle.ViewMovimentacaoLabel_idDetalheNota}"/>
+                        <h:outputText value="#{movimentacaoController.selected.idDetalheNota.idDetalheNota}"/>
+
+                        <h:outputText value="#{myBundle.ViewMovimentacaoLabel_idArmazem}"/>
+                        <h:outputText value="#{movimentacaoController.selected.idArmazem.idArmazem}"/>
+                    </p:panelGrid>
+                    <p:commandButton value="#{myBundle.Close}" onclick="MovimentacaoViewDialog.hide()"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="TipoSolicitacaoCreateDlg" widgetVar="TipoSolicitacaoCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="#{myBundle.CreateTipoSolicitacaoTitle}" closeOnEscape="true">
+
+            <h:form id="TipoSolicitacaoCreateForm">
+
+                <h:panelGroup id="display" rendered="#{tipoSolicitacaoController.selected != null}">
+                    <p:panelGrid columns="2" columnClasses="column">
+
+                        <p:outputLabel value="#{myBundle.CreateTipoSolicitacaoLabel_tipoSolicitacao}" for="tipoSolicitacao" />
+                        <p:inputText id="tipoSolicitacao" value="#{tipoSolicitacaoController.selected.tipoSolicitacao}" title="#{myBundle.CreateTipoSolicitacaoTitle_tipoSolicitacao}" required="true" requiredMessage="#{myBundle.CreateTipoSolicitacaoRequiredMessage_tipoSolicitacao}" size="60" maxlength="60"/>
+
+                        <p:outputLabel value="#{myBundle.CreateTipoSolicitacaoLabel_especTipoSolicitacao}" for="especTipoSolicitacao" />
+                        <p:inputText id="especTipoSolicitacao" value="#{tipoSolicitacaoController.selected.especTipoSolicitacao}" title="#{myBundle.CreateTipoSolicitacaoTitle_especTipoSolicitacao}" size="45" maxlength="45"/>
+
+                        <p:outputLabel value="#{myBundle.CreateTipoSolicitacaoLabel_idFornecedor}" for="idFornecedor" />
+                        <p:inputText id="idFornecedor" value="#{tipoSolicitacaoController.selected.idFornecedor}" title="#{myBundle.CreateTipoSolicitacaoTitle_idFornecedor}"/>
+
+                        <p:outputLabel value="#{myBundle.CreateTipoSolicitacaoLabel_solicitante}" for="solicitante" />
+                        <p:inputText id="solicitante" value="#{tipoSolicitacaoController.selected.solicitante}" title="#{myBundle.CreateTipoSolicitacaoTitle_solicitante}" required="true" requiredMessage="#{myBundle.CreateTipoSolicitacaoRequiredMessage_solicitante}" size="50" maxlength="50"/>
+
+                        <p:outputLabel value="#{myBundle.CreateTipoSolicitacaoLabel_idFuncionario}" for="idFuncionario" />
+                        <p:selectOneMenu id="idFuncionario" value="#{tipoSolicitacaoController.selected.idFuncionario}"  converter="funcionarioConverter">
+                            <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
+                            <f:selectItems value="#{funcionarioController.items}"
+                                           var="idFuncionarioItem"
+                                           itemValue="#{idFuncionarioItem}"
+                                           itemLabel="#{idFuncionarioItem.idFuncionario.toString()}"
+                                           />
+
+                        </p:selectOneMenu>
+
+                        <p:outputLabel value="#{myBundle.CreateTipoSolicitacaoLabel_fornecedorIdFornecedor}" for="fornecedorIdFornecedor" />
+                        <p:selectOneMenu id="fornecedorIdFornecedor" value="#{tipoSolicitacaoController.selected.fornecedorIdFornecedor}" required="true" requiredMessage="#{myBundle.CreateTipoSolicitacaoRequiredMessage_fornecedorIdFornecedor}" converter="fornecedorConverter">
+                            <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
+                            <f:selectItems value="#{fornecedorController.items}"
+                                           var="fornecedorIdFornecedorItem"
+                                           itemValue="#{fornecedorIdFornecedorItem}"
+                                           itemLabel="#{fornecedorIdFornecedorItem.idFornecedor.toString()}"
+                                           />
+
+                        </p:selectOneMenu>
+
+                        <p:outputLabel value="#{myBundle.CreateTipoSolicitacaoLabel_idArmazem}" for="idArmazem" />
+                        <p:selectOneMenu id="idArmazem" value="#{tipoSolicitacaoController.selected.idArmazem}"  converter="armazemConverter">
+                            <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
+                            <f:selectItems value="#{armazemController.items}"
+                                           var="idArmazemItem"
+                                           itemValue="#{idArmazemItem}"
+                                           itemLabel="#{idArmazemItem.idArmazem.toString()}"
+                                           />
+
+                        </p:selectOneMenu>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{tipoSolicitacaoController.saveNew}" value="#{myBundle.Save}" update="display,:TipoSolicitacaoListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,TipoSolicitacaoCreateDialog);">
+                        <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmCreateMessage}" icon="ui-icon-alert"/>
+                    </p:commandButton>
+
+                    <p:commandButton value="#{myBundle.Cancel}" onclick="TipoSolicitacaoCreateDialog.hide()"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

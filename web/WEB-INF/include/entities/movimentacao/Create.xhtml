@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="MovimentacaoCreateDlg" widgetVar="MovimentacaoCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="#{myBundle.CreateMovimentacaoTitle}" closeOnEscape="true">
+
+            <h:form id="MovimentacaoCreateForm">
+
+                <h:panelGroup id="display" rendered="#{movimentacaoController.selected != null}">
+                    <p:panelGrid columns="2" columnClasses="column">
+
+                        <p:outputLabel value="#{myBundle.CreateMovimentacaoLabel_dtPrevista}" for="dtPrevista" />
+                        <p:calendar id="dtPrevista" pattern="MM/dd/yyyy" value="#{movimentacaoController.selected.dtPrevista}" title="#{myBundle.CreateMovimentacaoTitle_dtPrevista}"  showOn="button"/>
+
+                        <p:outputLabel value="#{myBundle.CreateMovimentacaoLabel_dtEntrega}" for="dtEntrega" />
+                        <p:calendar id="dtEntrega" pattern="MM/dd/yyyy" value="#{movimentacaoController.selected.dtEntrega}" title="#{myBundle.CreateMovimentacaoTitle_dtEntrega}"  showOn="button"/>
+
+                        <p:outputLabel value="#{myBundle.CreateMovimentacaoLabel_dtSaida}" for="dtSaida" />
+                        <p:calendar id="dtSaida" pattern="MM/dd/yyyy" value="#{movimentacaoController.selected.dtSaida}" title="#{myBundle.CreateMovimentacaoTitle_dtSaida}"  showOn="button"/>
+
+                        <p:outputLabel value="#{myBundle.CreateMovimentacaoLabel_quantFuncionarios}" for="quantFuncionarios" />
+                        <p:inputText id="quantFuncionarios" value="#{movimentacaoController.selected.quantFuncionarios}" title="#{myBundle.CreateMovimentacaoTitle_quantFuncionarios}" required="true" requiredMessage="#{myBundle.CreateMovimentacaoRequiredMessage_quantFuncionarios}" size="25" maxlength="25"/>
+
+                        <p:outputLabel value="#{myBundle.CreateMovimentacaoLabel_responsavel}" for="responsavel" />
+                        <p:inputText id="responsavel" value="#{movimentacaoController.selected.responsavel}" title="#{myBundle.CreateMovimentacaoTitle_responsavel}" required="true" requiredMessage="#{myBundle.CreateMovimentacaoRequiredMessage_responsavel}" size="30" maxlength="30"/>
+
+                        <p:outputLabel value="#{myBundle.CreateMovimentacaoLabel_tempoPrevisto}" for="tempoPrevisto" />
+                        <p:calendar id="tempoPrevisto" pattern="HH:mm:ss" value="#{movimentacaoController.selected.tempoPrevisto}" title="#{myBundle.CreateMovimentacaoTitle_tempoPrevisto}"  showOn="button"/>
+
+                        <p:outputLabel value="#{myBundle.CreateMovimentacaoLabel_duracao}" for="duracao" />
+                        <p:calendar id="duracao" pattern="HH:mm:ss" value="#{movimentacaoController.selected.duracao}" title="#{myBundle.CreateMovimentacaoTitle_duracao}" required="true" requiredMessage="#{myBundle.CreateMovimentacaoRequiredMessage_duracao}" showOn="button"/>
+
+                        <p:outputLabel value="#{myBundle.CreateMovimentacaoLabel_idTipoSolicitacao}" for="idTipoSolicitacao" />
+                        <p:selectOneMenu id="idTipoSolicitacao" value="#{movimentacaoController.selected.idTipoSolicitacao}"  converter="tipoSolicitacaoConverter">
+                            <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
+                            <f:selectItems value="#{tipoSolicitacaoController.items}"
+                                           var="idTipoSolicitacaoItem"
+                                           itemValue="#{idTipoSolicitacaoItem}"
+                                           itemLabel="#{idTipoSolicitacaoItem.idTipoSolicitacao.toString()}"
+                                           />
+
+                        </p:selectOneMenu>
+
+                        <p:outputLabel value="#{myBundle.CreateMovimentacaoLabel_idTipoEquipamento}" for="idTipoEquipamento" />
+                        <p:selectOneMenu id="idTipoEquipamento" value="#{movimentacaoController.selected.idTipoEquipamento}"  converter="tipoEquipamentoConverter">
+                            <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
+                            <f:selectItems value="#{tipoEquipamentoController.items}"
+                                           var="idTipoEquipamentoItem"
+                                           itemValue="#{idTipoEquipamentoItem}"
+                                           itemLabel="#{idTipoEquipamentoItem.idTipoEquipamento.toString()}"
+                                           />
+
+                        </p:selectOneMenu>
+
+                        <p:outputLabel value="#{myBundle.CreateMovimentacaoLabel_idProduto}" for="idProduto" />
+                        <p:selectOneMenu id="idProduto" value="#{movimentacaoController.selected.idProduto}"  converter="produtoConverter">
+                            <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
+                            <f:selectItems value="#{produtoController.items}"
+                                           var="idProdutoItem"
+                                           itemValue="#{idProdutoItem}"
+                                           itemLabel="#{idProdutoItem.idProduto.toString()}"
+                                           />
+
+                        </p:selectOneMenu>
+
+                        <p:outputLabel value="#{myBundle.CreateMovimentacaoLabel_idFuncionario}" for="idFuncionario" />
+                        <p:selectOneMenu id="idFuncionario" value="#{movimentacaoController.selected.idFuncionario}"  converter="funcionarioConverter">
+                            <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
+                            <f:selectItems value="#{funcionarioController.items}"
+                                           var="idFuncionarioItem"
+                                           itemValue="#{idFuncionarioItem}"
+                                           itemLabel="#{idFuncionarioItem.idFuncionario.toString()}"
+                                           />
+
+                        </p:selectOneMenu>
+
+                        <p:outputLabel value="#{myBundle.CreateMovimentacaoLabel_idEndarmazem}" for="idEndarmazem" />
+                        <p:selectOneMenu id="idEndarmazem" value="#{movimentacaoController.selected.idEndarmazem}"  converter="endArmazemConverter">
+                            <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
+                            <f:selectItems value="#{endArmazemController.items}"
+                                           var="idEndarmazemItem"
+                                           itemValue="#{idEndarmazemItem}"
+                                           itemLabel="#{idEndarmazemItem.idEndarmazem.toString()}"
+                                           />
+
+                        </p:selectOneMenu>
+
+                        <p:outputLabel value="#{myBundle.CreateMovimentacaoLabel_idDetalheNota}" for="idDetalheNota" />
+                        <p:selectOneMenu id="idDetalheNota" value="#{movimentacaoController.selected.idDetalheNota}"  converter="detNotaConverter">
+                            <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
+                            <f:selectItems value="#{detNotaController.items}"
+                                           var="idDetalheNotaItem"
+                                           itemValue="#{idDetalheNotaItem}"
+                                           itemLabel="#{idDetalheNotaItem.idDetalheNota.toString()}"
+                                           />
+
+                        </p:selectOneMenu>
+
+                        <p:outputLabel value="#{myBundle.CreateMovimentacaoLabel_idArmazem}" for="idArmazem" />
+                        <p:selectOneMenu id="idArmazem" value="#{movimentacaoController.selected.idArmazem}"  converter="armazemConverter">
+                            <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
+                            <f:selectItems value="#{armazemController.items}"
+                                           var="idArmazemItem"
+                                           itemValue="#{idArmazemItem}"
+                                           itemLabel="#{idArmazemItem.idArmazem.toString()}"
+                                           />
+
+                        </p:selectOneMenu>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{movimentacaoController.saveNew}" value="#{myBundle.Save}" update="display,:MovimentacaoListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,MovimentacaoCreateDialog);">
+                        <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmCreateMessage}" icon="ui-icon-alert"/>
+                    </p:commandButton>
+
+                    <p:commandButton value="#{myBundle.Cancel}" onclick="MovimentacaoCreateDialog.hide()"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

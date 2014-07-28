@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui">
+
+    <h:form id="GrupoEmbalagemListForm">
+
+        <p:panel header="#{myBundle.ListGrupoEmbalagemTitle}">
+            <p:contextMenu id="GrupoEmbalagemDataTableContextMenu" for="datalist">  
+                <p:menuitem value="#{myBundle.Create}" onclick="document.getElementById('GrupoEmbalagemListForm:createButton').click();" icon="ui-icon-plus"/>
+                <p:menuitem value="#{myBundle.View}" onclick="document.getElementById('GrupoEmbalagemListForm:viewButton').click();" icon="ui-icon-search"/>
+                <p:menuitem value="#{myBundle.Edit}" onclick="document.getElementById('GrupoEmbalagemListForm:editButton').click();" icon="ui-icon-pencil"/>
+                <p:menuitem value="#{myBundle.Delete}" onclick="document.getElementById('GrupoEmbalagemListForm:deleteButton').click();" icon="ui-icon-trash"/>
+                <p:separator/>
+                <p:menuitem value="#{myBundle.GrupoEmbalagemMenuItem_embalagemCollection}" icon="ui-icon-search"  action="#{grupoEmbalagemController.navigateEmbalagemCollection}" disabled="#{empty grupoEmbalagemController.selected.embalagemCollection}" ajax="false"/>  
+            </p:contextMenu>
+            <p:dataTable id="datalist"
+                         value="#{grupoEmbalagemController.items}"
+                         var="item"
+                         rowKey="#{item.idGrupoEmbalagem}"
+                         paginator="true"
+                         rows="5"
+                         rowsPerPageTemplate="5,10,20,30,40,50"
+                         selectionMode="single"
+                         selection="#{grupoEmbalagemController.selected}">
+
+                <p:ajax event="rowSelect"   update=":GrupoEmbalagemListForm:createButton :GrupoEmbalagemListForm:viewButton :GrupoEmbalagemListForm:editButton :GrupoEmbalagemListForm:deleteButton :GrupoEmbalagemListForm:GrupoEmbalagemDataTableContextMenu" listener="#{grupoEmbalagemController.resetParents}"/>
+                <p:ajax event="rowUnselect" update=":GrupoEmbalagemListForm:createButton :GrupoEmbalagemListForm:viewButton :GrupoEmbalagemListForm:editButton :GrupoEmbalagemListForm:deleteButton :GrupoEmbalagemListForm:GrupoEmbalagemDataTableContextMenu" listener="#{grupoEmbalagemController.resetParents}"/>
+                <p:ajax event="rowDblselect" onsuccess="document.getElementById('GrupoEmbalagemListForm:viewButton').click();"/>
+
+                <p:column sortBy="#{item.idGrupoEmbalagem}" filterBy="#{item.idGrupoEmbalagem}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListGrupoEmbalagemTitle_idGrupoEmbalagem}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.idGrupoEmbalagem}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.nomeGrupoEmbalagem}" filterBy="#{item.nomeGrupoEmbalagem}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListGrupoEmbalagemTitle_nomeGrupoEmbalagem}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.nomeGrupoEmbalagem}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.especGrupoEmbalagem}" filterBy="#{item.especGrupoEmbalagem}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListGrupoEmbalagemTitle_especGrupoEmbalagem}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.especGrupoEmbalagem}"/>
+                </p:column>
+
+
+            </p:dataTable>
+
+            <p:commandButton id="createButton"                             icon="ui-icon-plus"   value="#{myBundle.Create}" actionListener="#{grupoEmbalagemController.prepareCreate}" update=":GrupoEmbalagemCreateForm" oncomplete="GrupoEmbalagemCreateDialog.show()"/>
+            <p:commandButton id="viewButton"   style="visibility: hidden;" icon="ui-icon-search" value="#{myBundle.View}" update=":GrupoEmbalagemViewForm" oncomplete="GrupoEmbalagemViewDialog.show()" disabled="#{empty grupoEmbalagemController.selected}"/>
+            <p:commandButton id="editButton"   style="visibility: hidden;" icon="ui-icon-pencil" value="#{myBundle.Edit}" update=":GrupoEmbalagemEditForm" oncomplete="GrupoEmbalagemEditDialog.show()" disabled="#{empty grupoEmbalagemController.selected}"/>
+            <p:commandButton id="deleteButton" style="visibility: hidden;" icon="ui-icon-trash"  value="#{myBundle.Delete}" actionListener="#{grupoEmbalagemController.delete}" update=":growl,datalist" disabled="#{empty grupoEmbalagemController.selected}">
+                <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmDeleteMessage}" icon="ui-icon-alert"/>
+            </p:commandButton>
+
+        </p:panel>
+        <ui:include src="/WEB-INF/include/confirmation.xhtml"/>
+    </h:form>
+
+</ui:composition>

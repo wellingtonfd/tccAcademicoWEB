@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+        <p:dialog id="FornecedorEditDlg" widgetVar="FornecedorEditDialog" modal="true" resizable="false"  appendTo="@(body)" header="#{myBundle.EditFornecedorTitle}" closeOnEscape="true">
+
+            <h:form id="FornecedorEditForm">
+
+                <h:panelGroup id="display">
+                    <p:panelGrid  columns="2" columnClasses="column" rendered="#{fornecedorController.selected != null}">
+
+
+                        <h:outputLabel value="#{myBundle.EditFornecedorLabel_idFornecedor}" for="idFornecedor" />
+                        <h:outputText id="idFornecedor" value="#{fornecedorController.selected.idFornecedor}" />
+
+                        <p:outputLabel value="#{myBundle.EditFornecedorLabel_nomeFantasia}" for="nomeFantasia" />
+                        <p:inputText id="nomeFantasia" value="#{fornecedorController.selected.nomeFantasia}" title="#{myBundle.EditFornecedorTitle_nomeFantasia}" required="true" requiredMessage="#{myBundle.EditFornecedorRequiredMessage_nomeFantasia}" size="60" maxlength="60"/>
+
+                        <p:outputLabel value="#{myBundle.EditFornecedorLabel_razaoSocial}" for="razaoSocial" />
+                        <p:inputText id="razaoSocial" value="#{fornecedorController.selected.razaoSocial}" title="#{myBundle.EditFornecedorTitle_razaoSocial}" required="true" requiredMessage="#{myBundle.EditFornecedorRequiredMessage_razaoSocial}" size="60" maxlength="60"/>
+
+                        <p:outputLabel value="#{myBundle.EditFornecedorLabel_cnpj}" for="cnpj" />
+                        <p:inputText id="cnpj" value="#{fornecedorController.selected.cnpj}" title="#{myBundle.EditFornecedorTitle_cnpj}" required="true" requiredMessage="#{myBundle.EditFornecedorRequiredMessage_cnpj}" size="20" maxlength="20"/>
+
+                        <p:outputLabel value="#{myBundle.EditFornecedorLabel_inscSocial}" for="inscSocial" />
+                        <p:inputText id="inscSocial" value="#{fornecedorController.selected.inscSocial}" title="#{myBundle.EditFornecedorTitle_inscSocial}" required="true" requiredMessage="#{myBundle.EditFornecedorRequiredMessage_inscSocial}" size="20" maxlength="20"/>
+
+                        <p:outputLabel value="#{myBundle.EditFornecedorLabel_idContato}" for="idContato" />
+                        <p:inputText id="idContato" value="#{fornecedorController.selected.idContato}" title="#{myBundle.EditFornecedorTitle_idContato}"/>
+
+                        <p:outputLabel value="#{myBundle.EditFornecedorLabel_idEndereco}" for="idEndereco" />
+                        <p:selectOneMenu id="idEndereco" value="#{fornecedorController.selected.idEndereco}"  converter="enderecoConverter">
+                            <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
+                            <f:selectItems value="#{enderecoController.items}"
+                                           var="idEnderecoItem"
+                                           itemValue="#{idEnderecoItem}"
+                                           itemLabel="#{idEnderecoItem.idEndereco.toString()}"
+                                           />
+
+                        </p:selectOneMenu>
+
+                        <p:outputLabel value="#{myBundle.EditFornecedorLabel_contatosIdContato}" for="contatosIdContato" />
+                        <p:selectOneMenu id="contatosIdContato" value="#{fornecedorController.selected.contatosIdContato}" required="true" requiredMessage="#{myBundle.EditFornecedorRequiredMessage_contatosIdContato}" converter="contatosConverter">
+                            <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
+                            <f:selectItems value="#{contatosController.items}"
+                                           var="contatosIdContatoItem"
+                                           itemValue="#{contatosIdContatoItem}"
+                                           itemLabel="#{contatosIdContatoItem.idContato.toString()}"
+                                           />
+
+                        </p:selectOneMenu>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{fornecedorController.save}" value="#{myBundle.Save}" update="display,:FornecedorListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,FornecedorEditDialog);">
+                        <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmEditMessage}" icon="ui-icon-alert"/>
+                    </p:commandButton>
+                    <p:commandButton value="#{myBundle.Cancel}" onclick="FornecedorEditDialog.hide()"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

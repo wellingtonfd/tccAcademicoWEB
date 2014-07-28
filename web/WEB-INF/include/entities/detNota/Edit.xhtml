@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+        <p:dialog id="DetNotaEditDlg" widgetVar="DetNotaEditDialog" modal="true" resizable="false"  appendTo="@(body)" header="#{myBundle.EditDetNotaTitle}" closeOnEscape="true">
+
+            <h:form id="DetNotaEditForm">
+
+                <h:panelGroup id="display">
+                    <p:panelGrid  columns="2" columnClasses="column" rendered="#{detNotaController.selected != null}">
+
+
+                        <h:outputLabel value="#{myBundle.EditDetNotaLabel_idDetalheNota}" for="idDetalheNota" />
+                        <h:outputText id="idDetalheNota" value="#{detNotaController.selected.idDetalheNota}" />
+
+                        <p:outputLabel value="#{myBundle.EditDetNotaLabel_numNota}" for="numNota" />
+                        <p:inputText id="numNota" value="#{detNotaController.selected.numNota}" title="#{myBundle.EditDetNotaTitle_numNota}" required="true" requiredMessage="#{myBundle.EditDetNotaRequiredMessage_numNota}" size="25" maxlength="25"/>
+
+                        <p:outputLabel value="#{myBundle.EditDetNotaLabel_dtPedido}" for="dtPedido" />
+                        <p:calendar id="dtPedido" pattern="MM/dd/yyyy" value="#{detNotaController.selected.dtPedido}" title="#{myBundle.EditDetNotaTitle_dtPedido}" required="true" requiredMessage="#{myBundle.EditDetNotaRequiredMessage_dtPedido}" showOn="button"/>
+
+                        <p:outputLabel value="#{myBundle.EditDetNotaLabel_valorTotal}" for="valorTotal" />
+                        <p:inputText id="valorTotal" value="#{detNotaController.selected.valorTotal}" title="#{myBundle.EditDetNotaTitle_valorTotal}" required="true" requiredMessage="#{myBundle.EditDetNotaRequiredMessage_valorTotal}"/>
+
+                        <p:outputLabel value="#{myBundle.EditDetNotaLabel_idFornecedor}" for="idFornecedor" />
+                        <p:inputText id="idFornecedor" value="#{detNotaController.selected.idFornecedor}" title="#{myBundle.EditDetNotaTitle_idFornecedor}"/>
+
+                        <p:outputLabel value="#{myBundle.EditDetNotaLabel_idTipoEquipamento}" for="idTipoEquipamento" />
+                        <p:inputText id="idTipoEquipamento" value="#{detNotaController.selected.idTipoEquipamento}" title="#{myBundle.EditDetNotaTitle_idTipoEquipamento}"/>
+
+                        <p:outputLabel value="#{myBundle.EditDetNotaLabel_valorUnitario}" for="valorUnitario" />
+                        <p:inputText id="valorUnitario" value="#{detNotaController.selected.valorUnitario}" title="#{myBundle.EditDetNotaTitle_valorUnitario}"/>
+
+                        <p:outputLabel value="#{myBundle.EditDetNotaLabel_tipoEquipamentoIdTipoEquipamento}" for="tipoEquipamentoIdTipoEquipamento" />
+                        <p:selectOneMenu id="tipoEquipamentoIdTipoEquipamento" value="#{detNotaController.selected.tipoEquipamentoIdTipoEquipamento}" required="true" requiredMessage="#{myBundle.EditDetNotaRequiredMessage_tipoEquipamentoIdTipoEquipamento}" converter="tipoEquipamentoConverter">
+                            <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
+                            <f:selectItems value="#{tipoEquipamentoController.items}"
+                                           var="tipoEquipamentoIdTipoEquipamentoItem"
+                                           itemValue="#{tipoEquipamentoIdTipoEquipamentoItem}"
+                                           itemLabel="#{tipoEquipamentoIdTipoEquipamentoItem.idTipoEquipamento.toString()}"
+                                           />
+
+                        </p:selectOneMenu>
+
+                        <p:outputLabel value="#{myBundle.EditDetNotaLabel_idProduto}" for="idProduto" />
+                        <p:selectOneMenu id="idProduto" value="#{detNotaController.selected.idProduto}"  converter="produtoConverter">
+                            <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
+                            <f:selectItems value="#{produtoController.items}"
+                                           var="idProdutoItem"
+                                           itemValue="#{idProdutoItem}"
+                                           itemLabel="#{idProdutoItem.idProduto.toString()}"
+                                           />
+
+                        </p:selectOneMenu>
+
+                        <p:outputLabel value="#{myBundle.EditDetNotaLabel_fornecedorIdFornecedor}" for="fornecedorIdFornecedor" />
+                        <p:selectOneMenu id="fornecedorIdFornecedor" value="#{detNotaController.selected.fornecedorIdFornecedor}" required="true" requiredMessage="#{myBundle.EditDetNotaRequiredMessage_fornecedorIdFornecedor}" converter="fornecedorConverter">
+                            <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
+                            <f:selectItems value="#{fornecedorController.items}"
+                                           var="fornecedorIdFornecedorItem"
+                                           itemValue="#{fornecedorIdFornecedorItem}"
+                                           itemLabel="#{fornecedorIdFornecedorItem.idFornecedor.toString()}"
+                                           />
+
+                        </p:selectOneMenu>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{detNotaController.save}" value="#{myBundle.Save}" update="display,:DetNotaListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,DetNotaEditDialog);">
+                        <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmEditMessage}" icon="ui-icon-alert"/>
+                    </p:commandButton>
+                    <p:commandButton value="#{myBundle.Cancel}" onclick="DetNotaEditDialog.hide()"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

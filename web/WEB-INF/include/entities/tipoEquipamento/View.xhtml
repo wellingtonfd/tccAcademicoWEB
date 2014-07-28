@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="TipoEquipamentoViewDlg" widgetVar="TipoEquipamentoViewDialog" modal="true" resizable="false"  appendTo="@(body)" header="#{myBundle.ViewTipoEquipamentoTitle}" closeOnEscape="true">
+
+            <h:form id="TipoEquipamentoViewForm">
+
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" columnClasses="column" rendered="#{tipoEquipamentoController.selected != null}">
+
+                        <h:outputText value="#{myBundle.ViewTipoEquipamentoLabel_idTipoEquipamento}"/>
+                        <h:outputText value="#{tipoEquipamentoController.selected.idTipoEquipamento}" title="#{myBundle.ViewTipoEquipamentoTitle_idTipoEquipamento}"/>
+
+                        <h:outputText value="#{myBundle.ViewTipoEquipamentoLabel_nomeTipoEquipamento}"/>
+                        <h:outputText value="#{tipoEquipamentoController.selected.nomeTipoEquipamento}" title="#{myBundle.ViewTipoEquipamentoTitle_nomeTipoEquipamento}"/>
+
+                        <h:outputText value="#{myBundle.ViewTipoEquipamentoLabel_espcTipoEquipamento}"/>
+                        <h:outputText value="#{tipoEquipamentoController.selected.espcTipoEquipamento}" title="#{myBundle.ViewTipoEquipamentoTitle_espcTipoEquipamento}"/>
+
+                        <h:outputText value="#{myBundle.ViewTipoEquipamentoLabel_idEpe}"/>
+                        <h:outputText value="#{tipoEquipamentoController.selected.idEpe}" title="#{myBundle.ViewTipoEquipamentoTitle_idEpe}"/>
+
+                        <h:outputText value="#{myBundle.ViewTipoEquipamentoLabel_idEmbalagem}"/>
+                        <h:outputText value="#{tipoEquipamentoController.selected.idEmbalagem}" title="#{myBundle.ViewTipoEquipamentoTitle_idEmbalagem}"/>
+
+                        <h:outputText value="#{myBundle.ViewTipoEquipamentoLabel_idVeiculo}"/>
+                        <h:outputText value="#{tipoEquipamentoController.selected.idVeiculo.idVeiculo}"/>
+
+                        <h:outputText value="#{myBundle.ViewTipoEquipamentoLabel_idEpi}"/>
+                        <h:outputText value="#{tipoEquipamentoController.selected.idEpi.idEpi}"/>
+
+                        <h:outputText value="#{myBundle.ViewTipoEquipamentoLabel_epeIdEpe}"/>
+                        <h:outputText value="#{tipoEquipamentoController.selected.epeIdEpe.idEpe}"/>
+                    </p:panelGrid>
+                    <p:commandButton value="#{myBundle.Close}" onclick="TipoEquipamentoViewDialog.hide()"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

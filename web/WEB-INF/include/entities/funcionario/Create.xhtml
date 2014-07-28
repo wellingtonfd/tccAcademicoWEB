@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="FuncionarioCreateDlg" widgetVar="FuncionarioCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="#{myBundle.CreateFuncionarioTitle}" closeOnEscape="true">
+
+            <h:form id="FuncionarioCreateForm">
+
+                <h:panelGroup id="display" rendered="#{funcionarioController.selected != null}">
+                    <p:panelGrid columns="2" columnClasses="column">
+
+                        <p:outputLabel value="#{myBundle.CreateFuncionarioLabel_nomeFuncionario}" for="nomeFuncionario" />
+                        <p:inputText id="nomeFuncionario" value="#{funcionarioController.selected.nomeFuncionario}" title="#{myBundle.CreateFuncionarioTitle_nomeFuncionario}" required="true" requiredMessage="#{myBundle.CreateFuncionarioRequiredMessage_nomeFuncionario}" size="60" maxlength="60"/>
+
+                        <p:outputLabel value="#{myBundle.CreateFuncionarioLabel_sbNomeFuncionario}" for="sbNomeFuncionario" />
+                        <p:inputText id="sbNomeFuncionario" value="#{funcionarioController.selected.sbNomeFuncionario}" title="#{myBundle.CreateFuncionarioTitle_sbNomeFuncionario}" required="true" requiredMessage="#{myBundle.CreateFuncionarioRequiredMessage_sbNomeFuncionario}" size="80" maxlength="80"/>
+
+                        <p:outputLabel value="#{myBundle.CreateFuncionarioLabel_sexo}" for="sexo" />
+                        <p:inputText id="sexo" value="#{funcionarioController.selected.sexo}" title="#{myBundle.CreateFuncionarioTitle_sexo}" required="true" requiredMessage="#{myBundle.CreateFuncionarioRequiredMessage_sexo}" size="1" maxlength="1"/>
+
+                        <p:outputLabel value="#{myBundle.CreateFuncionarioLabel_cpf}" for="cpf" />
+                        <p:inputText id="cpf" value="#{funcionarioController.selected.cpf}" title="#{myBundle.CreateFuncionarioTitle_cpf}" required="true" requiredMessage="#{myBundle.CreateFuncionarioRequiredMessage_cpf}" size="15" maxlength="15"/>
+
+                        <p:outputLabel value="#{myBundle.CreateFuncionarioLabel_rg}" for="rg" />
+                        <p:inputText id="rg" value="#{funcionarioController.selected.rg}" title="#{myBundle.CreateFuncionarioTitle_rg}" required="true" requiredMessage="#{myBundle.CreateFuncionarioRequiredMessage_rg}" size="15" maxlength="15"/>
+
+                        <p:outputLabel value="#{myBundle.CreateFuncionarioLabel_dtNasc}" for="dtNasc" />
+                        <p:calendar id="dtNasc" pattern="MM/dd/yyyy" value="#{funcionarioController.selected.dtNasc}" title="#{myBundle.CreateFuncionarioTitle_dtNasc}" required="true" requiredMessage="#{myBundle.CreateFuncionarioRequiredMessage_dtNasc}" showOn="button"/>
+
+                        <p:outputLabel value="#{myBundle.CreateFuncionarioLabel_matFuncionario}" for="matFuncionario" />
+                        <p:inputText id="matFuncionario" value="#{funcionarioController.selected.matFuncionario}" title="#{myBundle.CreateFuncionarioTitle_matFuncionario}" required="true" requiredMessage="#{myBundle.CreateFuncionarioRequiredMessage_matFuncionario}"/>
+
+                        <p:outputLabel value="#{myBundle.CreateFuncionarioLabel_dtAdmissao}" for="dtAdmissao" />
+                        <p:calendar id="dtAdmissao" pattern="MM/dd/yyyy" value="#{funcionarioController.selected.dtAdmissao}" title="#{myBundle.CreateFuncionarioTitle_dtAdmissao}" required="true" requiredMessage="#{myBundle.CreateFuncionarioRequiredMessage_dtAdmissao}" showOn="button"/>
+
+                        <p:outputLabel value="#{myBundle.CreateFuncionarioLabel_funcao}" for="funcao" />
+                        <p:inputText id="funcao" value="#{funcionarioController.selected.funcao}" title="#{myBundle.CreateFuncionarioTitle_funcao}" required="true" requiredMessage="#{myBundle.CreateFuncionarioRequiredMessage_funcao}" size="40" maxlength="40"/>
+
+                        <p:outputLabel value="#{myBundle.CreateFuncionarioLabel_cargo}" for="cargo" />
+                        <p:inputText id="cargo" value="#{funcionarioController.selected.cargo}" title="#{myBundle.CreateFuncionarioTitle_cargo}" required="true" requiredMessage="#{myBundle.CreateFuncionarioRequiredMessage_cargo}" size="40" maxlength="40"/>
+
+                        <p:outputLabel value="#{myBundle.CreateFuncionarioLabel_nivelFuncionario}" for="nivelFuncionario" />
+                        <p:inputText id="nivelFuncionario" value="#{funcionarioController.selected.nivelFuncionario}" title="#{myBundle.CreateFuncionarioTitle_nivelFuncionario}" required="true" requiredMessage="#{myBundle.CreateFuncionarioRequiredMessage_nivelFuncionario}" size="10" maxlength="10"/>
+
+                        <p:outputLabel value="#{myBundle.CreateFuncionarioLabel_especializacao}" for="especializacao" />
+                        <p:inputText id="especializacao" value="#{funcionarioController.selected.especializacao}" title="#{myBundle.CreateFuncionarioTitle_especializacao}" size="12" maxlength="12"/>
+
+                        <p:outputLabel value="#{myBundle.CreateFuncionarioLabel_idContato}" for="idContato" />
+                        <p:inputText id="idContato" value="#{funcionarioController.selected.idContato}" title="#{myBundle.CreateFuncionarioTitle_idContato}"/>
+
+                        <p:outputLabel value="#{myBundle.CreateFuncionarioLabel_idEndereco}" for="idEndereco" />
+                        <p:inputText id="idEndereco" value="#{funcionarioController.selected.idEndereco}" title="#{myBundle.CreateFuncionarioTitle_idEndereco}"/>
+
+                        <p:outputLabel value="#{myBundle.CreateFuncionarioLabel_idUsuario}" for="idUsuario" />
+                        <p:selectOneMenu id="idUsuario" value="#{funcionarioController.selected.idUsuario}"  converter="usuarioConverter">
+                            <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
+                            <f:selectItems value="#{usuarioController.items}"
+                                           var="idUsuarioItem"
+                                           itemValue="#{idUsuarioItem}"
+                                           itemLabel="#{idUsuarioItem.idUsuario.toString()}"
+                                           />
+
+                        </p:selectOneMenu>
+
+                        <p:outputLabel value="#{myBundle.CreateFuncionarioLabel_enderecoIdEndereco}" for="enderecoIdEndereco" />
+                        <p:selectOneMenu id="enderecoIdEndereco" value="#{funcionarioController.selected.enderecoIdEndereco}" required="true" requiredMessage="#{myBundle.CreateFuncionarioRequiredMessage_enderecoIdEndereco}" converter="enderecoConverter">
+                            <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
+                            <f:selectItems value="#{enderecoController.items}"
+                                           var="enderecoIdEnderecoItem"
+                                           itemValue="#{enderecoIdEnderecoItem}"
+                                           itemLabel="#{enderecoIdEnderecoItem.idEndereco.toString()}"
+                                           />
+
+                        </p:selectOneMenu>
+
+                        <p:outputLabel value="#{myBundle.CreateFuncionarioLabel_contatosIdContato}" for="contatosIdContato" />
+                        <p:selectOneMenu id="contatosIdContato" value="#{funcionarioController.selected.contatosIdContato}" required="true" requiredMessage="#{myBundle.CreateFuncionarioRequiredMessage_contatosIdContato}" converter="contatosConverter">
+                            <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
+                            <f:selectItems value="#{contatosController.items}"
+                                           var="contatosIdContatoItem"
+                                           itemValue="#{contatosIdContatoItem}"
+                                           itemLabel="#{contatosIdContatoItem.idContato.toString()}"
+                                           />
+
+                        </p:selectOneMenu>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{funcionarioController.saveNew}" value="#{myBundle.Save}" update="display,:FuncionarioListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,FuncionarioCreateDialog);">
+                        <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmCreateMessage}" icon="ui-icon-alert"/>
+                    </p:commandButton>
+
+                    <p:commandButton value="#{myBundle.Cancel}" onclick="FuncionarioCreateDialog.hide()"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

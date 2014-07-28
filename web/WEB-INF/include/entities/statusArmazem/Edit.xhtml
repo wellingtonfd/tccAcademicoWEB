@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+        <p:dialog id="StatusArmazemEditDlg" widgetVar="StatusArmazemEditDialog" modal="true" resizable="false"  appendTo="@(body)" header="#{myBundle.EditStatusArmazemTitle}" closeOnEscape="true">
+
+            <h:form id="StatusArmazemEditForm">
+
+                <h:panelGroup id="display">
+                    <p:panelGrid  columns="2" columnClasses="column" rendered="#{statusArmazemController.selected != null}">
+
+
+                        <h:outputLabel value="#{myBundle.EditStatusArmazemLabel_idStatusArmazem}" for="idStatusArmazem" />
+                        <h:outputText id="idStatusArmazem" value="#{statusArmazemController.selected.idStatusArmazem}" />
+
+                        <p:outputLabel value="#{myBundle.EditStatusArmazemLabel_tipoStatusArmazem}" for="tipoStatusArmazem" />
+                        <p:inputText id="tipoStatusArmazem" value="#{statusArmazemController.selected.tipoStatusArmazem}" title="#{myBundle.EditStatusArmazemTitle_tipoStatusArmazem}" required="true" requiredMessage="#{myBundle.EditStatusArmazemRequiredMessage_tipoStatusArmazem}" size="45" maxlength="45"/>
+
+                        <p:outputLabel value="#{myBundle.EditStatusArmazemLabel_especStatusArmazem}" for="especStatusArmazem" />
+                        <p:inputText id="especStatusArmazem" value="#{statusArmazemController.selected.especStatusArmazem}" title="#{myBundle.EditStatusArmazemTitle_especStatusArmazem}" required="true" requiredMessage="#{myBundle.EditStatusArmazemRequiredMessage_especStatusArmazem}" size="25" maxlength="25"/>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{statusArmazemController.save}" value="#{myBundle.Save}" update="display,:StatusArmazemListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,StatusArmazemEditDialog);">
+                        <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmEditMessage}" icon="ui-icon-alert"/>
+                    </p:commandButton>
+                    <p:commandButton value="#{myBundle.Cancel}" onclick="StatusArmazemEditDialog.hide()"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

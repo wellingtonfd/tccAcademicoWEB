@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui">
+
+    <h:form id="StatusArmazemListForm">
+
+        <p:panel header="#{myBundle.ListStatusArmazemTitle}">
+            <p:contextMenu id="StatusArmazemDataTableContextMenu" for="datalist">  
+                <p:menuitem value="#{myBundle.Create}" onclick="document.getElementById('StatusArmazemListForm:createButton').click();" icon="ui-icon-plus"/>
+                <p:menuitem value="#{myBundle.View}" onclick="document.getElementById('StatusArmazemListForm:viewButton').click();" icon="ui-icon-search"/>
+                <p:menuitem value="#{myBundle.Edit}" onclick="document.getElementById('StatusArmazemListForm:editButton').click();" icon="ui-icon-pencil"/>
+                <p:menuitem value="#{myBundle.Delete}" onclick="document.getElementById('StatusArmazemListForm:deleteButton').click();" icon="ui-icon-trash"/>
+                <p:separator/>
+                <p:menuitem value="#{myBundle.StatusArmazemMenuItem_armazemCollection}" icon="ui-icon-search"  action="#{statusArmazemController.navigateArmazemCollection}" disabled="#{empty statusArmazemController.selected.armazemCollection}" ajax="false"/>  
+            </p:contextMenu>
+            <p:dataTable id="datalist"
+                         value="#{statusArmazemController.items}"
+                         var="item"
+                         rowKey="#{item.idStatusArmazem}"
+                         paginator="true"
+                         rows="5"
+                         rowsPerPageTemplate="5,10,20,30,40,50"
+                         selectionMode="single"
+                         selection="#{statusArmazemController.selected}">
+
+                <p:ajax event="rowSelect"   update=":StatusArmazemListForm:createButton :StatusArmazemListForm:viewButton :StatusArmazemListForm:editButton :StatusArmazemListForm:deleteButton :StatusArmazemListForm:StatusArmazemDataTableContextMenu" listener="#{statusArmazemController.resetParents}"/>
+                <p:ajax event="rowUnselect" update=":StatusArmazemListForm:createButton :StatusArmazemListForm:viewButton :StatusArmazemListForm:editButton :StatusArmazemListForm:deleteButton :StatusArmazemListForm:StatusArmazemDataTableContextMenu" listener="#{statusArmazemController.resetParents}"/>
+                <p:ajax event="rowDblselect" onsuccess="document.getElementById('StatusArmazemListForm:viewButton').click();"/>
+
+                <p:column sortBy="#{item.idStatusArmazem}" filterBy="#{item.idStatusArmazem}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListStatusArmazemTitle_idStatusArmazem}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.idStatusArmazem}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.tipoStatusArmazem}" filterBy="#{item.tipoStatusArmazem}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListStatusArmazemTitle_tipoStatusArmazem}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.tipoStatusArmazem}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.especStatusArmazem}" filterBy="#{item.especStatusArmazem}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListStatusArmazemTitle_especStatusArmazem}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.especStatusArmazem}"/>
+                </p:column>
+
+
+            </p:dataTable>
+
+            <p:commandButton id="createButton"                             icon="ui-icon-plus"   value="#{myBundle.Create}" actionListener="#{statusArmazemController.prepareCreate}" update=":StatusArmazemCreateForm" oncomplete="StatusArmazemCreateDialog.show()"/>
+            <p:commandButton id="viewButton"   style="visibility: hidden;" icon="ui-icon-search" value="#{myBundle.View}" update=":StatusArmazemViewForm" oncomplete="StatusArmazemViewDialog.show()" disabled="#{empty statusArmazemController.selected}"/>
+            <p:commandButton id="editButton"   style="visibility: hidden;" icon="ui-icon-pencil" value="#{myBundle.Edit}" update=":StatusArmazemEditForm" oncomplete="StatusArmazemEditDialog.show()" disabled="#{empty statusArmazemController.selected}"/>
+            <p:commandButton id="deleteButton" style="visibility: hidden;" icon="ui-icon-trash"  value="#{myBundle.Delete}" actionListener="#{statusArmazemController.delete}" update=":growl,datalist" disabled="#{empty statusArmazemController.selected}">
+                <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmDeleteMessage}" icon="ui-icon-alert"/>
+            </p:commandButton>
+
+        </p:panel>
+        <ui:include src="/WEB-INF/include/confirmation.xhtml"/>
+    </h:form>
+
+</ui:composition>

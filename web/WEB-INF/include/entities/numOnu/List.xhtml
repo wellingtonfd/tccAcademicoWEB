@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui">
+
+    <h:form id="NumOnuListForm">
+
+        <p:panel header="#{myBundle.ListNumOnuTitle}">
+            <p:contextMenu id="NumOnuDataTableContextMenu" for="datalist">  
+                <p:menuitem value="#{myBundle.Create}" onclick="document.getElementById('NumOnuListForm:createButton').click();" icon="ui-icon-plus"/>
+                <p:menuitem value="#{myBundle.View}" onclick="document.getElementById('NumOnuListForm:viewButton').click();" icon="ui-icon-search"/>
+                <p:menuitem value="#{myBundle.Edit}" onclick="document.getElementById('NumOnuListForm:editButton').click();" icon="ui-icon-pencil"/>
+                <p:menuitem value="#{myBundle.Delete}" onclick="document.getElementById('NumOnuListForm:deleteButton').click();" icon="ui-icon-trash"/>
+                <p:separator/>
+                <p:menuitem value="#{myBundle.NumOnuMenuItem_produtoCollection}" icon="ui-icon-search"  action="#{numOnuController.navigateProdutoCollection}" disabled="#{empty numOnuController.selected.produtoCollection}" ajax="false"/>  
+            </p:contextMenu>
+            <p:dataTable id="datalist"
+                         value="#{numOnuController.items}"
+                         var="item"
+                         rowKey="#{item.idNumOnu}"
+                         paginator="true"
+                         rows="5"
+                         rowsPerPageTemplate="5,10,20,30,40,50"
+                         selectionMode="single"
+                         selection="#{numOnuController.selected}">
+
+                <p:ajax event="rowSelect"   update=":NumOnuListForm:createButton :NumOnuListForm:viewButton :NumOnuListForm:editButton :NumOnuListForm:deleteButton :NumOnuListForm:NumOnuDataTableContextMenu" listener="#{numOnuController.resetParents}"/>
+                <p:ajax event="rowUnselect" update=":NumOnuListForm:createButton :NumOnuListForm:viewButton :NumOnuListForm:editButton :NumOnuListForm:deleteButton :NumOnuListForm:NumOnuDataTableContextMenu" listener="#{numOnuController.resetParents}"/>
+                <p:ajax event="rowDblselect" onsuccess="document.getElementById('NumOnuListForm:viewButton').click();"/>
+
+                <p:column sortBy="#{item.idNumOnu}" filterBy="#{item.idNumOnu}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListNumOnuTitle_idNumOnu}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.idNumOnu}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.numOnu}" filterBy="#{item.numOnu}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListNumOnuTitle_numOnu}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.numOnu}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.nomeProd}" filterBy="#{item.nomeProd}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListNumOnuTitle_nomeProd}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.nomeProd}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.descProd}" filterBy="#{item.descProd}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListNumOnuTitle_descProd}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.descProd}"/>
+                </p:column>
+
+
+            </p:dataTable>
+
+            <p:commandButton id="createButton"                             icon="ui-icon-plus"   value="#{myBundle.Create}" actionListener="#{numOnuController.prepareCreate}" update=":NumOnuCreateForm" oncomplete="NumOnuCreateDialog.show()"/>
+            <p:commandButton id="viewButton"   style="visibility: hidden;" icon="ui-icon-search" value="#{myBundle.View}" update=":NumOnuViewForm" oncomplete="NumOnuViewDialog.show()" disabled="#{empty numOnuController.selected}"/>
+            <p:commandButton id="editButton"   style="visibility: hidden;" icon="ui-icon-pencil" value="#{myBundle.Edit}" update=":NumOnuEditForm" oncomplete="NumOnuEditDialog.show()" disabled="#{empty numOnuController.selected}"/>
+            <p:commandButton id="deleteButton" style="visibility: hidden;" icon="ui-icon-trash"  value="#{myBundle.Delete}" actionListener="#{numOnuController.delete}" update=":growl,datalist" disabled="#{empty numOnuController.selected}">
+                <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmDeleteMessage}" icon="ui-icon-alert"/>
+            </p:commandButton>
+
+        </p:panel>
+        <ui:include src="/WEB-INF/include/confirmation.xhtml"/>
+    </h:form>
+
+</ui:composition>

@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="FornecedorViewDlg" widgetVar="FornecedorViewDialog" modal="true" resizable="false"  appendTo="@(body)" header="#{myBundle.ViewFornecedorTitle}" closeOnEscape="true">
+
+            <h:form id="FornecedorViewForm">
+
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" columnClasses="column" rendered="#{fornecedorController.selected != null}">
+
+                        <h:outputText value="#{myBundle.ViewFornecedorLabel_idFornecedor}"/>
+                        <h:outputText value="#{fornecedorController.selected.idFornecedor}" title="#{myBundle.ViewFornecedorTitle_idFornecedor}"/>
+
+                        <h:outputText value="#{myBundle.ViewFornecedorLabel_nomeFantasia}"/>
+                        <h:outputText value="#{fornecedorController.selected.nomeFantasia}" title="#{myBundle.ViewFornecedorTitle_nomeFantasia}"/>
+
+                        <h:outputText value="#{myBundle.ViewFornecedorLabel_razaoSocial}"/>
+                        <h:outputText value="#{fornecedorController.selected.razaoSocial}" title="#{myBundle.ViewFornecedorTitle_razaoSocial}"/>
+
+                        <h:outputText value="#{myBundle.ViewFornecedorLabel_cnpj}"/>
+                        <h:outputText value="#{fornecedorController.selected.cnpj}" title="#{myBundle.ViewFornecedorTitle_cnpj}"/>
+
+                        <h:outputText value="#{myBundle.ViewFornecedorLabel_inscSocial}"/>
+                        <h:outputText value="#{fornecedorController.selected.inscSocial}" title="#{myBundle.ViewFornecedorTitle_inscSocial}"/>
+
+                        <h:outputText value="#{myBundle.ViewFornecedorLabel_idContato}"/>
+                        <h:outputText value="#{fornecedorController.selected.idContato}" title="#{myBundle.ViewFornecedorTitle_idContato}"/>
+
+                        <h:outputText value="#{myBundle.ViewFornecedorLabel_idEndereco}"/>
+                        <h:outputText value="#{fornecedorController.selected.idEndereco.idEndereco}"/>
+
+                        <h:outputText value="#{myBundle.ViewFornecedorLabel_contatosIdContato}"/>
+                        <h:outputText value="#{fornecedorController.selected.contatosIdContato.idContato}"/>
+                    </p:panelGrid>
+                    <p:commandButton value="#{myBundle.Close}" onclick="FornecedorViewDialog.hide()"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

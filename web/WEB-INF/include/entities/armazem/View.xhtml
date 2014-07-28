@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="ArmazemViewDlg" widgetVar="ArmazemViewDialog" modal="true" resizable="false"  appendTo="@(body)" header="#{myBundle.ViewArmazemTitle}" closeOnEscape="true">
+
+            <h:form id="ArmazemViewForm">
+
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" columnClasses="column" rendered="#{armazemController.selected != null}">
+
+                        <h:outputText value="#{myBundle.ViewArmazemLabel_idArmazem}"/>
+                        <h:outputText value="#{armazemController.selected.idArmazem}" title="#{myBundle.ViewArmazemTitle_idArmazem}"/>
+
+                        <h:outputText value="#{myBundle.ViewArmazemLabel_tipoArmazem}"/>
+                        <h:outputText value="#{armazemController.selected.tipoArmazem}" title="#{myBundle.ViewArmazemTitle_tipoArmazem}"/>
+
+                        <h:outputText value="#{myBundle.ViewArmazemLabel_capacidadeArmazem}"/>
+                        <h:outputText value="#{armazemController.selected.capacidadeArmazem}" title="#{myBundle.ViewArmazemTitle_capacidadeArmazem}"/>
+
+                        <h:outputText value="#{myBundle.ViewArmazemLabel_certificacaoArmazem}"/>
+                        <h:outputText value="#{armazemController.selected.certificacaoArmazem}" title="#{myBundle.ViewArmazemTitle_certificacaoArmazem}"/>
+
+                        <h:outputText value="#{myBundle.ViewArmazemLabel_especArmazem}"/>
+                        <h:outputText value="#{armazemController.selected.especArmazem}" title="#{myBundle.ViewArmazemTitle_especArmazem}"/>
+
+                        <h:outputText value="#{myBundle.ViewArmazemLabel_estoqueMax}"/>
+                        <h:outputText value="#{armazemController.selected.estoqueMax}" title="#{myBundle.ViewArmazemTitle_estoqueMax}"/>
+
+                        <h:outputText value="#{myBundle.ViewArmazemLabel_estoqueMin}"/>
+                        <h:outputText value="#{armazemController.selected.estoqueMin}" title="#{myBundle.ViewArmazemTitle_estoqueMin}"/>
+
+                        <h:outputText value="#{myBundle.ViewArmazemLabel_idStatusArmazem}"/>
+                        <h:outputText value="#{armazemController.selected.idStatusArmazem}" title="#{myBundle.ViewArmazemTitle_idStatusArmazem}"/>
+
+                        <h:outputText value="#{myBundle.ViewArmazemLabel_idLocalOper}"/>
+                        <h:outputText value="#{armazemController.selected.idLocalOper}" title="#{myBundle.ViewArmazemTitle_idLocalOper}"/>
+
+                        <h:outputText value="#{myBundle.ViewArmazemLabel_statusArmazemIdStatusArmazem}"/>
+                        <h:outputText value="#{armazemController.selected.statusArmazemIdStatusArmazem.idStatusArmazem}"/>
+
+                        <h:outputText value="#{myBundle.ViewArmazemLabel_localOperacaoIdLocalOper}"/>
+                        <h:outputText value="#{armazemController.selected.localOperacaoIdLocalOper.idLocalOper}"/>
+
+                        <h:outputText value="#{myBundle.ViewArmazemLabel_idEndarmazem}"/>
+                        <h:outputText value="#{armazemController.selected.idEndarmazem.idEndarmazem}"/>
+                    </p:panelGrid>
+                    <p:commandButton value="#{myBundle.Close}" onclick="ArmazemViewDialog.hide()"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

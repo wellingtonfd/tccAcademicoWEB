@@ -1,0 +1,183 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui">
+
+    <h:form id="MovimentacaoListForm">
+
+        <p:panel header="#{myBundle.ListMovimentacaoTitle}">
+            <p:contextMenu id="MovimentacaoDataTableContextMenu" for="datalist">  
+                <p:menuitem value="#{myBundle.Create}" onclick="document.getElementById('MovimentacaoListForm:createButton').click();" icon="ui-icon-plus"/>
+                <p:menuitem value="#{myBundle.View}" onclick="document.getElementById('MovimentacaoListForm:viewButton').click();" icon="ui-icon-search"/>
+                <p:menuitem value="#{myBundle.Edit}" onclick="document.getElementById('MovimentacaoListForm:editButton').click();" icon="ui-icon-pencil"/>
+                <p:menuitem value="#{myBundle.Delete}" onclick="document.getElementById('MovimentacaoListForm:deleteButton').click();" icon="ui-icon-trash"/>
+                <p:separator/>
+                <p:menuitem value="#{myBundle.MovimentacaoMenuItem_idTipoSolicitacao}" icon="ui-icon-search"  actionListener="#{movimentacaoController.prepareIdTipoSolicitacao}" update=":TipoSolicitacaoViewForm" oncomplete="TipoSolicitacaoViewDialog.show()" disabled="#{empty movimentacaoController.selected.idTipoSolicitacao}"/>  
+                <p:menuitem value="#{myBundle.MovimentacaoMenuItem_idTipoEquipamento}" icon="ui-icon-search"  actionListener="#{movimentacaoController.prepareIdTipoEquipamento}" update=":TipoEquipamentoViewForm" oncomplete="TipoEquipamentoViewDialog.show()" disabled="#{empty movimentacaoController.selected.idTipoEquipamento}"/>  
+                <p:menuitem value="#{myBundle.MovimentacaoMenuItem_idProduto}" icon="ui-icon-search"  actionListener="#{movimentacaoController.prepareIdProduto}" update=":ProdutoViewForm" oncomplete="ProdutoViewDialog.show()" disabled="#{empty movimentacaoController.selected.idProduto}"/>  
+                <p:menuitem value="#{myBundle.MovimentacaoMenuItem_idFuncionario}" icon="ui-icon-search"  actionListener="#{movimentacaoController.prepareIdFuncionario}" update=":FuncionarioViewForm" oncomplete="FuncionarioViewDialog.show()" disabled="#{empty movimentacaoController.selected.idFuncionario}"/>  
+                <p:menuitem value="#{myBundle.MovimentacaoMenuItem_idEndarmazem}" icon="ui-icon-search"  actionListener="#{movimentacaoController.prepareIdEndarmazem}" update=":EndArmazemViewForm" oncomplete="EndArmazemViewDialog.show()" disabled="#{empty movimentacaoController.selected.idEndarmazem}"/>  
+                <p:menuitem value="#{myBundle.MovimentacaoMenuItem_idDetalheNota}" icon="ui-icon-search"  actionListener="#{movimentacaoController.prepareIdDetalheNota}" update=":DetNotaViewForm" oncomplete="DetNotaViewDialog.show()" disabled="#{empty movimentacaoController.selected.idDetalheNota}"/>  
+                <p:menuitem value="#{myBundle.MovimentacaoMenuItem_idArmazem}" icon="ui-icon-search"  actionListener="#{movimentacaoController.prepareIdArmazem}" update=":ArmazemViewForm" oncomplete="ArmazemViewDialog.show()" disabled="#{empty movimentacaoController.selected.idArmazem}"/>  
+            </p:contextMenu>
+            <p:dataTable id="datalist"
+                         value="#{movimentacaoController.items}"
+                         var="item"
+                         rowKey="#{item.idMovimentacao}"
+                         paginator="true"
+                         rows="5"
+                         rowsPerPageTemplate="5,10,20,30,40,50"
+                         selectionMode="single"
+                         selection="#{movimentacaoController.selected}">
+
+                <p:ajax event="rowSelect"   update=":MovimentacaoListForm:createButton :MovimentacaoListForm:viewButton :MovimentacaoListForm:editButton :MovimentacaoListForm:deleteButton :MovimentacaoListForm:MovimentacaoDataTableContextMenu" listener="#{movimentacaoController.resetParents}"/>
+                <p:ajax event="rowUnselect" update=":MovimentacaoListForm:createButton :MovimentacaoListForm:viewButton :MovimentacaoListForm:editButton :MovimentacaoListForm:deleteButton :MovimentacaoListForm:MovimentacaoDataTableContextMenu" listener="#{movimentacaoController.resetParents}"/>
+                <p:ajax event="rowDblselect" onsuccess="document.getElementById('MovimentacaoListForm:viewButton').click();"/>
+
+                <p:column sortBy="#{item.idMovimentacao}" filterBy="#{item.idMovimentacao}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListMovimentacaoTitle_idMovimentacao}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.idMovimentacao}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.dtPrevista}" filterBy="#{item.dtPrevista}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListMovimentacaoTitle_dtPrevista}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.dtPrevista}">
+                        <f:convertDateTime pattern="MM/dd/yyyy" />
+                    </h:outputText>
+                </p:column>
+
+
+                <p:column sortBy="#{item.dtEntrega}" filterBy="#{item.dtEntrega}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListMovimentacaoTitle_dtEntrega}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.dtEntrega}">
+                        <f:convertDateTime pattern="MM/dd/yyyy" />
+                    </h:outputText>
+                </p:column>
+
+
+                <p:column sortBy="#{item.dtSaida}" filterBy="#{item.dtSaida}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListMovimentacaoTitle_dtSaida}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.dtSaida}">
+                        <f:convertDateTime pattern="MM/dd/yyyy" />
+                    </h:outputText>
+                </p:column>
+
+
+                <p:column sortBy="#{item.quantFuncionarios}" filterBy="#{item.quantFuncionarios}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListMovimentacaoTitle_quantFuncionarios}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.quantFuncionarios}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.responsavel}" filterBy="#{item.responsavel}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListMovimentacaoTitle_responsavel}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.responsavel}"/>
+                </p:column>
+
+                <!--
+                                    <p:column sortBy="#{item.tempoPrevisto}" filterBy="#{item.tempoPrevisto}">
+                                        <f:facet name="header">
+                                            <h:outputText value="#{myBundle.ListMovimentacaoTitle_tempoPrevisto}"/>
+                                        </f:facet>
+                                        <h:outputText value="#{item.tempoPrevisto}">
+                                            <f:convertDateTime pattern="HH:mm:ss" />
+                                        </h:outputText>
+                                    </p:column>
+                -->
+                <!--
+                                    <p:column sortBy="#{item.duracao}" filterBy="#{item.duracao}">
+                                        <f:facet name="header">
+                                            <h:outputText value="#{myBundle.ListMovimentacaoTitle_duracao}"/>
+                                        </f:facet>
+                                        <h:outputText value="#{item.duracao}">
+                                            <f:convertDateTime pattern="HH:mm:ss" />
+                                        </h:outputText>
+                                    </p:column>
+                -->
+                <!--
+                                    <p:column sortBy="#{item.idTipoSolicitacao.idTipoSolicitacao}" filterBy="#{item.idTipoSolicitacao.idTipoSolicitacao}">
+                                        <f:facet name="header">
+                                            <h:outputText value="#{myBundle.ListMovimentacaoTitle_idTipoSolicitacao}"/>
+                                        </f:facet>
+                                        <h:outputText value="#{item.idTipoSolicitacao.idTipoSolicitacao}"/>
+                                    </p:column>
+                -->
+                <!--
+                                    <p:column sortBy="#{item.idTipoEquipamento.idTipoEquipamento}" filterBy="#{item.idTipoEquipamento.idTipoEquipamento}">
+                                        <f:facet name="header">
+                                            <h:outputText value="#{myBundle.ListMovimentacaoTitle_idTipoEquipamento}"/>
+                                        </f:facet>
+                                        <h:outputText value="#{item.idTipoEquipamento.idTipoEquipamento}"/>
+                                    </p:column>
+                -->
+                <!--
+                                    <p:column sortBy="#{item.idProduto.idProduto}" filterBy="#{item.idProduto.idProduto}">
+                                        <f:facet name="header">
+                                            <h:outputText value="#{myBundle.ListMovimentacaoTitle_idProduto}"/>
+                                        </f:facet>
+                                        <h:outputText value="#{item.idProduto.idProduto}"/>
+                                    </p:column>
+                -->
+                <!--
+                                    <p:column sortBy="#{item.idFuncionario.idFuncionario}" filterBy="#{item.idFuncionario.idFuncionario}">
+                                        <f:facet name="header">
+                                            <h:outputText value="#{myBundle.ListMovimentacaoTitle_idFuncionario}"/>
+                                        </f:facet>
+                                        <h:outputText value="#{item.idFuncionario.idFuncionario}"/>
+                                    </p:column>
+                -->
+                <!--
+                                    <p:column sortBy="#{item.idEndarmazem.idEndarmazem}" filterBy="#{item.idEndarmazem.idEndarmazem}">
+                                        <f:facet name="header">
+                                            <h:outputText value="#{myBundle.ListMovimentacaoTitle_idEndarmazem}"/>
+                                        </f:facet>
+                                        <h:outputText value="#{item.idEndarmazem.idEndarmazem}"/>
+                                    </p:column>
+                -->
+                <!--
+                                    <p:column sortBy="#{item.idDetalheNota.idDetalheNota}" filterBy="#{item.idDetalheNota.idDetalheNota}">
+                                        <f:facet name="header">
+                                            <h:outputText value="#{myBundle.ListMovimentacaoTitle_idDetalheNota}"/>
+                                        </f:facet>
+                                        <h:outputText value="#{item.idDetalheNota.idDetalheNota}"/>
+                                    </p:column>
+                -->
+                <!--
+                                    <p:column sortBy="#{item.idArmazem.idArmazem}" filterBy="#{item.idArmazem.idArmazem}">
+                                        <f:facet name="header">
+                                            <h:outputText value="#{myBundle.ListMovimentacaoTitle_idArmazem}"/>
+                                        </f:facet>
+                                        <h:outputText value="#{item.idArmazem.idArmazem}"/>
+                                    </p:column>
+                -->
+
+            </p:dataTable>
+
+            <p:commandButton id="createButton"                             icon="ui-icon-plus"   value="#{myBundle.Create}" actionListener="#{movimentacaoController.prepareCreate}" update=":MovimentacaoCreateForm" oncomplete="MovimentacaoCreateDialog.show()"/>
+            <p:commandButton id="viewButton"   style="visibility: hidden;" icon="ui-icon-search" value="#{myBundle.View}" update=":MovimentacaoViewForm" oncomplete="MovimentacaoViewDialog.show()" disabled="#{empty movimentacaoController.selected}"/>
+            <p:commandButton id="editButton"   style="visibility: hidden;" icon="ui-icon-pencil" value="#{myBundle.Edit}" update=":MovimentacaoEditForm" oncomplete="MovimentacaoEditDialog.show()" disabled="#{empty movimentacaoController.selected}"/>
+            <p:commandButton id="deleteButton" style="visibility: hidden;" icon="ui-icon-trash"  value="#{myBundle.Delete}" actionListener="#{movimentacaoController.delete}" update=":growl,datalist" disabled="#{empty movimentacaoController.selected}">
+                <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmDeleteMessage}" icon="ui-icon-alert"/>
+            </p:commandButton>
+
+        </p:panel>
+        <ui:include src="/WEB-INF/include/confirmation.xhtml"/>
+    </h:form>
+
+</ui:composition>

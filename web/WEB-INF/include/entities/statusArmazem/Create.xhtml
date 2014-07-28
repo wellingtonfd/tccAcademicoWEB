@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="StatusArmazemCreateDlg" widgetVar="StatusArmazemCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="#{myBundle.CreateStatusArmazemTitle}" closeOnEscape="true">
+
+            <h:form id="StatusArmazemCreateForm">
+
+                <h:panelGroup id="display" rendered="#{statusArmazemController.selected != null}">
+                    <p:panelGrid columns="2" columnClasses="column">
+
+                        <p:outputLabel value="#{myBundle.CreateStatusArmazemLabel_tipoStatusArmazem}" for="tipoStatusArmazem" />
+                        <p:inputText id="tipoStatusArmazem" value="#{statusArmazemController.selected.tipoStatusArmazem}" title="#{myBundle.CreateStatusArmazemTitle_tipoStatusArmazem}" required="true" requiredMessage="#{myBundle.CreateStatusArmazemRequiredMessage_tipoStatusArmazem}" size="45" maxlength="45"/>
+
+                        <p:outputLabel value="#{myBundle.CreateStatusArmazemLabel_especStatusArmazem}" for="especStatusArmazem" />
+                        <p:inputText id="especStatusArmazem" value="#{statusArmazemController.selected.especStatusArmazem}" title="#{myBundle.CreateStatusArmazemTitle_especStatusArmazem}" required="true" requiredMessage="#{myBundle.CreateStatusArmazemRequiredMessage_especStatusArmazem}" size="25" maxlength="25"/>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{statusArmazemController.saveNew}" value="#{myBundle.Save}" update="display,:StatusArmazemListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,StatusArmazemCreateDialog);">
+                        <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmCreateMessage}" icon="ui-icon-alert"/>
+                    </p:commandButton>
+
+                    <p:commandButton value="#{myBundle.Cancel}" onclick="StatusArmazemCreateDialog.hide()"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

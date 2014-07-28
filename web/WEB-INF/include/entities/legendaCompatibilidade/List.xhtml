@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui">
+
+    <h:form id="LegendaCompatibilidadeListForm">
+
+        <p:panel header="#{myBundle.ListLegendaCompatibilidadeTitle}">
+            <p:contextMenu id="LegendaCompatibilidadeDataTableContextMenu" for="datalist">  
+                <p:menuitem value="#{myBundle.Create}" onclick="document.getElementById('LegendaCompatibilidadeListForm:createButton').click();" icon="ui-icon-plus"/>
+                <p:menuitem value="#{myBundle.View}" onclick="document.getElementById('LegendaCompatibilidadeListForm:viewButton').click();" icon="ui-icon-search"/>
+                <p:menuitem value="#{myBundle.Edit}" onclick="document.getElementById('LegendaCompatibilidadeListForm:editButton').click();" icon="ui-icon-pencil"/>
+                <p:menuitem value="#{myBundle.Delete}" onclick="document.getElementById('LegendaCompatibilidadeListForm:deleteButton').click();" icon="ui-icon-trash"/>
+                <p:separator/>
+                <p:menuitem value="#{myBundle.LegendaCompatibilidadeMenuItem_produtoCollection}" icon="ui-icon-search"  action="#{legendaCompatibilidadeController.navigateProdutoCollection}" disabled="#{empty legendaCompatibilidadeController.selected.produtoCollection}" ajax="false"/>  
+                <p:menuitem value="#{myBundle.LegendaCompatibilidadeMenuItem_compatibilidadeCollection}" icon="ui-icon-search"  action="#{legendaCompatibilidadeController.navigateCompatibilidadeCollection}" disabled="#{empty legendaCompatibilidadeController.selected.compatibilidadeCollection}" ajax="false"/>  
+            </p:contextMenu>
+            <p:dataTable id="datalist"
+                         value="#{legendaCompatibilidadeController.items}"
+                         var="item"
+                         rowKey="#{item.idLegendaCompatibilidade}"
+                         paginator="true"
+                         rows="5"
+                         rowsPerPageTemplate="5,10,20,30,40,50"
+                         selectionMode="single"
+                         selection="#{legendaCompatibilidadeController.selected}">
+
+                <p:ajax event="rowSelect"   update=":LegendaCompatibilidadeListForm:createButton :LegendaCompatibilidadeListForm:viewButton :LegendaCompatibilidadeListForm:editButton :LegendaCompatibilidadeListForm:deleteButton :LegendaCompatibilidadeListForm:LegendaCompatibilidadeDataTableContextMenu" listener="#{legendaCompatibilidadeController.resetParents}"/>
+                <p:ajax event="rowUnselect" update=":LegendaCompatibilidadeListForm:createButton :LegendaCompatibilidadeListForm:viewButton :LegendaCompatibilidadeListForm:editButton :LegendaCompatibilidadeListForm:deleteButton :LegendaCompatibilidadeListForm:LegendaCompatibilidadeDataTableContextMenu" listener="#{legendaCompatibilidadeController.resetParents}"/>
+                <p:ajax event="rowDblselect" onsuccess="document.getElementById('LegendaCompatibilidadeListForm:viewButton').click();"/>
+
+                <p:column sortBy="#{item.idLegendaCompatibilidade}" filterBy="#{item.idLegendaCompatibilidade}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListLegendaCompatibilidadeTitle_idLegendaCompatibilidade}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.idLegendaCompatibilidade}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.legenda}" filterBy="#{item.legenda}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListLegendaCompatibilidadeTitle_legenda}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.legenda}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.especLegenda}" filterBy="#{item.especLegenda}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListLegendaCompatibilidadeTitle_especLegenda}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.especLegenda}"/>
+                </p:column>
+
+
+            </p:dataTable>
+
+            <p:commandButton id="createButton"                             icon="ui-icon-plus"   value="#{myBundle.Create}" actionListener="#{legendaCompatibilidadeController.prepareCreate}" update=":LegendaCompatibilidadeCreateForm" oncomplete="LegendaCompatibilidadeCreateDialog.show()"/>
+            <p:commandButton id="viewButton"   style="visibility: hidden;" icon="ui-icon-search" value="#{myBundle.View}" update=":LegendaCompatibilidadeViewForm" oncomplete="LegendaCompatibilidadeViewDialog.show()" disabled="#{empty legendaCompatibilidadeController.selected}"/>
+            <p:commandButton id="editButton"   style="visibility: hidden;" icon="ui-icon-pencil" value="#{myBundle.Edit}" update=":LegendaCompatibilidadeEditForm" oncomplete="LegendaCompatibilidadeEditDialog.show()" disabled="#{empty legendaCompatibilidadeController.selected}"/>
+            <p:commandButton id="deleteButton" style="visibility: hidden;" icon="ui-icon-trash"  value="#{myBundle.Delete}" actionListener="#{legendaCompatibilidadeController.delete}" update=":growl,datalist" disabled="#{empty legendaCompatibilidadeController.selected}">
+                <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmDeleteMessage}" icon="ui-icon-alert"/>
+            </p:commandButton>
+
+        </p:panel>
+        <ui:include src="/WEB-INF/include/confirmation.xhtml"/>
+    </h:form>
+
+</ui:composition>

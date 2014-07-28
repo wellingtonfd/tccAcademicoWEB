@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="TipoMaterialCreateDlg" widgetVar="TipoMaterialCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="#{myBundle.CreateTipoMaterialTitle}" closeOnEscape="true">
+
+            <h:form id="TipoMaterialCreateForm">
+
+                <h:panelGroup id="display" rendered="#{tipoMaterialController.selected != null}">
+                    <p:panelGrid columns="2" columnClasses="column">
+
+                        <p:outputLabel value="#{myBundle.CreateTipoMaterialLabel_nomeMaterial}" for="nomeMaterial" />
+                        <p:inputText id="nomeMaterial" value="#{tipoMaterialController.selected.nomeMaterial}" title="#{myBundle.CreateTipoMaterialTitle_nomeMaterial}" required="true" requiredMessage="#{myBundle.CreateTipoMaterialRequiredMessage_nomeMaterial}" size="45" maxlength="45"/>
+
+                        <p:outputLabel value="#{myBundle.CreateTipoMaterialLabel_especMaterial}" for="especMaterial" />
+                        <p:inputText id="especMaterial" value="#{tipoMaterialController.selected.especMaterial}" title="#{myBundle.CreateTipoMaterialTitle_especMaterial}" size="60" maxlength="60"/>
+
+                        <p:outputLabel value="#{myBundle.CreateTipoMaterialLabel_ptFulgor}" for="ptFulgor" />
+                        <p:inputText id="ptFulgor" value="#{tipoMaterialController.selected.ptFulgor}" title="#{myBundle.CreateTipoMaterialTitle_ptFulgor}" size="20" maxlength="20"/>
+
+                        <p:outputLabel value="#{myBundle.CreateTipoMaterialLabel_ptEbuliO}" for="ptEbuliO" />
+                        <p:inputText id="ptEbuliO" value="#{tipoMaterialController.selected.ptEbuliO}" title="#{myBundle.CreateTipoMaterialTitle_ptEbuliO}" required="true" requiredMessage="#{myBundle.CreateTipoMaterialRequiredMessage_ptEbuliO}" size="20" maxlength="20"/>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{tipoMaterialController.saveNew}" value="#{myBundle.Save}" update="display,:TipoMaterialListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,TipoMaterialCreateDialog);">
+                        <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmCreateMessage}" icon="ui-icon-alert"/>
+                    </p:commandButton>
+
+                    <p:commandButton value="#{myBundle.Cancel}" onclick="TipoMaterialCreateDialog.hide()"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

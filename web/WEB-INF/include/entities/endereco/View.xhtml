@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="EnderecoViewDlg" widgetVar="EnderecoViewDialog" modal="true" resizable="false"  appendTo="@(body)" header="#{myBundle.ViewEnderecoTitle}" closeOnEscape="true">
+
+            <h:form id="EnderecoViewForm">
+
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" columnClasses="column" rendered="#{enderecoController.selected != null}">
+
+                        <h:outputText value="#{myBundle.ViewEnderecoLabel_idEndereco}"/>
+                        <h:outputText value="#{enderecoController.selected.idEndereco}" title="#{myBundle.ViewEnderecoTitle_idEndereco}"/>
+
+                        <h:outputText value="#{myBundle.ViewEnderecoLabel_idLogradouro}"/>
+                        <h:outputText value="#{enderecoController.selected.idLogradouro}" title="#{myBundle.ViewEnderecoTitle_idLogradouro}"/>
+
+                        <h:outputText value="#{myBundle.ViewEnderecoLabel_estadoIdEstado}"/>
+                        <h:outputText value="#{enderecoController.selected.estadoIdEstado}" title="#{myBundle.ViewEnderecoTitle_estadoIdEstado}"/>
+
+                        <h:outputText value="#{myBundle.ViewEnderecoLabel_bairro}"/>
+                        <h:outputText value="#{enderecoController.selected.bairro}" title="#{myBundle.ViewEnderecoTitle_bairro}"/>
+
+                        <h:outputText value="#{myBundle.ViewEnderecoLabel_cep}"/>
+                        <h:outputText value="#{enderecoController.selected.cep}" title="#{myBundle.ViewEnderecoTitle_cep}"/>
+
+                        <h:outputText value="#{myBundle.ViewEnderecoLabel_numero}"/>
+                        <h:outputText value="#{enderecoController.selected.numero}" title="#{myBundle.ViewEnderecoTitle_numero}"/>
+
+                        <h:outputText value="#{myBundle.ViewEnderecoLabel_idPais}"/>
+                        <h:outputText value="#{enderecoController.selected.idPais.idPais}"/>
+
+                        <h:outputText value="#{myBundle.ViewEnderecoLabel_idEstado}"/>
+                        <h:outputText value="#{enderecoController.selected.idEstado.idEstado}"/>
+
+                        <h:outputText value="#{myBundle.ViewEnderecoLabel_idCidade}"/>
+                        <h:outputText value="#{enderecoController.selected.idCidade.idCidade}"/>
+                    </p:panelGrid>
+                    <p:commandButton value="#{myBundle.Close}" onclick="EnderecoViewDialog.hide()"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

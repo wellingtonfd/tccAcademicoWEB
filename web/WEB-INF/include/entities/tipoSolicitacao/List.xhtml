@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui">
+
+    <h:form id="TipoSolicitacaoListForm">
+
+        <p:panel header="#{myBundle.ListTipoSolicitacaoTitle}">
+            <p:contextMenu id="TipoSolicitacaoDataTableContextMenu" for="datalist">  
+                <p:menuitem value="#{myBundle.Create}" onclick="document.getElementById('TipoSolicitacaoListForm:createButton').click();" icon="ui-icon-plus"/>
+                <p:menuitem value="#{myBundle.View}" onclick="document.getElementById('TipoSolicitacaoListForm:viewButton').click();" icon="ui-icon-search"/>
+                <p:menuitem value="#{myBundle.Edit}" onclick="document.getElementById('TipoSolicitacaoListForm:editButton').click();" icon="ui-icon-pencil"/>
+                <p:menuitem value="#{myBundle.Delete}" onclick="document.getElementById('TipoSolicitacaoListForm:deleteButton').click();" icon="ui-icon-trash"/>
+                <p:separator/>
+                <p:menuitem value="#{myBundle.TipoSolicitacaoMenuItem_idFuncionario}" icon="ui-icon-search"  actionListener="#{tipoSolicitacaoController.prepareIdFuncionario}" update=":FuncionarioViewForm" oncomplete="FuncionarioViewDialog.show()" disabled="#{empty tipoSolicitacaoController.selected.idFuncionario}"/>  
+                <p:menuitem value="#{myBundle.TipoSolicitacaoMenuItem_fornecedorIdFornecedor}" icon="ui-icon-search"  actionListener="#{tipoSolicitacaoController.prepareFornecedorIdFornecedor}" update=":FornecedorViewForm" oncomplete="FornecedorViewDialog.show()" disabled="#{empty tipoSolicitacaoController.selected.fornecedorIdFornecedor}"/>  
+                <p:menuitem value="#{myBundle.TipoSolicitacaoMenuItem_idArmazem}" icon="ui-icon-search"  actionListener="#{tipoSolicitacaoController.prepareIdArmazem}" update=":ArmazemViewForm" oncomplete="ArmazemViewDialog.show()" disabled="#{empty tipoSolicitacaoController.selected.idArmazem}"/>  
+                <p:menuitem value="#{myBundle.TipoSolicitacaoMenuItem_movimentacaoCollection}" icon="ui-icon-search"  action="#{tipoSolicitacaoController.navigateMovimentacaoCollection}" disabled="#{empty tipoSolicitacaoController.selected.movimentacaoCollection}" ajax="false"/>  
+            </p:contextMenu>
+            <p:dataTable id="datalist"
+                         value="#{tipoSolicitacaoController.items}"
+                         var="item"
+                         rowKey="#{item.idTipoSolicitacao}"
+                         paginator="true"
+                         rows="5"
+                         rowsPerPageTemplate="5,10,20,30,40,50"
+                         selectionMode="single"
+                         selection="#{tipoSolicitacaoController.selected}">
+
+                <p:ajax event="rowSelect"   update=":TipoSolicitacaoListForm:createButton :TipoSolicitacaoListForm:viewButton :TipoSolicitacaoListForm:editButton :TipoSolicitacaoListForm:deleteButton :TipoSolicitacaoListForm:TipoSolicitacaoDataTableContextMenu" listener="#{tipoSolicitacaoController.resetParents}"/>
+                <p:ajax event="rowUnselect" update=":TipoSolicitacaoListForm:createButton :TipoSolicitacaoListForm:viewButton :TipoSolicitacaoListForm:editButton :TipoSolicitacaoListForm:deleteButton :TipoSolicitacaoListForm:TipoSolicitacaoDataTableContextMenu" listener="#{tipoSolicitacaoController.resetParents}"/>
+                <p:ajax event="rowDblselect" onsuccess="document.getElementById('TipoSolicitacaoListForm:viewButton').click();"/>
+
+                <p:column sortBy="#{item.idTipoSolicitacao}" filterBy="#{item.idTipoSolicitacao}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListTipoSolicitacaoTitle_idTipoSolicitacao}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.idTipoSolicitacao}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.tipoSolicitacao}" filterBy="#{item.tipoSolicitacao}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListTipoSolicitacaoTitle_tipoSolicitacao}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.tipoSolicitacao}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.especTipoSolicitacao}" filterBy="#{item.especTipoSolicitacao}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListTipoSolicitacaoTitle_especTipoSolicitacao}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.especTipoSolicitacao}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.idFornecedor}" filterBy="#{item.idFornecedor}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListTipoSolicitacaoTitle_idFornecedor}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.idFornecedor}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.solicitante}" filterBy="#{item.solicitante}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListTipoSolicitacaoTitle_solicitante}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.solicitante}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.idFuncionario.idFuncionario}" filterBy="#{item.idFuncionario.idFuncionario}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListTipoSolicitacaoTitle_idFuncionario}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.idFuncionario.idFuncionario}"/>
+                </p:column>
+
+                <!--
+                                    <p:column sortBy="#{item.fornecedorIdFornecedor.idFornecedor}" filterBy="#{item.fornecedorIdFornecedor.idFornecedor}">
+                                        <f:facet name="header">
+                                            <h:outputText value="#{myBundle.ListTipoSolicitacaoTitle_fornecedorIdFornecedor}"/>
+                                        </f:facet>
+                                        <h:outputText value="#{item.fornecedorIdFornecedor.idFornecedor}"/>
+                                    </p:column>
+                -->
+                <!--
+                                    <p:column sortBy="#{item.idArmazem.idArmazem}" filterBy="#{item.idArmazem.idArmazem}">
+                                        <f:facet name="header">
+                                            <h:outputText value="#{myBundle.ListTipoSolicitacaoTitle_idArmazem}"/>
+                                        </f:facet>
+                                        <h:outputText value="#{item.idArmazem.idArmazem}"/>
+                                    </p:column>
+                -->
+
+            </p:dataTable>
+
+            <p:commandButton id="createButton"                             icon="ui-icon-plus"   value="#{myBundle.Create}" actionListener="#{tipoSolicitacaoController.prepareCreate}" update=":TipoSolicitacaoCreateForm" oncomplete="TipoSolicitacaoCreateDialog.show()"/>
+            <p:commandButton id="viewButton"   style="visibility: hidden;" icon="ui-icon-search" value="#{myBundle.View}" update=":TipoSolicitacaoViewForm" oncomplete="TipoSolicitacaoViewDialog.show()" disabled="#{empty tipoSolicitacaoController.selected}"/>
+            <p:commandButton id="editButton"   style="visibility: hidden;" icon="ui-icon-pencil" value="#{myBundle.Edit}" update=":TipoSolicitacaoEditForm" oncomplete="TipoSolicitacaoEditDialog.show()" disabled="#{empty tipoSolicitacaoController.selected}"/>
+            <p:commandButton id="deleteButton" style="visibility: hidden;" icon="ui-icon-trash"  value="#{myBundle.Delete}" actionListener="#{tipoSolicitacaoController.delete}" update=":growl,datalist" disabled="#{empty tipoSolicitacaoController.selected}">
+                <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmDeleteMessage}" icon="ui-icon-alert"/>
+            </p:commandButton>
+
+        </p:panel>
+        <ui:include src="/WEB-INF/include/confirmation.xhtml"/>
+    </h:form>
+
+</ui:composition>

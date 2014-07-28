@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui">
+
+    <h:form id="DetNotaListForm">
+
+        <p:panel header="#{myBundle.ListDetNotaTitle}">
+            <p:contextMenu id="DetNotaDataTableContextMenu" for="datalist">  
+                <p:menuitem value="#{myBundle.Create}" onclick="document.getElementById('DetNotaListForm:createButton').click();" icon="ui-icon-plus"/>
+                <p:menuitem value="#{myBundle.View}" onclick="document.getElementById('DetNotaListForm:viewButton').click();" icon="ui-icon-search"/>
+                <p:menuitem value="#{myBundle.Edit}" onclick="document.getElementById('DetNotaListForm:editButton').click();" icon="ui-icon-pencil"/>
+                <p:menuitem value="#{myBundle.Delete}" onclick="document.getElementById('DetNotaListForm:deleteButton').click();" icon="ui-icon-trash"/>
+                <p:separator/>
+                <p:menuitem value="#{myBundle.DetNotaMenuItem_movimentacaoCollection}" icon="ui-icon-search"  action="#{detNotaController.navigateMovimentacaoCollection}" disabled="#{empty detNotaController.selected.movimentacaoCollection}" ajax="false"/>  
+                <p:menuitem value="#{myBundle.DetNotaMenuItem_tipoEquipamentoIdTipoEquipamento}" icon="ui-icon-search"  actionListener="#{detNotaController.prepareTipoEquipamentoIdTipoEquipamento}" update=":TipoEquipamentoViewForm" oncomplete="TipoEquipamentoViewDialog.show()" disabled="#{empty detNotaController.selected.tipoEquipamentoIdTipoEquipamento}"/>  
+                <p:menuitem value="#{myBundle.DetNotaMenuItem_idProduto}" icon="ui-icon-search"  actionListener="#{detNotaController.prepareIdProduto}" update=":ProdutoViewForm" oncomplete="ProdutoViewDialog.show()" disabled="#{empty detNotaController.selected.idProduto}"/>  
+                <p:menuitem value="#{myBundle.DetNotaMenuItem_fornecedorIdFornecedor}" icon="ui-icon-search"  actionListener="#{detNotaController.prepareFornecedorIdFornecedor}" update=":FornecedorViewForm" oncomplete="FornecedorViewDialog.show()" disabled="#{empty detNotaController.selected.fornecedorIdFornecedor}"/>  
+            </p:contextMenu>
+            <p:dataTable id="datalist"
+                         value="#{detNotaController.items}"
+                         var="item"
+                         rowKey="#{item.idDetalheNota}"
+                         paginator="true"
+                         rows="5"
+                         rowsPerPageTemplate="5,10,20,30,40,50"
+                         selectionMode="single"
+                         selection="#{detNotaController.selected}">
+
+                <p:ajax event="rowSelect"   update=":DetNotaListForm:createButton :DetNotaListForm:viewButton :DetNotaListForm:editButton :DetNotaListForm:deleteButton :DetNotaListForm:DetNotaDataTableContextMenu" listener="#{detNotaController.resetParents}"/>
+                <p:ajax event="rowUnselect" update=":DetNotaListForm:createButton :DetNotaListForm:viewButton :DetNotaListForm:editButton :DetNotaListForm:deleteButton :DetNotaListForm:DetNotaDataTableContextMenu" listener="#{detNotaController.resetParents}"/>
+                <p:ajax event="rowDblselect" onsuccess="document.getElementById('DetNotaListForm:viewButton').click();"/>
+
+                <p:column sortBy="#{item.idDetalheNota}" filterBy="#{item.idDetalheNota}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListDetNotaTitle_idDetalheNota}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.idDetalheNota}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.numNota}" filterBy="#{item.numNota}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListDetNotaTitle_numNota}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.numNota}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.dtPedido}" filterBy="#{item.dtPedido}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListDetNotaTitle_dtPedido}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.dtPedido}">
+                        <f:convertDateTime pattern="MM/dd/yyyy" />
+                    </h:outputText>
+                </p:column>
+
+
+                <p:column sortBy="#{item.valorTotal}" filterBy="#{item.valorTotal}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListDetNotaTitle_valorTotal}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.valorTotal}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.idFornecedor}" filterBy="#{item.idFornecedor}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListDetNotaTitle_idFornecedor}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.idFornecedor}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.idTipoEquipamento}" filterBy="#{item.idTipoEquipamento}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListDetNotaTitle_idTipoEquipamento}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.idTipoEquipamento}"/>
+                </p:column>
+
+                <!--
+                                    <p:column sortBy="#{item.valorUnitario}" filterBy="#{item.valorUnitario}">
+                                        <f:facet name="header">
+                                            <h:outputText value="#{myBundle.ListDetNotaTitle_valorUnitario}"/>
+                                        </f:facet>
+                                        <h:outputText value="#{item.valorUnitario}"/>
+                                    </p:column>
+                -->
+                <!--
+                                    <p:column sortBy="#{item.tipoEquipamentoIdTipoEquipamento.idTipoEquipamento}" filterBy="#{item.tipoEquipamentoIdTipoEquipamento.idTipoEquipamento}">
+                                        <f:facet name="header">
+                                            <h:outputText value="#{myBundle.ListDetNotaTitle_tipoEquipamentoIdTipoEquipamento}"/>
+                                        </f:facet>
+                                        <h:outputText value="#{item.tipoEquipamentoIdTipoEquipamento.idTipoEquipamento}"/>
+                                    </p:column>
+                -->
+                <!--
+                                    <p:column sortBy="#{item.idProduto.idProduto}" filterBy="#{item.idProduto.idProduto}">
+                                        <f:facet name="header">
+                                            <h:outputText value="#{myBundle.ListDetNotaTitle_idProduto}"/>
+                                        </f:facet>
+                                        <h:outputText value="#{item.idProduto.idProduto}"/>
+                                    </p:column>
+                -->
+                <!--
+                                    <p:column sortBy="#{item.fornecedorIdFornecedor.idFornecedor}" filterBy="#{item.fornecedorIdFornecedor.idFornecedor}">
+                                        <f:facet name="header">
+                                            <h:outputText value="#{myBundle.ListDetNotaTitle_fornecedorIdFornecedor}"/>
+                                        </f:facet>
+                                        <h:outputText value="#{item.fornecedorIdFornecedor.idFornecedor}"/>
+                                    </p:column>
+                -->
+
+            </p:dataTable>
+
+            <p:commandButton id="createButton"                             icon="ui-icon-plus"   value="#{myBundle.Create}" actionListener="#{detNotaController.prepareCreate}" update=":DetNotaCreateForm" oncomplete="DetNotaCreateDialog.show()"/>
+            <p:commandButton id="viewButton"   style="visibility: hidden;" icon="ui-icon-search" value="#{myBundle.View}" update=":DetNotaViewForm" oncomplete="DetNotaViewDialog.show()" disabled="#{empty detNotaController.selected}"/>
+            <p:commandButton id="editButton"   style="visibility: hidden;" icon="ui-icon-pencil" value="#{myBundle.Edit}" update=":DetNotaEditForm" oncomplete="DetNotaEditDialog.show()" disabled="#{empty detNotaController.selected}"/>
+            <p:commandButton id="deleteButton" style="visibility: hidden;" icon="ui-icon-trash"  value="#{myBundle.Delete}" actionListener="#{detNotaController.delete}" update=":growl,datalist" disabled="#{empty detNotaController.selected}">
+                <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmDeleteMessage}" icon="ui-icon-alert"/>
+            </p:commandButton>
+
+        </p:panel>
+        <ui:include src="/WEB-INF/include/confirmation.xhtml"/>
+    </h:form>
+
+</ui:composition>

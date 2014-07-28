@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="UsuarioViewDlg" widgetVar="UsuarioViewDialog" modal="true" resizable="false"  appendTo="@(body)" header="#{myBundle.ViewUsuarioTitle}" closeOnEscape="true">
+
+            <h:form id="UsuarioViewForm">
+
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" columnClasses="column" rendered="#{usuarioController.selected != null}">
+
+                        <h:outputText value="#{myBundle.ViewUsuarioLabel_idUsuario}"/>
+                        <h:outputText value="#{usuarioController.selected.idUsuario}" title="#{myBundle.ViewUsuarioTitle_idUsuario}"/>
+
+                        <h:outputText value="#{myBundle.ViewUsuarioLabel_login}"/>
+                        <h:outputText value="#{usuarioController.selected.login}" title="#{myBundle.ViewUsuarioTitle_login}"/>
+
+                        <h:outputText value="#{myBundle.ViewUsuarioLabel_senha}"/>
+                        <h:outputText value="#{usuarioController.selected.senha}" title="#{myBundle.ViewUsuarioTitle_senha}"/>
+
+                        <h:outputText value="#{myBundle.ViewUsuarioLabel_idRoler}"/>
+                        <h:outputText value="#{usuarioController.selected.idRoler.idRoler}"/>
+                    </p:panelGrid>
+                    <p:commandButton value="#{myBundle.Close}" onclick="UsuarioViewDialog.hide()"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

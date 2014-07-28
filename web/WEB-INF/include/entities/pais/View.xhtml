@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="PaisViewDlg" widgetVar="PaisViewDialog" modal="true" resizable="false"  appendTo="@(body)" header="#{myBundle.ViewPaisTitle}" closeOnEscape="true">
+
+            <h:form id="PaisViewForm">
+
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" columnClasses="column" rendered="#{paisController.selected != null}">
+
+                        <h:outputText value="#{myBundle.ViewPaisLabel_idPais}"/>
+                        <h:outputText value="#{paisController.selected.idPais}" title="#{myBundle.ViewPaisTitle_idPais}"/>
+
+                        <h:outputText value="#{myBundle.ViewPaisLabel_nomePais}"/>
+                        <h:outputText value="#{paisController.selected.nomePais}" title="#{myBundle.ViewPaisTitle_nomePais}"/>
+
+                        <h:outputText value="#{myBundle.ViewPaisLabel_siglapais}"/>
+                        <h:outputText value="#{paisController.selected.siglapais}" title="#{myBundle.ViewPaisTitle_siglapais}"/>
+                    </p:panelGrid>
+                    <p:commandButton value="#{myBundle.Close}" onclick="PaisViewDialog.hide()"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

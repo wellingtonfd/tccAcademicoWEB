@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="CombustivelCreateDlg" widgetVar="CombustivelCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="#{myBundle.CreateCombustivelTitle}" closeOnEscape="true">
+
+            <h:form id="CombustivelCreateForm">
+
+                <h:panelGroup id="display" rendered="#{combustivelController.selected != null}">
+                    <p:panelGrid columns="2" columnClasses="column">
+
+                        <p:outputLabel value="#{myBundle.CreateCombustivelLabel_nomeCombustivel}" for="nomeCombustivel" />
+                        <p:inputText id="nomeCombustivel" value="#{combustivelController.selected.nomeCombustivel}" title="#{myBundle.CreateCombustivelTitle_nomeCombustivel}" required="true" requiredMessage="#{myBundle.CreateCombustivelRequiredMessage_nomeCombustivel}" size="35" maxlength="35"/>
+
+                        <p:outputLabel value="#{myBundle.CreateCombustivelLabel_especCombustivel}" for="especCombustivel" />
+                        <p:inputText id="especCombustivel" value="#{combustivelController.selected.especCombustivel}" title="#{myBundle.CreateCombustivelTitle_especCombustivel}" size="45" maxlength="45"/>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{combustivelController.saveNew}" value="#{myBundle.Save}" update="display,:CombustivelListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,CombustivelCreateDialog);">
+                        <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmCreateMessage}" icon="ui-icon-alert"/>
+                    </p:commandButton>
+
+                    <p:commandButton value="#{myBundle.Cancel}" onclick="CombustivelCreateDialog.hide()"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

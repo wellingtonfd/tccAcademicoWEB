@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="VeiculoCreateDlg" widgetVar="VeiculoCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="#{myBundle.CreateVeiculoTitle}" closeOnEscape="true">
+
+            <h:form id="VeiculoCreateForm">
+
+                <h:panelGroup id="display" rendered="#{veiculoController.selected != null}">
+                    <p:panelGrid columns="2" columnClasses="column">
+
+                        <p:outputLabel value="#{myBundle.CreateVeiculoLabel_nomeVeiculo}" for="nomeVeiculo" />
+                        <p:inputText id="nomeVeiculo" value="#{veiculoController.selected.nomeVeiculo}" title="#{myBundle.CreateVeiculoTitle_nomeVeiculo}" required="true" requiredMessage="#{myBundle.CreateVeiculoRequiredMessage_nomeVeiculo}" size="50" maxlength="50"/>
+
+                        <p:outputLabel value="#{myBundle.CreateVeiculoLabel_modeloVeiculo}" for="modeloVeiculo" />
+                        <p:inputText id="modeloVeiculo" value="#{veiculoController.selected.modeloVeiculo}" title="#{myBundle.CreateVeiculoTitle_modeloVeiculo}" required="true" requiredMessage="#{myBundle.CreateVeiculoRequiredMessage_modeloVeiculo}" size="45" maxlength="45"/>
+
+                        <p:outputLabel value="#{myBundle.CreateVeiculoLabel_fabricanteVeiculo}" for="fabricanteVeiculo" />
+                        <p:inputText id="fabricanteVeiculo" value="#{veiculoController.selected.fabricanteVeiculo}" title="#{myBundle.CreateVeiculoTitle_fabricanteVeiculo}" required="true" requiredMessage="#{myBundle.CreateVeiculoRequiredMessage_fabricanteVeiculo}" size="50" maxlength="50"/>
+
+                        <p:outputLabel value="#{myBundle.CreateVeiculoLabel_placaVeiculo}" for="placaVeiculo" />
+                        <p:inputText id="placaVeiculo" value="#{veiculoController.selected.placaVeiculo}" title="#{myBundle.CreateVeiculoTitle_placaVeiculo}" required="true" requiredMessage="#{myBundle.CreateVeiculoRequiredMessage_placaVeiculo}" size="10" maxlength="10"/>
+
+                        <p:outputLabel value="#{myBundle.CreateVeiculoLabel_corVeiculo}" for="corVeiculo" />
+                        <p:inputText id="corVeiculo" value="#{veiculoController.selected.corVeiculo}" title="#{myBundle.CreateVeiculoTitle_corVeiculo}" required="true" requiredMessage="#{myBundle.CreateVeiculoRequiredMessage_corVeiculo}" size="30" maxlength="30"/>
+
+                        <p:outputLabel value="#{myBundle.CreateVeiculoLabel_anoVeiculo}" for="anoVeiculo" />
+                        <p:inputText id="anoVeiculo" value="#{veiculoController.selected.anoVeiculo}" title="#{myBundle.CreateVeiculoTitle_anoVeiculo}" required="true" requiredMessage="#{myBundle.CreateVeiculoRequiredMessage_anoVeiculo}" size="30" maxlength="30"/>
+
+                        <p:outputLabel value="#{myBundle.CreateVeiculoLabel_chassiVeiculo}" for="chassiVeiculo" />
+                        <p:inputText id="chassiVeiculo" value="#{veiculoController.selected.chassiVeiculo}" title="#{myBundle.CreateVeiculoTitle_chassiVeiculo}" required="true" requiredMessage="#{myBundle.CreateVeiculoRequiredMessage_chassiVeiculo}" size="25" maxlength="25"/>
+
+                        <p:outputLabel value="#{myBundle.CreateVeiculoLabel_idCombustivel}" for="idCombustivel" />
+                        <p:selectOneMenu id="idCombustivel" value="#{veiculoController.selected.idCombustivel}" required="true" requiredMessage="#{myBundle.CreateVeiculoRequiredMessage_idCombustivel}" converter="combustivelConverter">
+                            <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
+                            <f:selectItems value="#{combustivelController.items}"
+                                           var="idCombustivelItem"
+                                           itemValue="#{idCombustivelItem}"
+                                           itemLabel="#{idCombustivelItem.idCombustivel.toString()}"
+                                           />
+
+                        </p:selectOneMenu>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{veiculoController.saveNew}" value="#{myBundle.Save}" update="display,:VeiculoListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,VeiculoCreateDialog);">
+                        <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmCreateMessage}" icon="ui-icon-alert"/>
+                    </p:commandButton>
+
+                    <p:commandButton value="#{myBundle.Cancel}" onclick="VeiculoCreateDialog.hide()"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

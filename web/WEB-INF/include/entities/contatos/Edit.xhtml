@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+        <p:dialog id="ContatosEditDlg" widgetVar="ContatosEditDialog" modal="true" resizable="false"  appendTo="@(body)" header="#{myBundle.EditContatosTitle}" closeOnEscape="true">
+
+            <h:form id="ContatosEditForm">
+
+                <h:panelGroup id="display">
+                    <p:panelGrid  columns="2" columnClasses="column" rendered="#{contatosController.selected != null}">
+
+
+                        <h:outputLabel value="#{myBundle.EditContatosLabel_idContato}" for="idContato" />
+                        <h:outputText id="idContato" value="#{contatosController.selected.idContato}" />
+
+                        <p:outputLabel value="#{myBundle.EditContatosLabel_tel}" for="tel" />
+                        <p:inputText id="tel" value="#{contatosController.selected.tel}" title="#{myBundle.EditContatosTitle_tel}" required="true" requiredMessage="#{myBundle.EditContatosRequiredMessage_tel}" size="15" maxlength="15"/>
+
+                        <p:outputLabel value="#{myBundle.EditContatosLabel_email}" for="email" />
+                        <p:inputText id="email" value="#{contatosController.selected.email}" title="#{myBundle.EditContatosTitle_email}" required="true" requiredMessage="#{myBundle.EditContatosRequiredMessage_email}" size="40" maxlength="40"/>
+
+                        <p:outputLabel value="#{myBundle.EditContatosLabel_celular}" for="celular" />
+                        <p:inputText id="celular" value="#{contatosController.selected.celular}" title="#{myBundle.EditContatosTitle_celular}" required="true" requiredMessage="#{myBundle.EditContatosRequiredMessage_celular}" size="15" maxlength="15"/>
+
+                        <p:outputLabel value="#{myBundle.EditContatosLabel_site}" for="site" />
+                        <p:inputText id="site" value="#{contatosController.selected.site}" title="#{myBundle.EditContatosTitle_site}" required="true" requiredMessage="#{myBundle.EditContatosRequiredMessage_site}" size="70" maxlength="70"/>
+
+                        <p:outputLabel value="#{myBundle.EditContatosLabel_radio}" for="radio" />
+                        <p:inputText id="radio" value="#{contatosController.selected.radio}" title="#{myBundle.EditContatosTitle_radio}" required="true" requiredMessage="#{myBundle.EditContatosRequiredMessage_radio}" size="20" maxlength="20"/>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{contatosController.save}" value="#{myBundle.Save}" update="display,:ContatosListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,ContatosEditDialog);">
+                        <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmEditMessage}" icon="ui-icon-alert"/>
+                    </p:commandButton>
+                    <p:commandButton value="#{myBundle.Cancel}" onclick="ContatosEditDialog.hide()"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

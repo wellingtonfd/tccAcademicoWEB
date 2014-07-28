@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="GrupoEmbalagemCreateDlg" widgetVar="GrupoEmbalagemCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="#{myBundle.CreateGrupoEmbalagemTitle}" closeOnEscape="true">
+
+            <h:form id="GrupoEmbalagemCreateForm">
+
+                <h:panelGroup id="display" rendered="#{grupoEmbalagemController.selected != null}">
+                    <p:panelGrid columns="2" columnClasses="column">
+
+                        <p:outputLabel value="#{myBundle.CreateGrupoEmbalagemLabel_nomeGrupoEmbalagem}" for="nomeGrupoEmbalagem" />
+                        <p:inputText id="nomeGrupoEmbalagem" value="#{grupoEmbalagemController.selected.nomeGrupoEmbalagem}" title="#{myBundle.CreateGrupoEmbalagemTitle_nomeGrupoEmbalagem}" size="40" maxlength="40"/>
+
+                        <p:outputLabel value="#{myBundle.CreateGrupoEmbalagemLabel_especGrupoEmbalagem}" for="especGrupoEmbalagem" />
+                        <p:inputText id="especGrupoEmbalagem" value="#{grupoEmbalagemController.selected.especGrupoEmbalagem}" title="#{myBundle.CreateGrupoEmbalagemTitle_especGrupoEmbalagem}" required="true" requiredMessage="#{myBundle.CreateGrupoEmbalagemRequiredMessage_especGrupoEmbalagem}" size="60" maxlength="60"/>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{grupoEmbalagemController.saveNew}" value="#{myBundle.Save}" update="display,:GrupoEmbalagemListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,GrupoEmbalagemCreateDialog);">
+                        <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmCreateMessage}" icon="ui-icon-alert"/>
+                    </p:commandButton>
+
+                    <p:commandButton value="#{myBundle.Cancel}" onclick="GrupoEmbalagemCreateDialog.hide()"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

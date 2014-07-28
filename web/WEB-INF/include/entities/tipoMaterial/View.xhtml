@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="TipoMaterialViewDlg" widgetVar="TipoMaterialViewDialog" modal="true" resizable="false"  appendTo="@(body)" header="#{myBundle.ViewTipoMaterialTitle}" closeOnEscape="true">
+
+            <h:form id="TipoMaterialViewForm">
+
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" columnClasses="column" rendered="#{tipoMaterialController.selected != null}">
+
+                        <h:outputText value="#{myBundle.ViewTipoMaterialLabel_idMaterial}"/>
+                        <h:outputText value="#{tipoMaterialController.selected.idMaterial}" title="#{myBundle.ViewTipoMaterialTitle_idMaterial}"/>
+
+                        <h:outputText value="#{myBundle.ViewTipoMaterialLabel_nomeMaterial}"/>
+                        <h:outputText value="#{tipoMaterialController.selected.nomeMaterial}" title="#{myBundle.ViewTipoMaterialTitle_nomeMaterial}"/>
+
+                        <h:outputText value="#{myBundle.ViewTipoMaterialLabel_especMaterial}"/>
+                        <h:outputText value="#{tipoMaterialController.selected.especMaterial}" title="#{myBundle.ViewTipoMaterialTitle_especMaterial}"/>
+
+                        <h:outputText value="#{myBundle.ViewTipoMaterialLabel_ptFulgor}"/>
+                        <h:outputText value="#{tipoMaterialController.selected.ptFulgor}" title="#{myBundle.ViewTipoMaterialTitle_ptFulgor}"/>
+
+                        <h:outputText value="#{myBundle.ViewTipoMaterialLabel_ptEbuliO}"/>
+                        <h:outputText value="#{tipoMaterialController.selected.ptEbuliO}" title="#{myBundle.ViewTipoMaterialTitle_ptEbuliO}"/>
+                    </p:panelGrid>
+                    <p:commandButton value="#{myBundle.Close}" onclick="TipoMaterialViewDialog.hide()"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+        <p:dialog id="LocalOperacaoEditDlg" widgetVar="LocalOperacaoEditDialog" modal="true" resizable="false"  appendTo="@(body)" header="#{myBundle.EditLocalOperacaoTitle}" closeOnEscape="true">
+
+            <h:form id="LocalOperacaoEditForm">
+
+                <h:panelGroup id="display">
+                    <p:panelGrid  columns="2" columnClasses="column" rendered="#{localOperacaoController.selected != null}">
+
+
+                        <h:outputLabel value="#{myBundle.EditLocalOperacaoLabel_idLocalOper}" for="idLocalOper" />
+                        <h:outputText id="idLocalOper" value="#{localOperacaoController.selected.idLocalOper}" />
+
+                        <p:outputLabel value="#{myBundle.EditLocalOperacaoLabel_descLocalOper}" for="descLocalOper" />
+                        <p:inputText id="descLocalOper" value="#{localOperacaoController.selected.descLocalOper}" title="#{myBundle.EditLocalOperacaoTitle_descLocalOper}" size="45" maxlength="45"/>
+
+                        <p:outputLabel value="#{myBundle.EditLocalOperacaoLabel_localOper}" for="localOper" />
+                        <p:inputText id="localOper" value="#{localOperacaoController.selected.localOper}" title="#{myBundle.EditLocalOperacaoTitle_localOper}" required="true" requiredMessage="#{myBundle.EditLocalOperacaoRequiredMessage_localOper}" size="45" maxlength="45"/>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{localOperacaoController.save}" value="#{myBundle.Save}" update="display,:LocalOperacaoListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,LocalOperacaoEditDialog);">
+                        <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmEditMessage}" icon="ui-icon-alert"/>
+                    </p:commandButton>
+                    <p:commandButton value="#{myBundle.Cancel}" onclick="LocalOperacaoEditDialog.hide()"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

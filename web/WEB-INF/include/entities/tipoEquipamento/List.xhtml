@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui">
+
+    <h:form id="TipoEquipamentoListForm">
+
+        <p:panel header="#{myBundle.ListTipoEquipamentoTitle}">
+            <p:contextMenu id="TipoEquipamentoDataTableContextMenu" for="datalist">  
+                <p:menuitem value="#{myBundle.Create}" onclick="document.getElementById('TipoEquipamentoListForm:createButton').click();" icon="ui-icon-plus"/>
+                <p:menuitem value="#{myBundle.View}" onclick="document.getElementById('TipoEquipamentoListForm:viewButton').click();" icon="ui-icon-search"/>
+                <p:menuitem value="#{myBundle.Edit}" onclick="document.getElementById('TipoEquipamentoListForm:editButton').click();" icon="ui-icon-pencil"/>
+                <p:menuitem value="#{myBundle.Delete}" onclick="document.getElementById('TipoEquipamentoListForm:deleteButton').click();" icon="ui-icon-trash"/>
+                <p:separator/>
+                <p:menuitem value="#{myBundle.TipoEquipamentoMenuItem_movimentacaoCollection}" icon="ui-icon-search"  action="#{tipoEquipamentoController.navigateMovimentacaoCollection}" disabled="#{empty tipoEquipamentoController.selected.movimentacaoCollection}" ajax="false"/>  
+                <p:menuitem value="#{myBundle.TipoEquipamentoMenuItem_idVeiculo}" icon="ui-icon-search"  actionListener="#{tipoEquipamentoController.prepareIdVeiculo}" update=":VeiculoViewForm" oncomplete="VeiculoViewDialog.show()" disabled="#{empty tipoEquipamentoController.selected.idVeiculo}"/>  
+                <p:menuitem value="#{myBundle.TipoEquipamentoMenuItem_idEpi}" icon="ui-icon-search"  actionListener="#{tipoEquipamentoController.prepareIdEpi}" update=":EpiViewForm" oncomplete="EpiViewDialog.show()" disabled="#{empty tipoEquipamentoController.selected.idEpi}"/>  
+                <p:menuitem value="#{myBundle.TipoEquipamentoMenuItem_epeIdEpe}" icon="ui-icon-search"  actionListener="#{tipoEquipamentoController.prepareEpeIdEpe}" update=":EpeViewForm" oncomplete="EpeViewDialog.show()" disabled="#{empty tipoEquipamentoController.selected.epeIdEpe}"/>  
+                <p:menuitem value="#{myBundle.TipoEquipamentoMenuItem_detNotaCollection}" icon="ui-icon-search"  action="#{tipoEquipamentoController.navigateDetNotaCollection}" disabled="#{empty tipoEquipamentoController.selected.detNotaCollection}" ajax="false"/>  
+            </p:contextMenu>
+            <p:dataTable id="datalist"
+                         value="#{tipoEquipamentoController.items}"
+                         var="item"
+                         rowKey="#{item.idTipoEquipamento}"
+                         paginator="true"
+                         rows="5"
+                         rowsPerPageTemplate="5,10,20,30,40,50"
+                         selectionMode="single"
+                         selection="#{tipoEquipamentoController.selected}">
+
+                <p:ajax event="rowSelect"   update=":TipoEquipamentoListForm:createButton :TipoEquipamentoListForm:viewButton :TipoEquipamentoListForm:editButton :TipoEquipamentoListForm:deleteButton :TipoEquipamentoListForm:TipoEquipamentoDataTableContextMenu" listener="#{tipoEquipamentoController.resetParents}"/>
+                <p:ajax event="rowUnselect" update=":TipoEquipamentoListForm:createButton :TipoEquipamentoListForm:viewButton :TipoEquipamentoListForm:editButton :TipoEquipamentoListForm:deleteButton :TipoEquipamentoListForm:TipoEquipamentoDataTableContextMenu" listener="#{tipoEquipamentoController.resetParents}"/>
+                <p:ajax event="rowDblselect" onsuccess="document.getElementById('TipoEquipamentoListForm:viewButton').click();"/>
+
+                <p:column sortBy="#{item.idTipoEquipamento}" filterBy="#{item.idTipoEquipamento}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListTipoEquipamentoTitle_idTipoEquipamento}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.idTipoEquipamento}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.nomeTipoEquipamento}" filterBy="#{item.nomeTipoEquipamento}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListTipoEquipamentoTitle_nomeTipoEquipamento}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.nomeTipoEquipamento}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.espcTipoEquipamento}" filterBy="#{item.espcTipoEquipamento}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListTipoEquipamentoTitle_espcTipoEquipamento}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.espcTipoEquipamento}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.idEpe}" filterBy="#{item.idEpe}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListTipoEquipamentoTitle_idEpe}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.idEpe}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.idEmbalagem}" filterBy="#{item.idEmbalagem}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListTipoEquipamentoTitle_idEmbalagem}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.idEmbalagem}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.idVeiculo.idVeiculo}" filterBy="#{item.idVeiculo.idVeiculo}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListTipoEquipamentoTitle_idVeiculo}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.idVeiculo.idVeiculo}"/>
+                </p:column>
+
+                <!--
+                                    <p:column sortBy="#{item.idEpi.idEpi}" filterBy="#{item.idEpi.idEpi}">
+                                        <f:facet name="header">
+                                            <h:outputText value="#{myBundle.ListTipoEquipamentoTitle_idEpi}"/>
+                                        </f:facet>
+                                        <h:outputText value="#{item.idEpi.idEpi}"/>
+                                    </p:column>
+                -->
+                <!--
+                                    <p:column sortBy="#{item.epeIdEpe.idEpe}" filterBy="#{item.epeIdEpe.idEpe}">
+                                        <f:facet name="header">
+                                            <h:outputText value="#{myBundle.ListTipoEquipamentoTitle_epeIdEpe}"/>
+                                        </f:facet>
+                                        <h:outputText value="#{item.epeIdEpe.idEpe}"/>
+                                    </p:column>
+                -->
+
+            </p:dataTable>
+
+            <p:commandButton id="createButton"                             icon="ui-icon-plus"   value="#{myBundle.Create}" actionListener="#{tipoEquipamentoController.prepareCreate}" update=":TipoEquipamentoCreateForm" oncomplete="TipoEquipamentoCreateDialog.show()"/>
+            <p:commandButton id="viewButton"   style="visibility: hidden;" icon="ui-icon-search" value="#{myBundle.View}" update=":TipoEquipamentoViewForm" oncomplete="TipoEquipamentoViewDialog.show()" disabled="#{empty tipoEquipamentoController.selected}"/>
+            <p:commandButton id="editButton"   style="visibility: hidden;" icon="ui-icon-pencil" value="#{myBundle.Edit}" update=":TipoEquipamentoEditForm" oncomplete="TipoEquipamentoEditDialog.show()" disabled="#{empty tipoEquipamentoController.selected}"/>
+            <p:commandButton id="deleteButton" style="visibility: hidden;" icon="ui-icon-trash"  value="#{myBundle.Delete}" actionListener="#{tipoEquipamentoController.delete}" update=":growl,datalist" disabled="#{empty tipoEquipamentoController.selected}">
+                <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmDeleteMessage}" icon="ui-icon-alert"/>
+            </p:commandButton>
+
+        </p:panel>
+        <ui:include src="/WEB-INF/include/confirmation.xhtml"/>
+    </h:form>
+
+</ui:composition>

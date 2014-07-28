@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="StatusArmazemViewDlg" widgetVar="StatusArmazemViewDialog" modal="true" resizable="false"  appendTo="@(body)" header="#{myBundle.ViewStatusArmazemTitle}" closeOnEscape="true">
+
+            <h:form id="StatusArmazemViewForm">
+
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" columnClasses="column" rendered="#{statusArmazemController.selected != null}">
+
+                        <h:outputText value="#{myBundle.ViewStatusArmazemLabel_idStatusArmazem}"/>
+                        <h:outputText value="#{statusArmazemController.selected.idStatusArmazem}" title="#{myBundle.ViewStatusArmazemTitle_idStatusArmazem}"/>
+
+                        <h:outputText value="#{myBundle.ViewStatusArmazemLabel_tipoStatusArmazem}"/>
+                        <h:outputText value="#{statusArmazemController.selected.tipoStatusArmazem}" title="#{myBundle.ViewStatusArmazemTitle_tipoStatusArmazem}"/>
+
+                        <h:outputText value="#{myBundle.ViewStatusArmazemLabel_especStatusArmazem}"/>
+                        <h:outputText value="#{statusArmazemController.selected.especStatusArmazem}" title="#{myBundle.ViewStatusArmazemTitle_especStatusArmazem}"/>
+                    </p:panelGrid>
+                    <p:commandButton value="#{myBundle.Close}" onclick="StatusArmazemViewDialog.hide()"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

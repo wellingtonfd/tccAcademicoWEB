@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="LocalOperacaoViewDlg" widgetVar="LocalOperacaoViewDialog" modal="true" resizable="false"  appendTo="@(body)" header="#{myBundle.ViewLocalOperacaoTitle}" closeOnEscape="true">
+
+            <h:form id="LocalOperacaoViewForm">
+
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" columnClasses="column" rendered="#{localOperacaoController.selected != null}">
+
+                        <h:outputText value="#{myBundle.ViewLocalOperacaoLabel_idLocalOper}"/>
+                        <h:outputText value="#{localOperacaoController.selected.idLocalOper}" title="#{myBundle.ViewLocalOperacaoTitle_idLocalOper}"/>
+
+                        <h:outputText value="#{myBundle.ViewLocalOperacaoLabel_descLocalOper}"/>
+                        <h:outputText value="#{localOperacaoController.selected.descLocalOper}" title="#{myBundle.ViewLocalOperacaoTitle_descLocalOper}"/>
+
+                        <h:outputText value="#{myBundle.ViewLocalOperacaoLabel_localOper}"/>
+                        <h:outputText value="#{localOperacaoController.selected.localOper}" title="#{myBundle.ViewLocalOperacaoTitle_localOper}"/>
+                    </p:panelGrid>
+                    <p:commandButton value="#{myBundle.Close}" onclick="LocalOperacaoViewDialog.hide()"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

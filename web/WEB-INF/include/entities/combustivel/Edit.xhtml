@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+        <p:dialog id="CombustivelEditDlg" widgetVar="CombustivelEditDialog" modal="true" resizable="false"  appendTo="@(body)" header="#{myBundle.EditCombustivelTitle}" closeOnEscape="true">
+
+            <h:form id="CombustivelEditForm">
+
+                <h:panelGroup id="display">
+                    <p:panelGrid  columns="2" columnClasses="column" rendered="#{combustivelController.selected != null}">
+
+
+                        <h:outputLabel value="#{myBundle.EditCombustivelLabel_idCombustivel}" for="idCombustivel" />
+                        <h:outputText id="idCombustivel" value="#{combustivelController.selected.idCombustivel}" />
+
+                        <p:outputLabel value="#{myBundle.EditCombustivelLabel_nomeCombustivel}" for="nomeCombustivel" />
+                        <p:inputText id="nomeCombustivel" value="#{combustivelController.selected.nomeCombustivel}" title="#{myBundle.EditCombustivelTitle_nomeCombustivel}" required="true" requiredMessage="#{myBundle.EditCombustivelRequiredMessage_nomeCombustivel}" size="35" maxlength="35"/>
+
+                        <p:outputLabel value="#{myBundle.EditCombustivelLabel_especCombustivel}" for="especCombustivel" />
+                        <p:inputText id="especCombustivel" value="#{combustivelController.selected.especCombustivel}" title="#{myBundle.EditCombustivelTitle_especCombustivel}" size="45" maxlength="45"/>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{combustivelController.save}" value="#{myBundle.Save}" update="display,:CombustivelListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,CombustivelEditDialog);">
+                        <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmEditMessage}" icon="ui-icon-alert"/>
+                    </p:commandButton>
+                    <p:commandButton value="#{myBundle.Cancel}" onclick="CombustivelEditDialog.hide()"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

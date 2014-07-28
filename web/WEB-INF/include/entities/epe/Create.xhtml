@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="EpeCreateDlg" widgetVar="EpeCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="#{myBundle.CreateEpeTitle}" closeOnEscape="true">
+
+            <h:form id="EpeCreateForm">
+
+                <h:panelGroup id="display" rendered="#{epeController.selected != null}">
+                    <p:panelGrid columns="2" columnClasses="column">
+
+                        <p:outputLabel value="#{myBundle.CreateEpeLabel_nomeEpe}" for="nomeEpe" />
+                        <p:inputText id="nomeEpe" value="#{epeController.selected.nomeEpe}" title="#{myBundle.CreateEpeTitle_nomeEpe}" required="true" requiredMessage="#{myBundle.CreateEpeRequiredMessage_nomeEpe}" size="45" maxlength="45"/>
+
+                        <p:outputLabel value="#{myBundle.CreateEpeLabel_classeEpe}" for="classeEpe" />
+                        <p:inputText id="classeEpe" value="#{epeController.selected.classeEpe}" title="#{myBundle.CreateEpeTitle_classeEpe}" required="true" requiredMessage="#{myBundle.CreateEpeRequiredMessage_classeEpe}" size="45" maxlength="45"/>
+
+                        <p:outputLabel value="#{myBundle.CreateEpeLabel_agenteEpe}" for="agenteEpe" />
+                        <p:inputText id="agenteEpe" value="#{epeController.selected.agenteEpe}" title="#{myBundle.CreateEpeTitle_agenteEpe}" required="true" requiredMessage="#{myBundle.CreateEpeRequiredMessage_agenteEpe}" size="45" maxlength="45"/>
+
+                        <p:outputLabel value="#{myBundle.CreateEpeLabel_tipoMaterialIdMaterial}" for="tipoMaterialIdMaterial" />
+                        <p:selectOneMenu id="tipoMaterialIdMaterial" value="#{epeController.selected.tipoMaterialIdMaterial}" required="true" requiredMessage="#{myBundle.CreateEpeRequiredMessage_tipoMaterialIdMaterial}" converter="tipoMaterialConverter">
+                            <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
+                            <f:selectItems value="#{tipoMaterialController.items}"
+                                           var="tipoMaterialIdMaterialItem"
+                                           itemValue="#{tipoMaterialIdMaterialItem}"
+                                           itemLabel="#{tipoMaterialIdMaterialItem.idMaterial.toString()}"
+                                           />
+
+                        </p:selectOneMenu>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{epeController.saveNew}" value="#{myBundle.Save}" update="display,:EpeListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,EpeCreateDialog);">
+                        <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmCreateMessage}" icon="ui-icon-alert"/>
+                    </p:commandButton>
+
+                    <p:commandButton value="#{myBundle.Cancel}" onclick="EpeCreateDialog.hide()"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

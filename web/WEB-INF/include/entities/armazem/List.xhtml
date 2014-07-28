@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui">
+
+    <h:form id="ArmazemListForm">
+
+        <p:panel header="#{myBundle.ListArmazemTitle}">
+            <p:contextMenu id="ArmazemDataTableContextMenu" for="datalist">  
+                <p:menuitem value="#{myBundle.Create}" onclick="document.getElementById('ArmazemListForm:createButton').click();" icon="ui-icon-plus"/>
+                <p:menuitem value="#{myBundle.View}" onclick="document.getElementById('ArmazemListForm:viewButton').click();" icon="ui-icon-search"/>
+                <p:menuitem value="#{myBundle.Edit}" onclick="document.getElementById('ArmazemListForm:editButton').click();" icon="ui-icon-pencil"/>
+                <p:menuitem value="#{myBundle.Delete}" onclick="document.getElementById('ArmazemListForm:deleteButton').click();" icon="ui-icon-trash"/>
+                <p:separator/>
+                <p:menuitem value="#{myBundle.ArmazemMenuItem_produtoCollection}" icon="ui-icon-search"  action="#{armazemController.navigateProdutoCollection}" disabled="#{empty armazemController.selected.produtoCollection}" ajax="false"/>  
+                <p:menuitem value="#{myBundle.ArmazemMenuItem_tipoSolicitacaoCollection}" icon="ui-icon-search"  action="#{armazemController.navigateTipoSolicitacaoCollection}" disabled="#{empty armazemController.selected.tipoSolicitacaoCollection}" ajax="false"/>  
+                <p:menuitem value="#{myBundle.ArmazemMenuItem_movimentacaoCollection}" icon="ui-icon-search"  action="#{armazemController.navigateMovimentacaoCollection}" disabled="#{empty armazemController.selected.movimentacaoCollection}" ajax="false"/>  
+                <p:menuitem value="#{myBundle.ArmazemMenuItem_statusArmazemIdStatusArmazem}" icon="ui-icon-search"  actionListener="#{armazemController.prepareStatusArmazemIdStatusArmazem}" update=":StatusArmazemViewForm" oncomplete="StatusArmazemViewDialog.show()" disabled="#{empty armazemController.selected.statusArmazemIdStatusArmazem}"/>  
+                <p:menuitem value="#{myBundle.ArmazemMenuItem_localOperacaoIdLocalOper}" icon="ui-icon-search"  actionListener="#{armazemController.prepareLocalOperacaoIdLocalOper}" update=":LocalOperacaoViewForm" oncomplete="LocalOperacaoViewDialog.show()" disabled="#{empty armazemController.selected.localOperacaoIdLocalOper}"/>  
+                <p:menuitem value="#{myBundle.ArmazemMenuItem_idEndarmazem}" icon="ui-icon-search"  actionListener="#{armazemController.prepareIdEndarmazem}" update=":EndArmazemViewForm" oncomplete="EndArmazemViewDialog.show()" disabled="#{empty armazemController.selected.idEndarmazem}"/>  
+            </p:contextMenu>
+            <p:dataTable id="datalist"
+                         value="#{armazemController.items}"
+                         var="item"
+                         rowKey="#{item.idArmazem}"
+                         paginator="true"
+                         rows="5"
+                         rowsPerPageTemplate="5,10,20,30,40,50"
+                         selectionMode="single"
+                         selection="#{armazemController.selected}">
+
+                <p:ajax event="rowSelect"   update=":ArmazemListForm:createButton :ArmazemListForm:viewButton :ArmazemListForm:editButton :ArmazemListForm:deleteButton :ArmazemListForm:ArmazemDataTableContextMenu" listener="#{armazemController.resetParents}"/>
+                <p:ajax event="rowUnselect" update=":ArmazemListForm:createButton :ArmazemListForm:viewButton :ArmazemListForm:editButton :ArmazemListForm:deleteButton :ArmazemListForm:ArmazemDataTableContextMenu" listener="#{armazemController.resetParents}"/>
+                <p:ajax event="rowDblselect" onsuccess="document.getElementById('ArmazemListForm:viewButton').click();"/>
+
+                <p:column sortBy="#{item.idArmazem}" filterBy="#{item.idArmazem}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListArmazemTitle_idArmazem}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.idArmazem}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.tipoArmazem}" filterBy="#{item.tipoArmazem}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListArmazemTitle_tipoArmazem}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.tipoArmazem}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.capacidadeArmazem}" filterBy="#{item.capacidadeArmazem}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListArmazemTitle_capacidadeArmazem}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.capacidadeArmazem}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.certificacaoArmazem}" filterBy="#{item.certificacaoArmazem}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListArmazemTitle_certificacaoArmazem}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.certificacaoArmazem}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.especArmazem}" filterBy="#{item.especArmazem}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListArmazemTitle_especArmazem}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.especArmazem}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.estoqueMax}" filterBy="#{item.estoqueMax}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListArmazemTitle_estoqueMax}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.estoqueMax}"/>
+                </p:column>
+
+                <!--
+                                    <p:column sortBy="#{item.estoqueMin}" filterBy="#{item.estoqueMin}">
+                                        <f:facet name="header">
+                                            <h:outputText value="#{myBundle.ListArmazemTitle_estoqueMin}"/>
+                                        </f:facet>
+                                        <h:outputText value="#{item.estoqueMin}"/>
+                                    </p:column>
+                -->
+                <!--
+                                    <p:column sortBy="#{item.idStatusArmazem}" filterBy="#{item.idStatusArmazem}">
+                                        <f:facet name="header">
+                                            <h:outputText value="#{myBundle.ListArmazemTitle_idStatusArmazem}"/>
+                                        </f:facet>
+                                        <h:outputText value="#{item.idStatusArmazem}"/>
+                                    </p:column>
+                -->
+                <!--
+                                    <p:column sortBy="#{item.idLocalOper}" filterBy="#{item.idLocalOper}">
+                                        <f:facet name="header">
+                                            <h:outputText value="#{myBundle.ListArmazemTitle_idLocalOper}"/>
+                                        </f:facet>
+                                        <h:outputText value="#{item.idLocalOper}"/>
+                                    </p:column>
+                -->
+                <!--
+                                    <p:column sortBy="#{item.statusArmazemIdStatusArmazem.idStatusArmazem}" filterBy="#{item.statusArmazemIdStatusArmazem.idStatusArmazem}">
+                                        <f:facet name="header">
+                                            <h:outputText value="#{myBundle.ListArmazemTitle_statusArmazemIdStatusArmazem}"/>
+                                        </f:facet>
+                                        <h:outputText value="#{item.statusArmazemIdStatusArmazem.idStatusArmazem}"/>
+                                    </p:column>
+                -->
+                <!--
+                                    <p:column sortBy="#{item.localOperacaoIdLocalOper.idLocalOper}" filterBy="#{item.localOperacaoIdLocalOper.idLocalOper}">
+                                        <f:facet name="header">
+                                            <h:outputText value="#{myBundle.ListArmazemTitle_localOperacaoIdLocalOper}"/>
+                                        </f:facet>
+                                        <h:outputText value="#{item.localOperacaoIdLocalOper.idLocalOper}"/>
+                                    </p:column>
+                -->
+                <!--
+                                    <p:column sortBy="#{item.idEndarmazem.idEndarmazem}" filterBy="#{item.idEndarmazem.idEndarmazem}">
+                                        <f:facet name="header">
+                                            <h:outputText value="#{myBundle.ListArmazemTitle_idEndarmazem}"/>
+                                        </f:facet>
+                                        <h:outputText value="#{item.idEndarmazem.idEndarmazem}"/>
+                                    </p:column>
+                -->
+
+            </p:dataTable>
+
+            <p:commandButton id="createButton"                             icon="ui-icon-plus"   value="#{myBundle.Create}" actionListener="#{armazemController.prepareCreate}" update=":ArmazemCreateForm" oncomplete="ArmazemCreateDialog.show()"/>
+            <p:commandButton id="viewButton"   style="visibility: hidden;" icon="ui-icon-search" value="#{myBundle.View}" update=":ArmazemViewForm" oncomplete="ArmazemViewDialog.show()" disabled="#{empty armazemController.selected}"/>
+            <p:commandButton id="editButton"   style="visibility: hidden;" icon="ui-icon-pencil" value="#{myBundle.Edit}" update=":ArmazemEditForm" oncomplete="ArmazemEditDialog.show()" disabled="#{empty armazemController.selected}"/>
+            <p:commandButton id="deleteButton" style="visibility: hidden;" icon="ui-icon-trash"  value="#{myBundle.Delete}" actionListener="#{armazemController.delete}" update=":growl,datalist" disabled="#{empty armazemController.selected}">
+                <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmDeleteMessage}" icon="ui-icon-alert"/>
+            </p:commandButton>
+
+        </p:panel>
+        <ui:include src="/WEB-INF/include/confirmation.xhtml"/>
+    </h:form>
+
+</ui:composition>

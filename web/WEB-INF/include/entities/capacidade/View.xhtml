@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="CapacidadeViewDlg" widgetVar="CapacidadeViewDialog" modal="true" resizable="false"  appendTo="@(body)" header="#{myBundle.ViewCapacidadeTitle}" closeOnEscape="true">
+
+            <h:form id="CapacidadeViewForm">
+
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" columnClasses="column" rendered="#{capacidadeController.selected != null}">
+
+                        <h:outputText value="#{myBundle.ViewCapacidadeLabel_idCapacidade}"/>
+                        <h:outputText value="#{capacidadeController.selected.idCapacidade}" title="#{myBundle.ViewCapacidadeTitle_idCapacidade}"/>
+
+                        <h:outputText value="#{myBundle.ViewCapacidadeLabel_tipoCapacidade}"/>
+                        <h:outputText value="#{capacidadeController.selected.tipoCapacidade}" title="#{myBundle.ViewCapacidadeTitle_tipoCapacidade}"/>
+                    </p:panelGrid>
+                    <p:commandButton value="#{myBundle.Close}" onclick="CapacidadeViewDialog.hide()"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

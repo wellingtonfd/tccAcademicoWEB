@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="EmbalagemViewDlg" widgetVar="EmbalagemViewDialog" modal="true" resizable="false"  appendTo="@(body)" header="#{myBundle.ViewEmbalagemTitle}" closeOnEscape="true">
+
+            <h:form id="EmbalagemViewForm">
+
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" columnClasses="column" rendered="#{embalagemController.selected != null}">
+
+                        <h:outputText value="#{myBundle.ViewEmbalagemLabel_idEmbalagem}"/>
+                        <h:outputText value="#{embalagemController.selected.idEmbalagem}" title="#{myBundle.ViewEmbalagemTitle_idEmbalagem}"/>
+
+                        <h:outputText value="#{myBundle.ViewEmbalagemLabel_especEmabalagem}"/>
+                        <h:outputText value="#{embalagemController.selected.especEmabalagem}" title="#{myBundle.ViewEmbalagemTitle_especEmabalagem}"/>
+
+                        <h:outputText value="#{myBundle.ViewEmbalagemLabel_idMaterial}"/>
+                        <h:outputText value="#{embalagemController.selected.idMaterial.idMaterial}"/>
+
+                        <h:outputText value="#{myBundle.ViewEmbalagemLabel_idGrupoEmbalagem}"/>
+                        <h:outputText value="#{embalagemController.selected.idGrupoEmbalagem.idGrupoEmbalagem}"/>
+
+                        <h:outputText value="#{myBundle.ViewEmbalagemLabel_idCompatibilidade}"/>
+                        <h:outputText value="#{embalagemController.selected.idCompatibilidade.idCompatibilidade}"/>
+
+                        <h:outputText value="#{myBundle.ViewEmbalagemLabel_idCapacidade}"/>
+                        <h:outputText value="#{embalagemController.selected.idCapacidade.idCapacidade}"/>
+                    </p:panelGrid>
+                    <p:commandButton value="#{myBundle.Close}" onclick="EmbalagemViewDialog.hide()"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

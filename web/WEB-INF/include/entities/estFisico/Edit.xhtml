@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+        <p:dialog id="EstFisicoEditDlg" widgetVar="EstFisicoEditDialog" modal="true" resizable="false"  appendTo="@(body)" header="#{myBundle.EditEstFisicoTitle}" closeOnEscape="true">
+
+            <h:form id="EstFisicoEditForm">
+
+                <h:panelGroup id="display">
+                    <p:panelGrid  columns="2" columnClasses="column" rendered="#{estFisicoController.selected != null}">
+
+
+                        <h:outputLabel value="#{myBundle.EditEstFisicoLabel_idEstFisico}" for="idEstFisico" />
+                        <h:outputText id="idEstFisico" value="#{estFisicoController.selected.idEstFisico}" />
+
+                        <p:outputLabel value="#{myBundle.EditEstFisicoLabel_nomeEstFisico}" for="nomeEstFisico" />
+                        <p:inputText id="nomeEstFisico" value="#{estFisicoController.selected.nomeEstFisico}" title="#{myBundle.EditEstFisicoTitle_nomeEstFisico}" required="true" requiredMessage="#{myBundle.EditEstFisicoRequiredMessage_nomeEstFisico}" size="55" maxlength="55"/>
+
+                        <p:outputLabel value="#{myBundle.EditEstFisicoLabel_espEstFisico}" for="espEstFisico" />
+                        <p:inputText id="espEstFisico" value="#{estFisicoController.selected.espEstFisico}" title="#{myBundle.EditEstFisicoTitle_espEstFisico}" size="50" maxlength="50"/>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{estFisicoController.save}" value="#{myBundle.Save}" update="display,:EstFisicoListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,EstFisicoEditDialog);">
+                        <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmEditMessage}" icon="ui-icon-alert"/>
+                    </p:commandButton>
+                    <p:commandButton value="#{myBundle.Cancel}" onclick="EstFisicoEditDialog.hide()"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

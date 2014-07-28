@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+        <p:dialog id="CompatibilidadeEditDlg" widgetVar="CompatibilidadeEditDialog" modal="true" resizable="false"  appendTo="@(body)" header="#{myBundle.EditCompatibilidadeTitle}" closeOnEscape="true">
+
+            <h:form id="CompatibilidadeEditForm">
+
+                <h:panelGroup id="display">
+                    <p:panelGrid  columns="2" columnClasses="column" rendered="#{compatibilidadeController.selected != null}">
+
+
+                        <h:outputLabel value="#{myBundle.EditCompatibilidadeLabel_idCompatibilidade}" for="idCompatibilidade" />
+                        <h:outputText id="idCompatibilidade" value="#{compatibilidadeController.selected.idCompatibilidade}" />
+
+                        <p:outputLabel value="#{myBundle.EditCompatibilidadeLabel_grupoCompatibilidade}" for="grupoCompatibilidade" />
+                        <p:inputText id="grupoCompatibilidade" value="#{compatibilidadeController.selected.grupoCompatibilidade}" title="#{myBundle.EditCompatibilidadeTitle_grupoCompatibilidade}" required="true" requiredMessage="#{myBundle.EditCompatibilidadeRequiredMessage_grupoCompatibilidade}" size="1" maxlength="1"/>
+
+                        <p:outputLabel value="#{myBundle.EditCompatibilidadeLabel_descCompatibilidade}" for="descCompatibilidade" />
+                        <p:inputText id="descCompatibilidade" value="#{compatibilidadeController.selected.descCompatibilidade}" title="#{myBundle.EditCompatibilidadeTitle_descCompatibilidade}" required="true" requiredMessage="#{myBundle.EditCompatibilidadeRequiredMessage_descCompatibilidade}" size="60" maxlength="60"/>
+
+                        <p:outputLabel value="#{myBundle.EditCompatibilidadeLabel_codClassifi}" for="codClassifi" />
+                        <p:inputText id="codClassifi" value="#{compatibilidadeController.selected.codClassifi}" title="#{myBundle.EditCompatibilidadeTitle_codClassifi}" required="true" requiredMessage="#{myBundle.EditCompatibilidadeRequiredMessage_codClassifi}" size="10" maxlength="10"/>
+
+                        <p:outputLabel value="#{myBundle.EditCompatibilidadeLabel_idLegendaCompatibilidade}" for="idLegendaCompatibilidade" />
+                        <p:selectOneMenu id="idLegendaCompatibilidade" value="#{compatibilidadeController.selected.idLegendaCompatibilidade}"  converter="legendaCompatibilidadeConverter">
+                            <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
+                            <f:selectItems value="#{legendaCompatibilidadeController.items}"
+                                           var="idLegendaCompatibilidadeItem"
+                                           itemValue="#{idLegendaCompatibilidadeItem}"
+                                           itemLabel="#{idLegendaCompatibilidadeItem.idLegendaCompatibilidade.toString()}"
+                                           />
+
+                        </p:selectOneMenu>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{compatibilidadeController.save}" value="#{myBundle.Save}" update="display,:CompatibilidadeListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,CompatibilidadeEditDialog);">
+                        <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmEditMessage}" icon="ui-icon-alert"/>
+                    </p:commandButton>
+                    <p:commandButton value="#{myBundle.Cancel}" onclick="CompatibilidadeEditDialog.hide()"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

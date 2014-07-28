@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="UsuarioCreateDlg" widgetVar="UsuarioCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="#{myBundle.CreateUsuarioTitle}" closeOnEscape="true">
+
+            <h:form id="UsuarioCreateForm">
+
+                <h:panelGroup id="display" rendered="#{usuarioController.selected != null}">
+                    <p:panelGrid columns="2" columnClasses="column">
+
+                        <p:outputLabel value="#{myBundle.CreateUsuarioLabel_login}" for="login" />
+                        <p:inputText id="login" value="#{usuarioController.selected.login}" title="#{myBundle.CreateUsuarioTitle_login}" required="true" requiredMessage="#{myBundle.CreateUsuarioRequiredMessage_login}" size="25" maxlength="25"/>
+
+                        <p:outputLabel value="#{myBundle.CreateUsuarioLabel_senha}" for="senha" />
+                        <p:inputText id="senha" value="#{usuarioController.selected.senha}" title="#{myBundle.CreateUsuarioTitle_senha}" required="true" requiredMessage="#{myBundle.CreateUsuarioRequiredMessage_senha}" size="25" maxlength="25"/>
+
+                        <p:outputLabel value="#{myBundle.CreateUsuarioLabel_idRoler}" for="idRoler" />
+                        <p:selectOneMenu id="idRoler" value="#{usuarioController.selected.idRoler}"  converter="rolerConverter">
+                            <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
+                            <f:selectItems value="#{rolerController.items}"
+                                           var="idRolerItem"
+                                           itemValue="#{idRolerItem}"
+                                           itemLabel="#{idRolerItem.idRoler.toString()}"
+                                           />
+
+                        </p:selectOneMenu>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{usuarioController.saveNew}" value="#{myBundle.Save}" update="display,:UsuarioListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,UsuarioCreateDialog);">
+                        <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmCreateMessage}" icon="ui-icon-alert"/>
+                    </p:commandButton>
+
+                    <p:commandButton value="#{myBundle.Cancel}" onclick="UsuarioCreateDialog.hide()"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

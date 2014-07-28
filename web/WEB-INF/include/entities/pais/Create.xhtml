@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="PaisCreateDlg" widgetVar="PaisCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="#{myBundle.CreatePaisTitle}" closeOnEscape="true">
+
+            <h:form id="PaisCreateForm">
+
+                <h:panelGroup id="display" rendered="#{paisController.selected != null}">
+                    <p:panelGrid columns="2" columnClasses="column">
+
+                        <p:outputLabel value="#{myBundle.CreatePaisLabel_nomePais}" for="nomePais" />
+                        <p:inputText id="nomePais" value="#{paisController.selected.nomePais}" title="#{myBundle.CreatePaisTitle_nomePais}" required="true" requiredMessage="#{myBundle.CreatePaisRequiredMessage_nomePais}" size="40" maxlength="40"/>
+
+                        <p:outputLabel value="#{myBundle.CreatePaisLabel_siglapais}" for="siglapais" />
+                        <p:inputText id="siglapais" value="#{paisController.selected.siglapais}" title="#{myBundle.CreatePaisTitle_siglapais}" size="2" maxlength="2"/>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{paisController.saveNew}" value="#{myBundle.Save}" update="display,:PaisListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,PaisCreateDialog);">
+                        <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmCreateMessage}" icon="ui-icon-alert"/>
+                    </p:commandButton>
+
+                    <p:commandButton value="#{myBundle.Cancel}" onclick="PaisCreateDialog.hide()"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui">
+
+    <h:form id="ClasseListForm">
+
+        <p:panel header="#{myBundle.ListClasseTitle}">
+            <p:contextMenu id="ClasseDataTableContextMenu" for="datalist">  
+                <p:menuitem value="#{myBundle.Create}" onclick="document.getElementById('ClasseListForm:createButton').click();" icon="ui-icon-plus"/>
+                <p:menuitem value="#{myBundle.View}" onclick="document.getElementById('ClasseListForm:viewButton').click();" icon="ui-icon-search"/>
+                <p:menuitem value="#{myBundle.Edit}" onclick="document.getElementById('ClasseListForm:editButton').click();" icon="ui-icon-pencil"/>
+                <p:menuitem value="#{myBundle.Delete}" onclick="document.getElementById('ClasseListForm:deleteButton').click();" icon="ui-icon-trash"/>
+                <p:separator/>
+                <p:menuitem value="#{myBundle.ClasseMenuItem_produtoCollection}" icon="ui-icon-search"  action="#{classeController.navigateProdutoCollection}" disabled="#{empty classeController.selected.produtoCollection}" ajax="false"/>  
+            </p:contextMenu>
+            <p:dataTable id="datalist"
+                         value="#{classeController.items}"
+                         var="item"
+                         rowKey="#{item.idClasse}"
+                         paginator="true"
+                         rows="5"
+                         rowsPerPageTemplate="5,10,20,30,40,50"
+                         selectionMode="single"
+                         selection="#{classeController.selected}">
+
+                <p:ajax event="rowSelect"   update=":ClasseListForm:createButton :ClasseListForm:viewButton :ClasseListForm:editButton :ClasseListForm:deleteButton :ClasseListForm:ClasseDataTableContextMenu" listener="#{classeController.resetParents}"/>
+                <p:ajax event="rowUnselect" update=":ClasseListForm:createButton :ClasseListForm:viewButton :ClasseListForm:editButton :ClasseListForm:deleteButton :ClasseListForm:ClasseDataTableContextMenu" listener="#{classeController.resetParents}"/>
+                <p:ajax event="rowDblselect" onsuccess="document.getElementById('ClasseListForm:viewButton').click();"/>
+
+                <p:column sortBy="#{item.idClasse}" filterBy="#{item.idClasse}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListClasseTitle_idClasse}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.idClasse}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.numClasse}" filterBy="#{item.numClasse}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListClasseTitle_numClasse}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.numClasse}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.numSubclasse}" filterBy="#{item.numSubclasse}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListClasseTitle_numSubclasse}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.numSubclasse}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.especClasse}" filterBy="#{item.especClasse}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListClasseTitle_especClasse}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.especClasse}"/>
+                </p:column>
+
+
+            </p:dataTable>
+
+            <p:commandButton id="createButton"                             icon="ui-icon-plus"   value="#{myBundle.Create}" actionListener="#{classeController.prepareCreate}" update=":ClasseCreateForm" oncomplete="ClasseCreateDialog.show()"/>
+            <p:commandButton id="viewButton"   style="visibility: hidden;" icon="ui-icon-search" value="#{myBundle.View}" update=":ClasseViewForm" oncomplete="ClasseViewDialog.show()" disabled="#{empty classeController.selected}"/>
+            <p:commandButton id="editButton"   style="visibility: hidden;" icon="ui-icon-pencil" value="#{myBundle.Edit}" update=":ClasseEditForm" oncomplete="ClasseEditDialog.show()" disabled="#{empty classeController.selected}"/>
+            <p:commandButton id="deleteButton" style="visibility: hidden;" icon="ui-icon-trash"  value="#{myBundle.Delete}" actionListener="#{classeController.delete}" update=":growl,datalist" disabled="#{empty classeController.selected}">
+                <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmDeleteMessage}" icon="ui-icon-alert"/>
+            </p:commandButton>
+
+        </p:panel>
+        <ui:include src="/WEB-INF/include/confirmation.xhtml"/>
+    </h:form>
+
+</ui:composition>

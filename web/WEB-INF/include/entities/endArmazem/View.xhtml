@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="EndArmazemViewDlg" widgetVar="EndArmazemViewDialog" modal="true" resizable="false"  appendTo="@(body)" header="#{myBundle.ViewEndArmazemTitle}" closeOnEscape="true">
+
+            <h:form id="EndArmazemViewForm">
+
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" columnClasses="column" rendered="#{endArmazemController.selected != null}">
+
+                        <h:outputText value="#{myBundle.ViewEndArmazemLabel_idEndarmazem}"/>
+                        <h:outputText value="#{endArmazemController.selected.idEndarmazem}" title="#{myBundle.ViewEndArmazemTitle_idEndarmazem}"/>
+
+                        <h:outputText value="#{myBundle.ViewEndArmazemLabel_corEndArmazem}"/>
+                        <h:outputText value="#{endArmazemController.selected.corEndArmazem}" title="#{myBundle.ViewEndArmazemTitle_corEndArmazem}"/>
+
+                        <h:outputText value="#{myBundle.ViewEndArmazemLabel_ruaEndArmazem}"/>
+                        <h:outputText value="#{endArmazemController.selected.ruaEndArmazem}" title="#{myBundle.ViewEndArmazemTitle_ruaEndArmazem}"/>
+
+                        <h:outputText value="#{myBundle.ViewEndArmazemLabel_ladoEndArmazem}"/>
+                        <h:outputText value="#{endArmazemController.selected.ladoEndArmazem}" title="#{myBundle.ViewEndArmazemTitle_ladoEndArmazem}"/>
+
+                        <h:outputText value="#{myBundle.ViewEndArmazemLabel_nivelEndArmazem}"/>
+                        <h:outputText value="#{endArmazemController.selected.nivelEndArmazem}" title="#{myBundle.ViewEndArmazemTitle_nivelEndArmazem}"/>
+
+                        <h:outputText value="#{myBundle.ViewEndArmazemLabel_posicaoEndArmazem}"/>
+                        <h:outputText value="#{endArmazemController.selected.posicaoEndArmazem}" title="#{myBundle.ViewEndArmazemTitle_posicaoEndArmazem}"/>
+                    </p:panelGrid>
+                    <p:commandButton value="#{myBundle.Close}" onclick="EndArmazemViewDialog.hide()"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

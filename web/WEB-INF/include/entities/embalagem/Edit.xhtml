@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+        <p:dialog id="EmbalagemEditDlg" widgetVar="EmbalagemEditDialog" modal="true" resizable="false"  appendTo="@(body)" header="#{myBundle.EditEmbalagemTitle}" closeOnEscape="true">
+
+            <h:form id="EmbalagemEditForm">
+
+                <h:panelGroup id="display">
+                    <p:panelGrid  columns="2" columnClasses="column" rendered="#{embalagemController.selected != null}">
+
+
+                        <h:outputLabel value="#{myBundle.EditEmbalagemLabel_idEmbalagem}" for="idEmbalagem" />
+                        <h:outputText id="idEmbalagem" value="#{embalagemController.selected.idEmbalagem}" />
+
+                        <p:outputLabel value="#{myBundle.EditEmbalagemLabel_especEmabalagem}" for="especEmabalagem" />
+                        <p:inputText id="especEmabalagem" value="#{embalagemController.selected.especEmabalagem}" title="#{myBundle.EditEmbalagemTitle_especEmabalagem}" size="40" maxlength="40"/>
+
+                        <p:outputLabel value="#{myBundle.EditEmbalagemLabel_idMaterial}" for="idMaterial" />
+                        <p:selectOneMenu id="idMaterial" value="#{embalagemController.selected.idMaterial}"  converter="tipoMaterialConverter">
+                            <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
+                            <f:selectItems value="#{tipoMaterialController.items}"
+                                           var="idMaterialItem"
+                                           itemValue="#{idMaterialItem}"
+                                           itemLabel="#{idMaterialItem.idMaterial.toString()}"
+                                           />
+
+                        </p:selectOneMenu>
+
+                        <p:outputLabel value="#{myBundle.EditEmbalagemLabel_idGrupoEmbalagem}" for="idGrupoEmbalagem" />
+                        <p:selectOneMenu id="idGrupoEmbalagem" value="#{embalagemController.selected.idGrupoEmbalagem}"  converter="grupoEmbalagemConverter">
+                            <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
+                            <f:selectItems value="#{grupoEmbalagemController.items}"
+                                           var="idGrupoEmbalagemItem"
+                                           itemValue="#{idGrupoEmbalagemItem}"
+                                           itemLabel="#{idGrupoEmbalagemItem.idGrupoEmbalagem.toString()}"
+                                           />
+
+                        </p:selectOneMenu>
+
+                        <p:outputLabel value="#{myBundle.EditEmbalagemLabel_idCompatibilidade}" for="idCompatibilidade" />
+                        <p:selectOneMenu id="idCompatibilidade" value="#{embalagemController.selected.idCompatibilidade}"  converter="compatibilidadeConverter">
+                            <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
+                            <f:selectItems value="#{compatibilidadeController.items}"
+                                           var="idCompatibilidadeItem"
+                                           itemValue="#{idCompatibilidadeItem}"
+                                           itemLabel="#{idCompatibilidadeItem.idCompatibilidade.toString()}"
+                                           />
+
+                        </p:selectOneMenu>
+
+                        <p:outputLabel value="#{myBundle.EditEmbalagemLabel_idCapacidade}" for="idCapacidade" />
+                        <p:selectOneMenu id="idCapacidade" value="#{embalagemController.selected.idCapacidade}" required="true" requiredMessage="#{myBundle.EditEmbalagemRequiredMessage_idCapacidade}" converter="capacidadeConverter">
+                            <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
+                            <f:selectItems value="#{capacidadeController.items}"
+                                           var="idCapacidadeItem"
+                                           itemValue="#{idCapacidadeItem}"
+                                           itemLabel="#{idCapacidadeItem.idCapacidade.toString()}"
+                                           />
+
+                        </p:selectOneMenu>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{embalagemController.save}" value="#{myBundle.Save}" update="display,:EmbalagemListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,EmbalagemEditDialog);">
+                        <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmEditMessage}" icon="ui-icon-alert"/>
+                    </p:commandButton>
+                    <p:commandButton value="#{myBundle.Cancel}" onclick="EmbalagemEditDialog.hide()"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

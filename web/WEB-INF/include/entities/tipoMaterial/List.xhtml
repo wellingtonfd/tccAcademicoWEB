@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui">
+
+    <h:form id="TipoMaterialListForm">
+
+        <p:panel header="#{myBundle.ListTipoMaterialTitle}">
+            <p:contextMenu id="TipoMaterialDataTableContextMenu" for="datalist">  
+                <p:menuitem value="#{myBundle.Create}" onclick="document.getElementById('TipoMaterialListForm:createButton').click();" icon="ui-icon-plus"/>
+                <p:menuitem value="#{myBundle.View}" onclick="document.getElementById('TipoMaterialListForm:viewButton').click();" icon="ui-icon-search"/>
+                <p:menuitem value="#{myBundle.Edit}" onclick="document.getElementById('TipoMaterialListForm:editButton').click();" icon="ui-icon-pencil"/>
+                <p:menuitem value="#{myBundle.Delete}" onclick="document.getElementById('TipoMaterialListForm:deleteButton').click();" icon="ui-icon-trash"/>
+                <p:separator/>
+                <p:menuitem value="#{myBundle.TipoMaterialMenuItem_epeCollection}" icon="ui-icon-search"  action="#{tipoMaterialController.navigateEpeCollection}" disabled="#{empty tipoMaterialController.selected.epeCollection}" ajax="false"/>  
+                <p:menuitem value="#{myBundle.TipoMaterialMenuItem_embalagemCollection}" icon="ui-icon-search"  action="#{tipoMaterialController.navigateEmbalagemCollection}" disabled="#{empty tipoMaterialController.selected.embalagemCollection}" ajax="false"/>  
+                <p:menuitem value="#{myBundle.TipoMaterialMenuItem_epiCollection}" icon="ui-icon-search"  action="#{tipoMaterialController.navigateEpiCollection}" disabled="#{empty tipoMaterialController.selected.epiCollection}" ajax="false"/>  
+            </p:contextMenu>
+            <p:dataTable id="datalist"
+                         value="#{tipoMaterialController.items}"
+                         var="item"
+                         rowKey="#{item.idMaterial}"
+                         paginator="true"
+                         rows="5"
+                         rowsPerPageTemplate="5,10,20,30,40,50"
+                         selectionMode="single"
+                         selection="#{tipoMaterialController.selected}">
+
+                <p:ajax event="rowSelect"   update=":TipoMaterialListForm:createButton :TipoMaterialListForm:viewButton :TipoMaterialListForm:editButton :TipoMaterialListForm:deleteButton :TipoMaterialListForm:TipoMaterialDataTableContextMenu" listener="#{tipoMaterialController.resetParents}"/>
+                <p:ajax event="rowUnselect" update=":TipoMaterialListForm:createButton :TipoMaterialListForm:viewButton :TipoMaterialListForm:editButton :TipoMaterialListForm:deleteButton :TipoMaterialListForm:TipoMaterialDataTableContextMenu" listener="#{tipoMaterialController.resetParents}"/>
+                <p:ajax event="rowDblselect" onsuccess="document.getElementById('TipoMaterialListForm:viewButton').click();"/>
+
+                <p:column sortBy="#{item.idMaterial}" filterBy="#{item.idMaterial}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListTipoMaterialTitle_idMaterial}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.idMaterial}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.nomeMaterial}" filterBy="#{item.nomeMaterial}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListTipoMaterialTitle_nomeMaterial}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.nomeMaterial}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.especMaterial}" filterBy="#{item.especMaterial}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListTipoMaterialTitle_especMaterial}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.especMaterial}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.ptFulgor}" filterBy="#{item.ptFulgor}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListTipoMaterialTitle_ptFulgor}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.ptFulgor}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.ptEbuliO}" filterBy="#{item.ptEbuliO}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListTipoMaterialTitle_ptEbuliO}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.ptEbuliO}"/>
+                </p:column>
+
+
+            </p:dataTable>
+
+            <p:commandButton id="createButton"                             icon="ui-icon-plus"   value="#{myBundle.Create}" actionListener="#{tipoMaterialController.prepareCreate}" update=":TipoMaterialCreateForm" oncomplete="TipoMaterialCreateDialog.show()"/>
+            <p:commandButton id="viewButton"   style="visibility: hidden;" icon="ui-icon-search" value="#{myBundle.View}" update=":TipoMaterialViewForm" oncomplete="TipoMaterialViewDialog.show()" disabled="#{empty tipoMaterialController.selected}"/>
+            <p:commandButton id="editButton"   style="visibility: hidden;" icon="ui-icon-pencil" value="#{myBundle.Edit}" update=":TipoMaterialEditForm" oncomplete="TipoMaterialEditDialog.show()" disabled="#{empty tipoMaterialController.selected}"/>
+            <p:commandButton id="deleteButton" style="visibility: hidden;" icon="ui-icon-trash"  value="#{myBundle.Delete}" actionListener="#{tipoMaterialController.delete}" update=":growl,datalist" disabled="#{empty tipoMaterialController.selected}">
+                <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmDeleteMessage}" icon="ui-icon-alert"/>
+            </p:commandButton>
+
+        </p:panel>
+        <ui:include src="/WEB-INF/include/confirmation.xhtml"/>
+    </h:form>
+
+</ui:composition>

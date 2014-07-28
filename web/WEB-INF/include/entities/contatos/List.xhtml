@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui">
+
+    <h:form id="ContatosListForm">
+
+        <p:panel header="#{myBundle.ListContatosTitle}">
+            <p:contextMenu id="ContatosDataTableContextMenu" for="datalist">  
+                <p:menuitem value="#{myBundle.Create}" onclick="document.getElementById('ContatosListForm:createButton').click();" icon="ui-icon-plus"/>
+                <p:menuitem value="#{myBundle.View}" onclick="document.getElementById('ContatosListForm:viewButton').click();" icon="ui-icon-search"/>
+                <p:menuitem value="#{myBundle.Edit}" onclick="document.getElementById('ContatosListForm:editButton').click();" icon="ui-icon-pencil"/>
+                <p:menuitem value="#{myBundle.Delete}" onclick="document.getElementById('ContatosListForm:deleteButton').click();" icon="ui-icon-trash"/>
+                <p:separator/>
+                <p:menuitem value="#{myBundle.ContatosMenuItem_fornecedorCollection}" icon="ui-icon-search"  action="#{contatosController.navigateFornecedorCollection}" disabled="#{empty contatosController.selected.fornecedorCollection}" ajax="false"/>  
+                <p:menuitem value="#{myBundle.ContatosMenuItem_funcionarioCollection}" icon="ui-icon-search"  action="#{contatosController.navigateFuncionarioCollection}" disabled="#{empty contatosController.selected.funcionarioCollection}" ajax="false"/>  
+            </p:contextMenu>
+            <p:dataTable id="datalist"
+                         value="#{contatosController.items}"
+                         var="item"
+                         rowKey="#{item.idContato}"
+                         paginator="true"
+                         rows="5"
+                         rowsPerPageTemplate="5,10,20,30,40,50"
+                         selectionMode="single"
+                         selection="#{contatosController.selected}">
+
+                <p:ajax event="rowSelect"   update=":ContatosListForm:createButton :ContatosListForm:viewButton :ContatosListForm:editButton :ContatosListForm:deleteButton :ContatosListForm:ContatosDataTableContextMenu" listener="#{contatosController.resetParents}"/>
+                <p:ajax event="rowUnselect" update=":ContatosListForm:createButton :ContatosListForm:viewButton :ContatosListForm:editButton :ContatosListForm:deleteButton :ContatosListForm:ContatosDataTableContextMenu" listener="#{contatosController.resetParents}"/>
+                <p:ajax event="rowDblselect" onsuccess="document.getElementById('ContatosListForm:viewButton').click();"/>
+
+                <p:column sortBy="#{item.idContato}" filterBy="#{item.idContato}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListContatosTitle_idContato}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.idContato}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.tel}" filterBy="#{item.tel}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListContatosTitle_tel}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.tel}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.email}" filterBy="#{item.email}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListContatosTitle_email}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.email}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.celular}" filterBy="#{item.celular}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListContatosTitle_celular}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.celular}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.site}" filterBy="#{item.site}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListContatosTitle_site}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.site}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.radio}" filterBy="#{item.radio}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListContatosTitle_radio}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.radio}"/>
+                </p:column>
+
+
+            </p:dataTable>
+
+            <p:commandButton id="createButton"                             icon="ui-icon-plus"   value="#{myBundle.Create}" actionListener="#{contatosController.prepareCreate}" update=":ContatosCreateForm" oncomplete="ContatosCreateDialog.show()"/>
+            <p:commandButton id="viewButton"   style="visibility: hidden;" icon="ui-icon-search" value="#{myBundle.View}" update=":ContatosViewForm" oncomplete="ContatosViewDialog.show()" disabled="#{empty contatosController.selected}"/>
+            <p:commandButton id="editButton"   style="visibility: hidden;" icon="ui-icon-pencil" value="#{myBundle.Edit}" update=":ContatosEditForm" oncomplete="ContatosEditDialog.show()" disabled="#{empty contatosController.selected}"/>
+            <p:commandButton id="deleteButton" style="visibility: hidden;" icon="ui-icon-trash"  value="#{myBundle.Delete}" actionListener="#{contatosController.delete}" update=":growl,datalist" disabled="#{empty contatosController.selected}">
+                <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmDeleteMessage}" icon="ui-icon-alert"/>
+            </p:commandButton>
+
+        </p:panel>
+        <ui:include src="/WEB-INF/include/confirmation.xhtml"/>
+    </h:form>
+
+</ui:composition>

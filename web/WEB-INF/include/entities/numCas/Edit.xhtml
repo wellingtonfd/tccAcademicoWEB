@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+        <p:dialog id="NumCasEditDlg" widgetVar="NumCasEditDialog" modal="true" resizable="false"  appendTo="@(body)" header="#{myBundle.EditNumCasTitle}" closeOnEscape="true">
+
+            <h:form id="NumCasEditForm">
+
+                <h:panelGroup id="display">
+                    <p:panelGrid  columns="2" columnClasses="column" rendered="#{numCasController.selected != null}">
+
+
+                        <h:outputLabel value="#{myBundle.EditNumCasLabel_idNumCas}" for="idNumCas" />
+                        <h:outputText id="idNumCas" value="#{numCasController.selected.idNumCas}" />
+
+                        <p:outputLabel value="#{myBundle.EditNumCasLabel_numCas}" for="numCas" />
+                        <p:inputText id="numCas" value="#{numCasController.selected.numCas}" title="#{myBundle.EditNumCasTitle_numCas}" required="true" requiredMessage="#{myBundle.EditNumCasRequiredMessage_numCas}" size="10" maxlength="10"/>
+
+                        <p:outputLabel value="#{myBundle.EditNumCasLabel_espcNumCas}" for="espcNumCas" />
+                        <p:inputText id="espcNumCas" value="#{numCasController.selected.espcNumCas}" title="#{myBundle.EditNumCasTitle_espcNumCas}" size="45" maxlength="45"/>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{numCasController.save}" value="#{myBundle.Save}" update="display,:NumCasListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,NumCasEditDialog);">
+                        <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmEditMessage}" icon="ui-icon-alert"/>
+                    </p:commandButton>
+                    <p:commandButton value="#{myBundle.Cancel}" onclick="NumCasEditDialog.hide()"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

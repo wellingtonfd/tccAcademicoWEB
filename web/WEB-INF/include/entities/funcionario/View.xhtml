@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="FuncionarioViewDlg" widgetVar="FuncionarioViewDialog" modal="true" resizable="false"  appendTo="@(body)" header="#{myBundle.ViewFuncionarioTitle}" closeOnEscape="true">
+
+            <h:form id="FuncionarioViewForm">
+
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" columnClasses="column" rendered="#{funcionarioController.selected != null}">
+
+                        <h:outputText value="#{myBundle.ViewFuncionarioLabel_idFuncionario}"/>
+                        <h:outputText value="#{funcionarioController.selected.idFuncionario}" title="#{myBundle.ViewFuncionarioTitle_idFuncionario}"/>
+
+                        <h:outputText value="#{myBundle.ViewFuncionarioLabel_nomeFuncionario}"/>
+                        <h:outputText value="#{funcionarioController.selected.nomeFuncionario}" title="#{myBundle.ViewFuncionarioTitle_nomeFuncionario}"/>
+
+                        <h:outputText value="#{myBundle.ViewFuncionarioLabel_sbNomeFuncionario}"/>
+                        <h:outputText value="#{funcionarioController.selected.sbNomeFuncionario}" title="#{myBundle.ViewFuncionarioTitle_sbNomeFuncionario}"/>
+
+                        <h:outputText value="#{myBundle.ViewFuncionarioLabel_sexo}"/>
+                        <h:outputText value="#{funcionarioController.selected.sexo}" title="#{myBundle.ViewFuncionarioTitle_sexo}"/>
+
+                        <h:outputText value="#{myBundle.ViewFuncionarioLabel_cpf}"/>
+                        <h:outputText value="#{funcionarioController.selected.cpf}" title="#{myBundle.ViewFuncionarioTitle_cpf}"/>
+
+                        <h:outputText value="#{myBundle.ViewFuncionarioLabel_rg}"/>
+                        <h:outputText value="#{funcionarioController.selected.rg}" title="#{myBundle.ViewFuncionarioTitle_rg}"/>
+
+                        <h:outputText value="#{myBundle.ViewFuncionarioLabel_dtNasc}"/>
+                        <h:outputText value="#{funcionarioController.selected.dtNasc}" title="#{myBundle.ViewFuncionarioTitle_dtNasc}">
+                            <f:convertDateTime pattern="MM/dd/yyyy" />
+                        </h:outputText>
+
+                        <h:outputText value="#{myBundle.ViewFuncionarioLabel_matFuncionario}"/>
+                        <h:outputText value="#{funcionarioController.selected.matFuncionario}" title="#{myBundle.ViewFuncionarioTitle_matFuncionario}"/>
+
+                        <h:outputText value="#{myBundle.ViewFuncionarioLabel_dtAdmissao}"/>
+                        <h:outputText value="#{funcionarioController.selected.dtAdmissao}" title="#{myBundle.ViewFuncionarioTitle_dtAdmissao}">
+                            <f:convertDateTime pattern="MM/dd/yyyy" />
+                        </h:outputText>
+
+                        <h:outputText value="#{myBundle.ViewFuncionarioLabel_funcao}"/>
+                        <h:outputText value="#{funcionarioController.selected.funcao}" title="#{myBundle.ViewFuncionarioTitle_funcao}"/>
+
+                        <h:outputText value="#{myBundle.ViewFuncionarioLabel_cargo}"/>
+                        <h:outputText value="#{funcionarioController.selected.cargo}" title="#{myBundle.ViewFuncionarioTitle_cargo}"/>
+
+                        <h:outputText value="#{myBundle.ViewFuncionarioLabel_nivelFuncionario}"/>
+                        <h:outputText value="#{funcionarioController.selected.nivelFuncionario}" title="#{myBundle.ViewFuncionarioTitle_nivelFuncionario}"/>
+
+                        <h:outputText value="#{myBundle.ViewFuncionarioLabel_especializacao}"/>
+                        <h:outputText value="#{funcionarioController.selected.especializacao}" title="#{myBundle.ViewFuncionarioTitle_especializacao}"/>
+
+                        <h:outputText value="#{myBundle.ViewFuncionarioLabel_idContato}"/>
+                        <h:outputText value="#{funcionarioController.selected.idContato}" title="#{myBundle.ViewFuncionarioTitle_idContato}"/>
+
+                        <h:outputText value="#{myBundle.ViewFuncionarioLabel_idEndereco}"/>
+                        <h:outputText value="#{funcionarioController.selected.idEndereco}" title="#{myBundle.ViewFuncionarioTitle_idEndereco}"/>
+
+                        <h:outputText value="#{myBundle.ViewFuncionarioLabel_idUsuario}"/>
+                        <h:outputText value="#{funcionarioController.selected.idUsuario.idUsuario}"/>
+
+                        <h:outputText value="#{myBundle.ViewFuncionarioLabel_enderecoIdEndereco}"/>
+                        <h:outputText value="#{funcionarioController.selected.enderecoIdEndereco.idEndereco}"/>
+
+                        <h:outputText value="#{myBundle.ViewFuncionarioLabel_contatosIdContato}"/>
+                        <h:outputText value="#{funcionarioController.selected.contatosIdContato.idContato}"/>
+                    </p:panelGrid>
+                    <p:commandButton value="#{myBundle.Close}" onclick="FuncionarioViewDialog.hide()"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

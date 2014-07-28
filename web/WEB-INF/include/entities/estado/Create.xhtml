@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="EstadoCreateDlg" widgetVar="EstadoCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="#{myBundle.CreateEstadoTitle}" closeOnEscape="true">
+
+            <h:form id="EstadoCreateForm">
+
+                <h:panelGroup id="display" rendered="#{estadoController.selected != null}">
+                    <p:panelGrid columns="2" columnClasses="column">
+
+                        <p:outputLabel value="#{myBundle.CreateEstadoLabel_nomeEstado}" for="nomeEstado" />
+                        <p:inputText id="nomeEstado" value="#{estadoController.selected.nomeEstado}" title="#{myBundle.CreateEstadoTitle_nomeEstado}" required="true" requiredMessage="#{myBundle.CreateEstadoRequiredMessage_nomeEstado}" size="60" maxlength="60"/>
+
+                        <p:outputLabel value="#{myBundle.CreateEstadoLabel_siglaEstado}" for="siglaEstado" />
+                        <p:inputText id="siglaEstado" value="#{estadoController.selected.siglaEstado}" title="#{myBundle.CreateEstadoTitle_siglaEstado}" required="true" requiredMessage="#{myBundle.CreateEstadoRequiredMessage_siglaEstado}" size="2" maxlength="2"/>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{estadoController.saveNew}" value="#{myBundle.Save}" update="display,:EstadoListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,EstadoCreateDialog);">
+                        <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmCreateMessage}" icon="ui-icon-alert"/>
+                    </p:commandButton>
+
+                    <p:commandButton value="#{myBundle.Cancel}" onclick="EstadoCreateDialog.hide()"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

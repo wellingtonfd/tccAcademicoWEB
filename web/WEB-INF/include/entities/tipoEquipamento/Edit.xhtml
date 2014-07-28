@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+        <p:dialog id="TipoEquipamentoEditDlg" widgetVar="TipoEquipamentoEditDialog" modal="true" resizable="false"  appendTo="@(body)" header="#{myBundle.EditTipoEquipamentoTitle}" closeOnEscape="true">
+
+            <h:form id="TipoEquipamentoEditForm">
+
+                <h:panelGroup id="display">
+                    <p:panelGrid  columns="2" columnClasses="column" rendered="#{tipoEquipamentoController.selected != null}">
+
+
+                        <h:outputLabel value="#{myBundle.EditTipoEquipamentoLabel_idTipoEquipamento}" for="idTipoEquipamento" />
+                        <h:outputText id="idTipoEquipamento" value="#{tipoEquipamentoController.selected.idTipoEquipamento}" />
+
+                        <p:outputLabel value="#{myBundle.EditTipoEquipamentoLabel_nomeTipoEquipamento}" for="nomeTipoEquipamento" />
+                        <p:inputText id="nomeTipoEquipamento" value="#{tipoEquipamentoController.selected.nomeTipoEquipamento}" title="#{myBundle.EditTipoEquipamentoTitle_nomeTipoEquipamento}" required="true" requiredMessage="#{myBundle.EditTipoEquipamentoRequiredMessage_nomeTipoEquipamento}" size="50" maxlength="50"/>
+
+                        <p:outputLabel value="#{myBundle.EditTipoEquipamentoLabel_espcTipoEquipamento}" for="espcTipoEquipamento" />
+                        <p:inputText id="espcTipoEquipamento" value="#{tipoEquipamentoController.selected.espcTipoEquipamento}" title="#{myBundle.EditTipoEquipamentoTitle_espcTipoEquipamento}" size="35" maxlength="35"/>
+
+                        <p:outputLabel value="#{myBundle.EditTipoEquipamentoLabel_idEpe}" for="idEpe" />
+                        <p:inputText id="idEpe" value="#{tipoEquipamentoController.selected.idEpe}" title="#{myBundle.EditTipoEquipamentoTitle_idEpe}"/>
+
+                        <p:outputLabel value="#{myBundle.EditTipoEquipamentoLabel_idEmbalagem}" for="idEmbalagem" />
+                        <p:inputText id="idEmbalagem" value="#{tipoEquipamentoController.selected.idEmbalagem}" title="#{myBundle.EditTipoEquipamentoTitle_idEmbalagem}"/>
+
+                        <p:outputLabel value="#{myBundle.EditTipoEquipamentoLabel_idVeiculo}" for="idVeiculo" />
+                        <p:selectOneMenu id="idVeiculo" value="#{tipoEquipamentoController.selected.idVeiculo}"  converter="veiculoConverter">
+                            <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
+                            <f:selectItems value="#{veiculoController.items}"
+                                           var="idVeiculoItem"
+                                           itemValue="#{idVeiculoItem}"
+                                           itemLabel="#{idVeiculoItem.idVeiculo.toString()}"
+                                           />
+
+                        </p:selectOneMenu>
+
+                        <p:outputLabel value="#{myBundle.EditTipoEquipamentoLabel_idEpi}" for="idEpi" />
+                        <p:selectOneMenu id="idEpi" value="#{tipoEquipamentoController.selected.idEpi}"  converter="epiConverter">
+                            <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
+                            <f:selectItems value="#{epiController.items}"
+                                           var="idEpiItem"
+                                           itemValue="#{idEpiItem}"
+                                           itemLabel="#{idEpiItem.idEpi.toString()}"
+                                           />
+
+                        </p:selectOneMenu>
+
+                        <p:outputLabel value="#{myBundle.EditTipoEquipamentoLabel_epeIdEpe}" for="epeIdEpe" />
+                        <p:selectOneMenu id="epeIdEpe" value="#{tipoEquipamentoController.selected.epeIdEpe}" required="true" requiredMessage="#{myBundle.EditTipoEquipamentoRequiredMessage_epeIdEpe}" converter="epeConverter">
+                            <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
+                            <f:selectItems value="#{epeController.items}"
+                                           var="epeIdEpeItem"
+                                           itemValue="#{epeIdEpeItem}"
+                                           itemLabel="#{epeIdEpeItem.idEpe.toString()}"
+                                           />
+
+                        </p:selectOneMenu>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{tipoEquipamentoController.save}" value="#{myBundle.Save}" update="display,:TipoEquipamentoListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,TipoEquipamentoEditDialog);">
+                        <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmEditMessage}" icon="ui-icon-alert"/>
+                    </p:commandButton>
+                    <p:commandButton value="#{myBundle.Cancel}" onclick="TipoEquipamentoEditDialog.hide()"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

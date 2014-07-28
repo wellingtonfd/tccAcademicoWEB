@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui">
+
+    <h:form id="EpeListForm">
+
+        <p:panel header="#{myBundle.ListEpeTitle}">
+            <p:contextMenu id="EpeDataTableContextMenu" for="datalist">  
+                <p:menuitem value="#{myBundle.Create}" onclick="document.getElementById('EpeListForm:createButton').click();" icon="ui-icon-plus"/>
+                <p:menuitem value="#{myBundle.View}" onclick="document.getElementById('EpeListForm:viewButton').click();" icon="ui-icon-search"/>
+                <p:menuitem value="#{myBundle.Edit}" onclick="document.getElementById('EpeListForm:editButton').click();" icon="ui-icon-pencil"/>
+                <p:menuitem value="#{myBundle.Delete}" onclick="document.getElementById('EpeListForm:deleteButton').click();" icon="ui-icon-trash"/>
+                <p:separator/>
+                <p:menuitem value="#{myBundle.EpeMenuItem_tipoMaterialIdMaterial}" icon="ui-icon-search"  actionListener="#{epeController.prepareTipoMaterialIdMaterial}" update=":TipoMaterialViewForm" oncomplete="TipoMaterialViewDialog.show()" disabled="#{empty epeController.selected.tipoMaterialIdMaterial}"/>  
+                <p:menuitem value="#{myBundle.EpeMenuItem_tipoEquipamentoCollection}" icon="ui-icon-search"  action="#{epeController.navigateTipoEquipamentoCollection}" disabled="#{empty epeController.selected.tipoEquipamentoCollection}" ajax="false"/>  
+            </p:contextMenu>
+            <p:dataTable id="datalist"
+                         value="#{epeController.items}"
+                         var="item"
+                         rowKey="#{item.idEpe}"
+                         paginator="true"
+                         rows="5"
+                         rowsPerPageTemplate="5,10,20,30,40,50"
+                         selectionMode="single"
+                         selection="#{epeController.selected}">
+
+                <p:ajax event="rowSelect"   update=":EpeListForm:createButton :EpeListForm:viewButton :EpeListForm:editButton :EpeListForm:deleteButton :EpeListForm:EpeDataTableContextMenu" listener="#{epeController.resetParents}"/>
+                <p:ajax event="rowUnselect" update=":EpeListForm:createButton :EpeListForm:viewButton :EpeListForm:editButton :EpeListForm:deleteButton :EpeListForm:EpeDataTableContextMenu" listener="#{epeController.resetParents}"/>
+                <p:ajax event="rowDblselect" onsuccess="document.getElementById('EpeListForm:viewButton').click();"/>
+
+                <p:column sortBy="#{item.idEpe}" filterBy="#{item.idEpe}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListEpeTitle_idEpe}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.idEpe}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.nomeEpe}" filterBy="#{item.nomeEpe}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListEpeTitle_nomeEpe}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.nomeEpe}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.classeEpe}" filterBy="#{item.classeEpe}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListEpeTitle_classeEpe}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.classeEpe}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.agenteEpe}" filterBy="#{item.agenteEpe}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListEpeTitle_agenteEpe}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.agenteEpe}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.tipoMaterialIdMaterial.idMaterial}" filterBy="#{item.tipoMaterialIdMaterial.idMaterial}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListEpeTitle_tipoMaterialIdMaterial}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.tipoMaterialIdMaterial.idMaterial}"/>
+                </p:column>
+
+
+            </p:dataTable>
+
+            <p:commandButton id="createButton"                             icon="ui-icon-plus"   value="#{myBundle.Create}" actionListener="#{epeController.prepareCreate}" update=":EpeCreateForm" oncomplete="EpeCreateDialog.show()"/>
+            <p:commandButton id="viewButton"   style="visibility: hidden;" icon="ui-icon-search" value="#{myBundle.View}" update=":EpeViewForm" oncomplete="EpeViewDialog.show()" disabled="#{empty epeController.selected}"/>
+            <p:commandButton id="editButton"   style="visibility: hidden;" icon="ui-icon-pencil" value="#{myBundle.Edit}" update=":EpeEditForm" oncomplete="EpeEditDialog.show()" disabled="#{empty epeController.selected}"/>
+            <p:commandButton id="deleteButton" style="visibility: hidden;" icon="ui-icon-trash"  value="#{myBundle.Delete}" actionListener="#{epeController.delete}" update=":growl,datalist" disabled="#{empty epeController.selected}">
+                <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmDeleteMessage}" icon="ui-icon-alert"/>
+            </p:commandButton>
+
+        </p:panel>
+        <ui:include src="/WEB-INF/include/confirmation.xhtml"/>
+    </h:form>
+
+</ui:composition>

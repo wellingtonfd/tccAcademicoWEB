@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui">
+
+    <h:form id="CombustivelListForm">
+
+        <p:panel header="#{myBundle.ListCombustivelTitle}">
+            <p:contextMenu id="CombustivelDataTableContextMenu" for="datalist">  
+                <p:menuitem value="#{myBundle.Create}" onclick="document.getElementById('CombustivelListForm:createButton').click();" icon="ui-icon-plus"/>
+                <p:menuitem value="#{myBundle.View}" onclick="document.getElementById('CombustivelListForm:viewButton').click();" icon="ui-icon-search"/>
+                <p:menuitem value="#{myBundle.Edit}" onclick="document.getElementById('CombustivelListForm:editButton').click();" icon="ui-icon-pencil"/>
+                <p:menuitem value="#{myBundle.Delete}" onclick="document.getElementById('CombustivelListForm:deleteButton').click();" icon="ui-icon-trash"/>
+                <p:separator/>
+                <p:menuitem value="#{myBundle.CombustivelMenuItem_veiculoCollection}" icon="ui-icon-search"  action="#{combustivelController.navigateVeiculoCollection}" disabled="#{empty combustivelController.selected.veiculoCollection}" ajax="false"/>  
+            </p:contextMenu>
+            <p:dataTable id="datalist"
+                         value="#{combustivelController.items}"
+                         var="item"
+                         rowKey="#{item.idCombustivel}"
+                         paginator="true"
+                         rows="5"
+                         rowsPerPageTemplate="5,10,20,30,40,50"
+                         selectionMode="single"
+                         selection="#{combustivelController.selected}">
+
+                <p:ajax event="rowSelect"   update=":CombustivelListForm:createButton :CombustivelListForm:viewButton :CombustivelListForm:editButton :CombustivelListForm:deleteButton :CombustivelListForm:CombustivelDataTableContextMenu" listener="#{combustivelController.resetParents}"/>
+                <p:ajax event="rowUnselect" update=":CombustivelListForm:createButton :CombustivelListForm:viewButton :CombustivelListForm:editButton :CombustivelListForm:deleteButton :CombustivelListForm:CombustivelDataTableContextMenu" listener="#{combustivelController.resetParents}"/>
+                <p:ajax event="rowDblselect" onsuccess="document.getElementById('CombustivelListForm:viewButton').click();"/>
+
+                <p:column sortBy="#{item.idCombustivel}" filterBy="#{item.idCombustivel}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListCombustivelTitle_idCombustivel}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.idCombustivel}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.nomeCombustivel}" filterBy="#{item.nomeCombustivel}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListCombustivelTitle_nomeCombustivel}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.nomeCombustivel}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.especCombustivel}" filterBy="#{item.especCombustivel}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListCombustivelTitle_especCombustivel}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.especCombustivel}"/>
+                </p:column>
+
+
+            </p:dataTable>
+
+            <p:commandButton id="createButton"                             icon="ui-icon-plus"   value="#{myBundle.Create}" actionListener="#{combustivelController.prepareCreate}" update=":CombustivelCreateForm" oncomplete="CombustivelCreateDialog.show()"/>
+            <p:commandButton id="viewButton"   style="visibility: hidden;" icon="ui-icon-search" value="#{myBundle.View}" update=":CombustivelViewForm" oncomplete="CombustivelViewDialog.show()" disabled="#{empty combustivelController.selected}"/>
+            <p:commandButton id="editButton"   style="visibility: hidden;" icon="ui-icon-pencil" value="#{myBundle.Edit}" update=":CombustivelEditForm" oncomplete="CombustivelEditDialog.show()" disabled="#{empty combustivelController.selected}"/>
+            <p:commandButton id="deleteButton" style="visibility: hidden;" icon="ui-icon-trash"  value="#{myBundle.Delete}" actionListener="#{combustivelController.delete}" update=":growl,datalist" disabled="#{empty combustivelController.selected}">
+                <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmDeleteMessage}" icon="ui-icon-alert"/>
+            </p:commandButton>
+
+        </p:panel>
+        <ui:include src="/WEB-INF/include/confirmation.xhtml"/>
+    </h:form>
+
+</ui:composition>
