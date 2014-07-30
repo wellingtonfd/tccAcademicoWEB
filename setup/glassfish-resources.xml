@@ -11,4 +11,6 @@
         <property name="driverClass" value="org.postgresql.Driver"/>
     </jdbc-connection-pool>
     <jdbc-resource enabled="true" jndi-name="academico" object-type="user" pool-name="post-gre-sql_academico_postgresPool"/>
+
+<!-- jndi-name="academico" -->
 </resources>

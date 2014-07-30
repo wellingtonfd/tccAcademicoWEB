@@ -212,7 +212,7 @@ public class Veiculo implements Serializable {
 
     @Override
     public String toString() {
-        return "entity.Veiculo[ idVeiculo=" + idVeiculo + " ]";
+        return "br.com.scpp.Veiculo[ idVeiculo=" + idVeiculo + " ]";
     }
 
 }

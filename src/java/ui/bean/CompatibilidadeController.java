@@ -41,7 +41,7 @@ public class CompatibilidadeController extends AbstractController<Compatibilidad
         if (this.getSelected() != null) {
             FacesContext.getCurrentInstance().getExternalContext().getRequestMap().put("Embalagem_items", this.getSelected().getEmbalagemCollection());
         }
-        return "/entities/embalagem/index";
+        return "/entity/embalagem/index";
     }
 
     /**
@@ -55,7 +55,7 @@ public class CompatibilidadeController extends AbstractController<Compatibilidad
         if (this.getSelected() != null) {
             FacesContext.getCurrentInstance().getExternalContext().getRequestMap().put("Produto_items", this.getSelected().getProdutoCollection());
         }
-        return "/entities/produto/index";
+        return "/entity/produto/index";
     }
 
     /**

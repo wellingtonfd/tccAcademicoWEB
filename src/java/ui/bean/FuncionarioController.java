@@ -47,7 +47,7 @@ public class FuncionarioController extends AbstractController<Funcionario> {
         if (this.getSelected() != null) {
             FacesContext.getCurrentInstance().getExternalContext().getRequestMap().put("TipoSolicitacao_items", this.getSelected().getTipoSolicitacaoCollection());
         }
-        return "/entities/tipoSolicitacao/index";
+        return "/entity/tipoSolicitacao/index";
     }
 
     /**
@@ -61,7 +61,7 @@ public class FuncionarioController extends AbstractController<Funcionario> {
         if (this.getSelected() != null) {
             FacesContext.getCurrentInstance().getExternalContext().getRequestMap().put("Movimentacao_items", this.getSelected().getMovimentacaoCollection());
         }
-        return "/entities/movimentacao/index";
+        return "/entity/movimentacao/index";
     }
 
     /**

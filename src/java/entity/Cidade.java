@@ -110,7 +110,7 @@ public class Cidade implements Serializable {
 
     @Override
     public String toString() {
-        return "entity.Cidade[ idCidade=" + idCidade + " ]";
+        return "br.com.scpp.Cidade[ idCidade=" + idCidade + " ]";
     }
 
 }

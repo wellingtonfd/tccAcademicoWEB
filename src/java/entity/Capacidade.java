@@ -102,7 +102,7 @@ public class Capacidade implements Serializable {
 
     @Override
     public String toString() {
-        return "entity.Capacidade[ idCapacidade=" + idCapacidade + " ]";
+        return "br.com.scpp.Capacidade[ idCapacidade=" + idCapacidade + " ]";
     }
 
 }

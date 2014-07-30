@@ -35,7 +35,7 @@ public class CombustivelController extends AbstractController<Combustivel> {
         if (this.getSelected() != null) {
             FacesContext.getCurrentInstance().getExternalContext().getRequestMap().put("Veiculo_items", this.getSelected().getVeiculoCollection());
         }
-        return "/entities/veiculo/index";
+        return "/entity/veiculo/index";
     }
 
 }

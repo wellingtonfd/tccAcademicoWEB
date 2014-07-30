@@ -122,7 +122,7 @@ public class Combustivel implements Serializable {
 
     @Override
     public String toString() {
-        return "entity.Combustivel[ idCombustivel=" + idCombustivel + " ]";
+        return "br.com.scpp.Combustivel[ idCombustivel=" + idCombustivel + " ]";
     }
 
 }

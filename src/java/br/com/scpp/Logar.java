@@ -88,7 +88,7 @@ public class Logar {
         con = conectar.conectar(usuario, senha);
         if(con != null){            
                 setConectou("OK");
-                FacesContext.getCurrentInstance().getExternalContext().redirect("menu.jsf");
+                FacesContext.getCurrentInstance().getExternalContext().redirect("index.xhtml");
             }
         else {            
                 setConectou("Usuário e/ou senha inválidos");

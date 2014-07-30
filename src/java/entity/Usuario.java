@@ -39,6 +39,11 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Usuario.findByLogin", query = "SELECT u FROM Usuario u WHERE u.login = :login"),
     @NamedQuery(name = "Usuario.findBySenha", query = "SELECT u FROM Usuario u WHERE u.senha = :senha")})
 public class Usuario implements Serializable {
+    @JoinColumn(name = "id_roler", referencedColumnName = "id_roler")
+    @ManyToOne
+    private Roler idRoler;
+    @OneToMany(mappedBy = "idUsuario")
+    private Collection<Funcionario> funcionarioCollection;
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -55,11 +60,6 @@ public class Usuario implements Serializable {
     @Size(min = 1, max = 25)
     @Column(name = "senha")
     private String senha;
-    @JoinColumn(name = "id_roler", referencedColumnName = "id_roler")
-    @ManyToOne
-    private Roler idRoler;
-    @OneToMany(mappedBy = "idUsuario")
-    private Collection<Funcionario> funcionarioCollection;
 
     public Usuario() {
     }
@@ -98,23 +98,6 @@ public class Usuario implements Serializable {
         this.senha = senha;
     }
 
-    public Roler getIdRoler() {
-        return idRoler;
-    }
-
-    public void setIdRoler(Roler idRoler) {
-        this.idRoler = idRoler;
-    }
-
-    @XmlTransient
-    public Collection<Funcionario> getFuncionarioCollection() {
-        return funcionarioCollection;
-    }
-
-    public void setFuncionarioCollection(Collection<Funcionario> funcionarioCollection) {
-        this.funcionarioCollection = funcionarioCollection;
-    }
-
     @Override
     public int hashCode() {
         int hash = 0;
@@ -137,7 +120,24 @@ public class Usuario implements Serializable {
 
     @Override
     public String toString() {
-        return "entity.Usuario[ idUsuario=" + idUsuario + " ]";
+        return "br.com.scpp.Usuario[ idUsuario=" + idUsuario + " ]";
+    }
+
+    public Roler getIdRoler() {
+        return idRoler;
+    }
+
+    public void setIdRoler(Roler idRoler) {
+        this.idRoler = idRoler;
+    }
+
+    @XmlTransient
+    public Collection<Funcionario> getFuncionarioCollection() {
+        return funcionarioCollection;
+    }
+
+    public void setFuncionarioCollection(Collection<Funcionario> funcionarioCollection) {
+        this.funcionarioCollection = funcionarioCollection;
     }
 
 }

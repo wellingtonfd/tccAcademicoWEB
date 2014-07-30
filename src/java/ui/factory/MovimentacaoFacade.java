@@ -18,7 +18,7 @@ import javax.persistence.PersistenceContext;
  */
 @Stateless
 public class MovimentacaoFacade extends AbstractFacade<Movimentacao> {
-    @PersistenceContext(unitName = "tccAcademicoWEBPU")
+    @PersistenceContext(unitName = "tccAcademicoWEBPU2")
     private EntityManager em;
 
     @Override

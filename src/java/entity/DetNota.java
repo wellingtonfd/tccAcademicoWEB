@@ -211,7 +211,7 @@ public class DetNota implements Serializable {
 
     @Override
     public String toString() {
-        return "entity.DetNota[ idDetalheNota=" + idDetalheNota + " ]";
+        return "br.com.scpp.DetNota[ idDetalheNota=" + idDetalheNota + " ]";
     }
 
 }

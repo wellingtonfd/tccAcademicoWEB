@@ -179,7 +179,7 @@ public class EndArmazem implements Serializable {
 
     @Override
     public String toString() {
-        return "entity.EndArmazem[ idEndarmazem=" + idEndarmazem + " ]";
+        return "br.com.scpp.EndArmazem[ idEndarmazem=" + idEndarmazem + " ]";
     }
 
 }

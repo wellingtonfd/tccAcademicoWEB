@@ -36,7 +36,7 @@ public class CapacidadeController extends AbstractController<Capacidade> {
         if (this.getSelected() != null) {
             FacesContext.getCurrentInstance().getExternalContext().getRequestMap().put("Embalagem_items", this.getSelected().getEmbalagemCollection());
         }
-        return "/entities/embalagem/index";
+        return "/entity/embalagem/index";
     }
 
 }

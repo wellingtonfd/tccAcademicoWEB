@@ -51,7 +51,7 @@ public class EpeController extends AbstractController<Epe> {
         if (this.getSelected() != null) {
             FacesContext.getCurrentInstance().getExternalContext().getRequestMap().put("TipoEquipamento_items", this.getSelected().getTipoEquipamentoCollection());
         }
-        return "/entities/tipoEquipamento/index";
+        return "/entity/tipoEquipamento/index";
     }
 
 }

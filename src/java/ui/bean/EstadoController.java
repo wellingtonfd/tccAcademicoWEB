@@ -35,7 +35,7 @@ public class EstadoController extends AbstractController<Estado> {
         if (this.getSelected() != null) {
             FacesContext.getCurrentInstance().getExternalContext().getRequestMap().put("Endereco_items", this.getSelected().getEnderecoCollection());
         }
-        return "/entities/endereco/index";
+        return "/entity/endereco/index";
     }
 
 }

@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Scene Scope="Project" version="2">
+    <Scope Scope="Faces Configuration Only"/>
+    <Scope Scope="Project">
+        <Node id="entities/cidade/index.xhtml" x="900" y="750" zoom="true"/>
+        <Node id="index.jsp" x="1650" y="150" zoom="true"/>
+        <Node id="entities/compatibilidade/index.xhtml" x="1900" y="150" zoom="true"/>
+        <Node id="entities/roler/index.xhtml" x="150" y="900" zoom="true"/>
+        <Node id="entities/contatos/index.xhtml" x="150" y="1050" zoom="true"/>
+        <Node id="entities/legendaCompatibilidade/index.xhtml" x="650" y="300" zoom="true"/>
+        <Node id="entities/capacidade/index.xhtml" x="150" y="600" zoom="true"/>
+        <Node id="entities/numCas/index.xhtml" x="150" y="450" zoom="true"/>
+        <Node id="entities/grupoEmbalagem/index.xhtml" x="400" y="300" zoom="true"/>
+        <Node id="entities/classe/index.xhtml" x="150" y="150" zoom="true"/>
+        <Node id="entities/tipoMaterial/index.xhtml" x="1400" y="450" zoom="true"/>
+        <Node id="entities/statusArmazem/index.xhtml" x="1650" y="300" zoom="true"/>
+        <Node id="entities/detNota/index.xhtml" x="1150" y="600" zoom="true"/>
+        <Node id="welcomePrimefaces.xhtml" x="1400" y="300" zoom="true"/>
+        <Node id="entities/estado/index.xhtml" x="150" y="750" zoom="true"/>
+        <Node id="entities/endArmazem/index.xhtml" x="1150" y="450" zoom="true"/>
+        <Node id="entities/movimentacao/index.xhtml" x="650" y="900" zoom="true"/>
+        <Node id="entities/usuario/index.xhtml" x="400" y="600" zoom="true"/>
+        <Node id="entities/estFisico/index.xhtml" x="400" y="450" zoom="true"/>
+        <Node id="entities/tipoSolicitacao/index.xhtml" x="400" y="750" zoom="true"/>
+        <Node id="entities/armazem/index.xhtml" x="1150" y="300" zoom="true"/>
+        <Node id="entities/veiculo/index.xhtml" x="650" y="600" zoom="true"/>
+        <Node id="entities/endereco/index.xhtml" x="150" y="1200" zoom="true"/>
+        <Node id="entities/localOperacao/index.xhtml" x="150" y="300" zoom="true"/>
+        <Node id="entities/pais/index.xhtml" x="900" y="300" zoom="true"/>
+        <Node id="entities/epi/index.xhtml" x="650" y="750" zoom="true"/>
+        <Node id="entities/fornecedor/index.xhtml" x="400" y="900" zoom="true"/>
+        <Node id="index.xhtml" x="650" y="150" zoom="true"/>
+        <Node id="entities/epe/index.xhtml" x="900" y="150" zoom="true"/>
+        <Node id="entities/embalagem/index.xhtml" x="650" y="450" zoom="true"/>
+        <Node id="index_1.xhtml" x="1400" y="150" zoom="true"/>
+        <Node id="entities/funcionario/index.xhtml" x="400" y="1050" zoom="true"/>
+        <Node id="entities/produto/index.xhtml" x="900" y="450" zoom="true"/>
+        <Node id="entities/tipoEquipamento/index.xhtml" x="1150" y="150" zoom="true"/>
+        <Node id="entities/combustivel/index.xhtml" x="900" y="600" zoom="true"/>
+        <Node id="entities/numOnu/index.xhtml" x="400" y="150" zoom="true"/>
+    </Scope>
+    <Scope Scope="All Faces Configurations"/>
+</Scene>

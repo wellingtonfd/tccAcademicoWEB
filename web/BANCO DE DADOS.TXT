@@ -3,8 +3,8 @@
 --
 
 -- Dumped from database version 9.2.4
--- Dumped by pg_dump version 9.2.2
--- Started on 2014-06-16 22:34:13
+-- Dumped by pg_dump version 9.2.4
+-- Started on 2014-07-29 20:24:04
 
 SET statement_timeout = 0;
 SET client_encoding = 'UTF8';
@@ -13,7 +13,7 @@ SET check_function_bodies = false;
 SET client_min_messages = warning;
 
 --
--- TOC entry 234 (class 3079 OID 11727)
+-- TOC entry 232 (class 3079 OID 11727)
 -- Name: plpgsql; Type: EXTENSION; Schema: -; Owner: 
 --
 
@@ -21,8 +21,8 @@ CREATE EXTENSION IF NOT EXISTS plpgsql WITH SCHEMA pg_catalog;
 
 
 --
--- TOC entry 2357 (class 0 OID 0)
--- Dependencies: 234
+-- TOC entry 2345 (class 0 OID 0)
+-- Dependencies: 232
 -- Name: EXTENSION plpgsql; Type: COMMENT; Schema: -; Owner: 
 --
 
@@ -36,23 +36,30 @@ SET default_tablespace = '';
 SET default_with_oids = false;
 
 --
--- TOC entry 169 (class 1259 OID 26663)
+-- TOC entry 211 (class 1259 OID 62853)
 -- Name: armazem; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
 --
 
 CREATE TABLE armazem (
-    id_armazem serial primary key unique NOT NULL,
-    tipo character varying(50) unique NOT NULL,
-    capacidade integer NOT NULL,
-    especificacao character varying(50) NOT NULL,
-    certificacao character varying(50) NOT NULL
+    id_armazem integer NOT NULL,
+    tipo_armazem character varying(45) NOT NULL,
+    capacidade_armazem character varying(30) NOT NULL,
+    certificacao_armazem character varying(45),
+    espec_armazem character varying(45),
+    estoque_max character varying(30) NOT NULL,
+    estoque_min character varying(45) NOT NULL,
+    id_status_armazem integer,
+    id_endarmazem integer,
+    status_armazem_id_status_armazem integer NOT NULL,
+    id_local_oper integer,
+    local_operacao_id_local_oper integer NOT NULL
 );
 
 
 ALTER TABLE public.armazem OWNER TO postgres;
 
 --
--- TOC entry 168 (class 1259 OID 26661)
+-- TOC entry 210 (class 1259 OID 62851)
 -- Name: armazem_id_armazem_seq; Type: SEQUENCE; Schema: public; Owner: postgres
 --
 
@@ -67,8 +74,8 @@ CREATE SEQUENCE armazem_id_armazem_seq
 ALTER TABLE public.armazem_id_armazem_seq OWNER TO postgres;
 
 --
--- TOC entry 2358 (class 0 OID 0)
--- Dependencies: 168
+-- TOC entry 2346 (class 0 OID 0)
+-- Dependencies: 210
 -- Name: armazem_id_armazem_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
 
@@ -76,25 +83,24 @@ ALTER SEQUENCE armazem_id_armazem_seq OWNED BY armazem.id_armazem;
 
 
 --
--- TOC entry 221 (class 1259 OID 26883)
--- Name: cidade; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+-- TOC entry 173 (class 1259 OID 62645)
+-- Name: capacidade; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
 --
 
-CREATE TABLE cidade (
-    cod_cidade serial primary key unique NOT NULL,
-    cod_estado integer NOT NULL,
-    nom_cidade character varying(50) NOT NULL
+CREATE TABLE capacidade (
+    id_capacidade integer NOT NULL,
+    tipo_capacidade character varying(40)
 );
 
 
-ALTER TABLE public.cidade OWNER TO postgres;
+ALTER TABLE public.capacidade OWNER TO postgres;
 
 --
--- TOC entry 220 (class 1259 OID 26881)
--- Name: cidade_cod_cidade_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+-- TOC entry 172 (class 1259 OID 62643)
+-- Name: capacidade_id_capacidade_seq; Type: SEQUENCE; Schema: public; Owner: postgres
 --
 
-CREATE SEQUENCE cidade_cod_cidade_seq
+CREATE SEQUENCE capacidade_id_capacidade_seq
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -102,33 +108,71 @@ CREATE SEQUENCE cidade_cod_cidade_seq
     CACHE 1;
 
 
-ALTER TABLE public.cidade_cod_cidade_seq OWNER TO postgres;
+ALTER TABLE public.capacidade_id_capacidade_seq OWNER TO postgres;
 
 --
--- TOC entry 2359 (class 0 OID 0)
--- Dependencies: 220
--- Name: cidade_cod_cidade_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+-- TOC entry 2347 (class 0 OID 0)
+-- Dependencies: 172
+-- Name: capacidade_id_capacidade_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
 
-ALTER SEQUENCE cidade_cod_cidade_seq OWNED BY cidade.cod_cidade;
+ALTER SEQUENCE capacidade_id_capacidade_seq OWNED BY capacidade.id_capacidade;
 
 
 --
--- TOC entry 211 (class 1259 OID 26840)
+-- TOC entry 177 (class 1259 OID 62662)
+-- Name: cidade; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE cidade (
+    id_cidade integer NOT NULL,
+    nome_cidade character varying(60) NOT NULL
+);
+
+
+ALTER TABLE public.cidade OWNER TO postgres;
+
+--
+-- TOC entry 176 (class 1259 OID 62660)
+-- Name: cidade_id_cidade_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE cidade_id_cidade_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.cidade_id_cidade_seq OWNER TO postgres;
+
+--
+-- TOC entry 2348 (class 0 OID 0)
+-- Dependencies: 176
+-- Name: cidade_id_cidade_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE cidade_id_cidade_seq OWNED BY cidade.id_cidade;
+
+
+--
+-- TOC entry 195 (class 1259 OID 62749)
 -- Name: classe; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
 --
 
 CREATE TABLE classe (
-    id_classe serial primary key unique NOT NULL,
-    classe integer unique NOT NULL,
-    subclasse integer unique NOT NULL
+    id_classe integer NOT NULL,
+    num_classe integer NOT NULL,
+    num_subclasse integer NOT NULL,
+    espec_classe character varying(50) NOT NULL
 );
 
 
 ALTER TABLE public.classe OWNER TO postgres;
 
 --
--- TOC entry 210 (class 1259 OID 26838)
+-- TOC entry 194 (class 1259 OID 62747)
 -- Name: classe_id_classe_seq; Type: SEQUENCE; Schema: public; Owner: postgres
 --
 
@@ -143,8 +187,8 @@ CREATE SEQUENCE classe_id_classe_seq
 ALTER TABLE public.classe_id_classe_seq OWNER TO postgres;
 
 --
--- TOC entry 2360 (class 0 OID 0)
--- Dependencies: 210
+-- TOC entry 2349 (class 0 OID 0)
+-- Dependencies: 194
 -- Name: classe_id_classe_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
 
@@ -152,20 +196,21 @@ ALTER SEQUENCE classe_id_classe_seq OWNED BY classe.id_classe;
 
 
 --
--- TOC entry 191 (class 1259 OID 26755)
+-- TOC entry 185 (class 1259 OID 62698)
 -- Name: combustivel; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
 --
 
 CREATE TABLE combustivel (
-    id_combustivel serial primary key unique NOT NULL,
-    nome_combustivel character varying(30) unique
+    id_combustivel integer NOT NULL,
+    nome_combustivel character varying(35) NOT NULL,
+    espec_combustivel character varying(45)
 );
 
 
 ALTER TABLE public.combustivel OWNER TO postgres;
 
 --
--- TOC entry 190 (class 1259 OID 26753)
+-- TOC entry 184 (class 1259 OID 62696)
 -- Name: combustivel_id_combustivel_seq; Type: SEQUENCE; Schema: public; Owner: postgres
 --
 
@@ -180,8 +225,8 @@ CREATE SEQUENCE combustivel_id_combustivel_seq
 ALTER TABLE public.combustivel_id_combustivel_seq OWNER TO postgres;
 
 --
--- TOC entry 2361 (class 0 OID 0)
--- Dependencies: 190
+-- TOC entry 2350 (class 0 OID 0)
+-- Dependencies: 184
 -- Name: combustivel_id_combustivel_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
 
@@ -189,36 +234,27 @@ ALTER SEQUENCE combustivel_id_combustivel_seq OWNED BY combustivel.id_combustive
 
 
 --
--- TOC entry 209 (class 1259 OID 26829)
--- Name: composproduto; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+-- TOC entry 207 (class 1259 OID 62824)
+-- Name: compatibilidade; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
 --
 
-CREATE TABLE composproduto (
-    tipoproduto varchar (30) nOT NULL,
-    formulaproduto character varying(45),
-    formaproduto character varying(45),
-    odorproduto character varying(45),
-    ph character varying(45),
-    estfisico character varying(35),
-    solibilidadeagua character varying(35),
-    limiteexplosivo character varying(35),
-    densidade character varying(35),
-    pressavapor character varying(35),
-    sinonimos character varying(30),
-    tramentodisposicao character varying(255),
-    regulamentacao character varying(100),
-    decomposicao character varying(100)
+CREATE TABLE compatibilidade (
+    id_compatibilidade integer NOT NULL,
+    grupo_compatibilidade character varying(1) NOT NULL,
+    desc_compatibilidade character varying(60) NOT NULL,
+    cod_classifi character varying(10) NOT NULL,
+    id_legenda_compatibilidade integer
 );
 
 
-ALTER TABLE public.composproduto OWNER TO postgres;
+ALTER TABLE public.compatibilidade OWNER TO postgres;
 
 --
--- TOC entry 208 (class 1259 OID 26827)
--- Name: composproduto_tipoproduto_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+-- TOC entry 206 (class 1259 OID 62822)
+-- Name: compatibilidade_id_compatibilidade_seq; Type: SEQUENCE; Schema: public; Owner: postgres
 --
 
-CREATE SEQUENCE composproduto_tipoproduto_seq
+CREATE SEQUENCE compatibilidade_id_compatibilidade_seq
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -226,42 +262,85 @@ CREATE SEQUENCE composproduto_tipoproduto_seq
     CACHE 1;
 
 
-ALTER TABLE public.composproduto_tipoproduto_seq OWNER TO postgres;
+ALTER TABLE public.compatibilidade_id_compatibilidade_seq OWNER TO postgres;
 
 --
--- TOC entry 2362 (class 0 OID 0)
--- Dependencies: 208
--- Name: composproduto_tipoproduto_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+-- TOC entry 2351 (class 0 OID 0)
+-- Dependencies: 206
+-- Name: compatibilidade_id_compatibilidade_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
 
-ALTER SEQUENCE composproduto_tipoproduto_seq OWNED BY composproduto.tipoproduto;
+ALTER SEQUENCE compatibilidade_id_compatibilidade_seq OWNED BY compatibilidade.id_compatibilidade;
 
 
 --
--- TOC entry 229 (class 1259 OID 26918)
--- Name: detalhe_nota; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+-- TOC entry 197 (class 1259 OID 62758)
+-- Name: contatos; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
 --
 
-CREATE TABLE detalhe_nota (
-    id_detalhe_nota serial primary key unique NOT NULL,
-    num_nota integer unique NOT NULL,
-    valor_unitario numeric(18,2) NOT NULL,
+CREATE TABLE contatos (
+    id_contato integer NOT NULL,
+    tel character varying(15) NOT NULL,
+    email character varying(40) NOT NULL,
+    celular character varying(15) NOT NULL,
+    site character varying(70) NOT NULL,
+    radio character varying(20) NOT NULL
+);
+
+
+ALTER TABLE public.contatos OWNER TO postgres;
+
+--
+-- TOC entry 196 (class 1259 OID 62756)
+-- Name: contatos_id_contato_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE contatos_id_contato_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.contatos_id_contato_seq OWNER TO postgres;
+
+--
+-- TOC entry 2352 (class 0 OID 0)
+-- Dependencies: 196
+-- Name: contatos_id_contato_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE contatos_id_contato_seq OWNED BY contatos.id_contato;
+
+
+--
+-- TOC entry 225 (class 1259 OID 63054)
+-- Name: det_nota; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE det_nota (
+    id_detalhe_nota integer NOT NULL,
+    num_nota character varying(25) NOT NULL,
     dt_pedido date NOT NULL,
-    valor_total numeric(19,2) NOT NULL,
-    fornecedorid_fornecedor integer NOT NULL,
-    tipo_equipamentoid_tipo_equipamento integer NOT NULL,
-    embalagemid_embalgem integer NOT NULL
+    valor_total numeric(18,2) NOT NULL,
+    id_fornecedor integer,
+    id_tipo_equipamento integer,
+    valor_unitario integer,
+    tipo_equipamento_id_tipo_equipamento integer NOT NULL,
+    fornecedor_id_fornecedor integer NOT NULL,
+    id_produto integer
 );
 
 
-ALTER TABLE public.detalhe_nota OWNER TO postgres;
+ALTER TABLE public.det_nota OWNER TO postgres;
 
 --
--- TOC entry 228 (class 1259 OID 26916)
--- Name: detalhe_nota_id_detalhe_nota_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+-- TOC entry 224 (class 1259 OID 63052)
+-- Name: det_nota_id_detalhe_nota_seq; Type: SEQUENCE; Schema: public; Owner: postgres
 --
 
-CREATE SEQUENCE detalhe_nota_id_detalhe_nota_seq
+CREATE SEQUENCE det_nota_id_detalhe_nota_seq
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -269,46 +348,40 @@ CREATE SEQUENCE detalhe_nota_id_detalhe_nota_seq
     CACHE 1;
 
 
-ALTER TABLE public.detalhe_nota_id_detalhe_nota_seq OWNER TO postgres;
+ALTER TABLE public.det_nota_id_detalhe_nota_seq OWNER TO postgres;
 
 --
--- TOC entry 2363 (class 0 OID 0)
--- Dependencies: 228
--- Name: detalhe_nota_id_detalhe_nota_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+-- TOC entry 2353 (class 0 OID 0)
+-- Dependencies: 224
+-- Name: det_nota_id_detalhe_nota_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
 
-ALTER SEQUENCE detalhe_nota_id_detalhe_nota_seq OWNED BY detalhe_nota.id_detalhe_nota;
+ALTER SEQUENCE det_nota_id_detalhe_nota_seq OWNED BY det_nota.id_detalhe_nota;
 
 
 --
--- TOC entry 207 (class 1259 OID 26819)
+-- TOC entry 219 (class 1259 OID 62948)
 -- Name: embalagem; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
 --
 
 CREATE TABLE embalagem (
-    id_embalgem serial primary key unique NOT NULL,
-    tipo_embalagemid_tipo_embalagem integer NOT NULL,
-    materialid_material integer NOT NULL,
-    classeid_classe integer NOT NULL,
-    capacidade character varying(50) NOT NULL,
-    especeficacao character varying(50) NOT NULL,
-    condicoes character varying(30) NOT NULL,
-    dtfabricacao date,
-    certificado character varying(40) NOT NULL,
-    validadecert date NOT NULL,
-    valorunitario numeric(19,2) NOT NULL,
-    grupoembalagemid_grupoembalagem integer NOT NULL
+    id_embalagem integer NOT NULL,
+    espec_emabalagem character varying(40),
+    id_capacidade integer NOT NULL,
+    id_grupo_embalagem integer,
+    id_compatibilidade integer,
+    id_material integer
 );
 
 
 ALTER TABLE public.embalagem OWNER TO postgres;
 
 --
--- TOC entry 206 (class 1259 OID 26817)
--- Name: embalagem_id_embalgem_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+-- TOC entry 218 (class 1259 OID 62946)
+-- Name: embalagem_id_embalagem_seq; Type: SEQUENCE; Schema: public; Owner: postgres
 --
 
-CREATE SEQUENCE embalagem_id_embalgem_seq
+CREATE SEQUENCE embalagem_id_embalagem_seq
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -316,44 +389,40 @@ CREATE SEQUENCE embalagem_id_embalgem_seq
     CACHE 1;
 
 
-ALTER TABLE public.embalagem_id_embalgem_seq OWNER TO postgres;
+ALTER TABLE public.embalagem_id_embalagem_seq OWNER TO postgres;
 
 --
--- TOC entry 2364 (class 0 OID 0)
--- Dependencies: 206
--- Name: embalagem_id_embalgem_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+-- TOC entry 2354 (class 0 OID 0)
+-- Dependencies: 218
+-- Name: embalagem_id_embalagem_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
 
-ALTER SEQUENCE embalagem_id_embalgem_seq OWNED BY embalagem.id_embalgem;
+ALTER SEQUENCE embalagem_id_embalagem_seq OWNED BY embalagem.id_embalagem;
 
 
 --
--- TOC entry 171 (class 1259 OID 26671)
+-- TOC entry 169 (class 1259 OID 62627)
 -- Name: end_armazem; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
 --
 
 CREATE TABLE end_armazem (
-    id_enderecamento serial primary key unique NOT NULL,
-    identificacao character varying(15) NOT NULL,
-    cor character varying(25) NOT NULL,
-    cod_area_armazem character varying(15) NOT NULL,
-    rua_armazem character varying(15),
-    num_porta_palete character varying(15),
-    num_prateleira_estante integer,
-    pos_vertical character varying(80),
-    pos_horizontal character varying(80),
-    armazemid_armazem integer NOT NULL
+    id_endarmazem integer NOT NULL,
+    cor_end_armazem character varying(40) NOT NULL,
+    rua_end_armazem character varying(25),
+    lado_end_armazem character varying(15),
+    nivel_end_armazem character varying(15),
+    posicao_end_armazem character varying(15)
 );
 
 
 ALTER TABLE public.end_armazem OWNER TO postgres;
 
 --
--- TOC entry 170 (class 1259 OID 26669)
--- Name: end_armazem_id_enderecamento_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+-- TOC entry 168 (class 1259 OID 62625)
+-- Name: end_armazem_id_endarmazem_seq; Type: SEQUENCE; Schema: public; Owner: postgres
 --
 
-CREATE SEQUENCE end_armazem_id_enderecamento_seq
+CREATE SEQUENCE end_armazem_id_endarmazem_seq
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -361,39 +430,39 @@ CREATE SEQUENCE end_armazem_id_enderecamento_seq
     CACHE 1;
 
 
-ALTER TABLE public.end_armazem_id_enderecamento_seq OWNER TO postgres;
+ALTER TABLE public.end_armazem_id_endarmazem_seq OWNER TO postgres;
 
 --
--- TOC entry 2365 (class 0 OID 0)
--- Dependencies: 170
--- Name: end_armazem_id_enderecamento_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+-- TOC entry 2355 (class 0 OID 0)
+-- Dependencies: 168
+-- Name: end_armazem_id_endarmazem_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
 
-ALTER SEQUENCE end_armazem_id_enderecamento_seq OWNED BY end_armazem.id_enderecamento;
+ALTER SEQUENCE end_armazem_id_endarmazem_seq OWNED BY end_armazem.id_endarmazem;
 
 
 --
--- TOC entry 223 (class 1259 OID 26891)
+-- TOC entry 215 (class 1259 OID 62900)
 -- Name: endereco; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
 --
 
 CREATE TABLE endereco (
     id_endereco integer NOT NULL,
-    logradouro character varying(70) NOT NULL,
-    num character varying(10) NOT NULL,
-    complemento character varying(30) NOT NULL,
-    cep character varying(10) NOT NULL,
-    bairro character varying(40) NOT NULL,
-    cod_cidade integer NOT NULL,
-    cod_estado integer NOT NULL,
-    cod_pais integer NOT NULL
+    id_cidade integer NOT NULL,
+    id_pais integer NOT NULL,
+    id_estado integer NOT NULL,
+    id_logradouro integer NOT NULL,
+    estado_id_estado integer NOT NULL,
+    bairro character varying(50) NOT NULL,
+    cep character varying(20),
+    numero character varying(15)
 );
 
 
 ALTER TABLE public.endereco OWNER TO postgres;
 
 --
--- TOC entry 222 (class 1259 OID 26889)
+-- TOC entry 214 (class 1259 OID 62898)
 -- Name: endereco_id_endereco_seq; Type: SEQUENCE; Schema: public; Owner: postgres
 --
 
@@ -408,8 +477,8 @@ CREATE SEQUENCE endereco_id_endereco_seq
 ALTER TABLE public.endereco_id_endereco_seq OWNER TO postgres;
 
 --
--- TOC entry 2366 (class 0 OID 0)
--- Dependencies: 222
+-- TOC entry 2356 (class 0 OID 0)
+-- Dependencies: 214
 -- Name: endereco_id_endereco_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
 
@@ -417,21 +486,23 @@ ALTER SEQUENCE endereco_id_endereco_seq OWNED BY endereco.id_endereco;
 
 
 --
--- TOC entry 195 (class 1259 OID 26771)
+-- TOC entry 203 (class 1259 OID 62795)
 -- Name: epe; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
 --
 
 CREATE TABLE epe (
-    id_epe serial primary key unique NOT NULL,
-    classe_epe character varying(250) unique not null,
-    agente_epe character varying(250)unique not null
+    id_epe integer NOT NULL,
+    nome_epe character varying(45) NOT NULL,
+    classe_epe character varying(45) NOT NULL,
+    agente_epe character varying(45) NOT NULL,
+    tipo_material_id_material integer NOT NULL
 );
 
 
 ALTER TABLE public.epe OWNER TO postgres;
 
 --
--- TOC entry 194 (class 1259 OID 26769)
+-- TOC entry 202 (class 1259 OID 62793)
 -- Name: epe_id_epe_seq; Type: SEQUENCE; Schema: public; Owner: postgres
 --
 
@@ -446,8 +517,8 @@ CREATE SEQUENCE epe_id_epe_seq
 ALTER TABLE public.epe_id_epe_seq OWNER TO postgres;
 
 --
--- TOC entry 2367 (class 0 OID 0)
--- Dependencies: 194
+-- TOC entry 2357 (class 0 OID 0)
+-- Dependencies: 202
 -- Name: epe_id_epe_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
 
@@ -455,20 +526,23 @@ ALTER SEQUENCE epe_id_epe_seq OWNED BY epe.id_epe;
 
 
 --
--- TOC entry 197 (class 1259 OID 26779)
+-- TOC entry 201 (class 1259 OID 62778)
 -- Name: epi; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
 --
 
 CREATE TABLE epi (
-    id_epi serial primary key unique NOT NULL,
-    especificacao character varying(250)not null,
-    grupo_epi character varying(250) not null);
+    id_epi integer NOT NULL,
+    nome_epi character varying(45) NOT NULL,
+    grupo_epi character varying(25) NOT NULL,
+    espec_epi character varying,
+    id_material integer
+);
 
 
 ALTER TABLE public.epi OWNER TO postgres;
 
 --
--- TOC entry 196 (class 1259 OID 26777)
+-- TOC entry 200 (class 1259 OID 62776)
 -- Name: epi_id_epi_seq; Type: SEQUENCE; Schema: public; Owner: postgres
 --
 
@@ -483,8 +557,8 @@ CREATE SEQUENCE epi_id_epi_seq
 ALTER TABLE public.epi_id_epi_seq OWNER TO postgres;
 
 --
--- TOC entry 2368 (class 0 OID 0)
--- Dependencies: 196
+-- TOC entry 2358 (class 0 OID 0)
+-- Dependencies: 200
 -- Name: epi_id_epi_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
 
@@ -492,26 +566,25 @@ ALTER SEQUENCE epi_id_epi_seq OWNED BY epi.id_epi;
 
 
 --
--- TOC entry 217 (class 1259 OID 26867)
--- Name: estado; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+-- TOC entry 231 (class 1259 OID 63201)
+-- Name: est_fisico; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
 --
 
-CREATE TABLE estado (
-    cod_estado serial primary key unique NOT NULL,
-    cod_pais integer NOT NULL,
-    sgl_estado character(2) NOT NULL,
-    nom_estado character varying(50) NOT NULL
+CREATE TABLE est_fisico (
+    id_est_fisico integer NOT NULL,
+    nome_est_fisico character varying(55) NOT NULL,
+    esp_est_fisico character varying(50)
 );
 
 
-ALTER TABLE public.estado OWNER TO postgres;
+ALTER TABLE public.est_fisico OWNER TO postgres;
 
 --
--- TOC entry 216 (class 1259 OID 26865)
--- Name: estado_cod_estado_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+-- TOC entry 230 (class 1259 OID 63199)
+-- Name: est_fisico_id_est_fisico_seq; Type: SEQUENCE; Schema: public; Owner: postgres
 --
 
-CREATE SEQUENCE estado_cod_estado_seq
+CREATE SEQUENCE est_fisico_id_est_fisico_seq
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -519,46 +592,76 @@ CREATE SEQUENCE estado_cod_estado_seq
     CACHE 1;
 
 
-ALTER TABLE public.estado_cod_estado_seq OWNER TO postgres;
+ALTER TABLE public.est_fisico_id_est_fisico_seq OWNER TO postgres;
 
 --
--- TOC entry 2369 (class 0 OID 0)
--- Dependencies: 216
--- Name: estado_cod_estado_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+-- TOC entry 2359 (class 0 OID 0)
+-- Dependencies: 230
+-- Name: est_fisico_id_est_fisico_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
 
-ALTER SEQUENCE estado_cod_estado_seq OWNED BY estado.cod_estado;
+ALTER SEQUENCE est_fisico_id_est_fisico_seq OWNED BY est_fisico.id_est_fisico;
 
 
 --
--- TOC entry 225 (class 1259 OID 26899)
+-- TOC entry 179 (class 1259 OID 62671)
+-- Name: estado; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE estado (
+    id_estado integer NOT NULL,
+    nome_estado character varying(60) NOT NULL,
+    sigla_estado character varying(2) NOT NULL
+);
+
+
+ALTER TABLE public.estado OWNER TO postgres;
+
+--
+-- TOC entry 178 (class 1259 OID 62669)
+-- Name: estado_id_estado_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE estado_id_estado_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.estado_id_estado_seq OWNER TO postgres;
+
+--
+-- TOC entry 2360 (class 0 OID 0)
+-- Dependencies: 178
+-- Name: estado_id_estado_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE estado_id_estado_seq OWNED BY estado.id_estado;
+
+
+--
+-- TOC entry 223 (class 1259 OID 63033)
 -- Name: fornecedor; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
 --
 
 CREATE TABLE fornecedor (
-    id_fornecedor serial primary key unique NOT NULL,
-    cnpj varchar(35) unique NOT NULL,
-    razaosocial character varying(255) NOT NULL,
-    nomefantasia character varying(255) NOT NULL,
-    enderecoid_endereco integer NOT NULL,
-    
-    "e-mail" character varying(30),
-    endereco character varying(255),
-    logradouro character varying(255),
-    num integer,
-    cep varchar(30) not null,
-    bairro character varying(30),
-    cidade character varying(30),
-    estado character varying(2),
-    pais character varying(30)
-    
+    id_fornecedor integer NOT NULL,
+    nome_fantasia character varying(60) NOT NULL,
+    razao_social character varying(60) NOT NULL,
+    cnpj character varying(20) NOT NULL,
+    insc_social character varying(20) NOT NULL,
+    id_contato integer,
+    contatos_id_contato integer NOT NULL,
+    id_endereco integer
 );
 
 
 ALTER TABLE public.fornecedor OWNER TO postgres;
 
 --
--- TOC entry 224 (class 1259 OID 26897)
+-- TOC entry 222 (class 1259 OID 63031)
 -- Name: fornecedor_id_fornecedor_seq; Type: SEQUENCE; Schema: public; Owner: postgres
 --
 
@@ -573,8 +676,8 @@ CREATE SEQUENCE fornecedor_id_fornecedor_seq
 ALTER TABLE public.fornecedor_id_fornecedor_seq OWNER TO postgres;
 
 --
--- TOC entry 2370 (class 0 OID 0)
--- Dependencies: 224
+-- TOC entry 2361 (class 0 OID 0)
+-- Dependencies: 222
 -- Name: fornecedor_id_fornecedor_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
 
@@ -582,48 +685,36 @@ ALTER SEQUENCE fornecedor_id_fornecedor_seq OWNED BY fornecedor.id_fornecedor;
 
 
 --
--- TOC entry 189 (class 1259 OID 26747)
+-- TOC entry 217 (class 1259 OID 62923)
 -- Name: funcionario; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
 --
 
-
-
-
 CREATE TABLE funcionario (
---DADOS FUNCIONAIS
-    id_funcionario serial primary key unique  NOT NULL,
-    nome character varying(60) NOT NULL,
-    sobrenome character varying(70) NOT NULL,
-    SEXO CHAR(1) NOT NULL,
-    CHECK (SEXO  IN('F','M')),
-    matricula integer unique NOT NULL,
+    id_funcionario integer NOT NULL,
+    nome_funcionario character varying(60) NOT NULL,
+    sb_nome_funcionario character varying(80) NOT NULL,
+    sexo character varying(1) NOT NULL,
+    cpf character varying(15) NOT NULL,
+    rg character varying(15) NOT NULL,
+    dt_nasc date NOT NULL,
+    mat_funcionario integer NOT NULL,
+    dt_admissao date NOT NULL,
     funcao character varying(40) NOT NULL,
-    especializacao character varying(100),
-    dtadmissao date NOT NULL,
-    cargo character varying(50) NOT NULL,
-    nivel character varying(30) NOT NULL,
---DADOS PESSOAIS
-    cpf character varying(17) unique NOT NULL,
-    rg character varying(12)unique  NOT NULL,
-    dtnasc date NOT NULL,
-    lotacao character varying(30) NOT NULL,
-    usuarioid_usuario integer NOT NULL,
-    enderecoid_endereco integer NOT NULL,
-    "e-mail" character varying(50),
-    endereco character varying(255),
-    logradouro character varying(255),
-    num integer,
-    cep varchar(35) not null,
-    bairro character varying(30),
-    cidade character varying(30),
-    estado character varying(2),
-    pais character varying(30));
+    cargo character varying(40) NOT NULL,
+    nivel_funcionario character varying(10) NOT NULL,
+    especializacao character varying(12),
+    id_contato integer,
+    id_usuario integer,
+    contatos_id_contato integer NOT NULL,
+    id_endereco integer,
+    endereco_id_endereco integer NOT NULL
+);
 
 
 ALTER TABLE public.funcionario OWNER TO postgres;
 
 --
--- TOC entry 188 (class 1259 OID 26745)
+-- TOC entry 216 (class 1259 OID 62921)
 -- Name: funcionario_id_funcionario_seq; Type: SEQUENCE; Schema: public; Owner: postgres
 --
 
@@ -638,8 +729,8 @@ CREATE SEQUENCE funcionario_id_funcionario_seq
 ALTER TABLE public.funcionario_id_funcionario_seq OWNER TO postgres;
 
 --
--- TOC entry 2371 (class 0 OID 0)
--- Dependencies: 188
+-- TOC entry 2362 (class 0 OID 0)
+-- Dependencies: 216
 -- Name: funcionario_id_funcionario_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
 
@@ -647,25 +738,25 @@ ALTER SEQUENCE funcionario_id_funcionario_seq OWNED BY funcionario.id_funcionari
 
 
 --
--- TOC entry 201 (class 1259 OID 26795)
--- Name: grupoembalagem; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+-- TOC entry 171 (class 1259 OID 62636)
+-- Name: grupo_embalagem; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
 --
 
-CREATE TABLE grupoembalagem (
-    id_grupoembalagem integer NOT NULL,
-    grupo character varying(3) NOT NULL,
-    risco character varying(15) NOT NULL
+CREATE TABLE grupo_embalagem (
+    id_grupo_embalagem integer NOT NULL,
+    nome_grupo_embalagem character varying(40),
+    espec_grupo_embalagem character varying(60) NOT NULL
 );
 
 
-ALTER TABLE public.grupoembalagem OWNER TO postgres;
+ALTER TABLE public.grupo_embalagem OWNER TO postgres;
 
 --
--- TOC entry 200 (class 1259 OID 26793)
--- Name: grupoembalagem_id_grupoembalagem_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+-- TOC entry 170 (class 1259 OID 62634)
+-- Name: grupo_embalagem_id_grupo_embalagem_seq; Type: SEQUENCE; Schema: public; Owner: postgres
 --
 
-CREATE SEQUENCE grupoembalagem_id_grupoembalagem_seq
+CREATE SEQUENCE grupo_embalagem_id_grupo_embalagem_seq
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -673,37 +764,75 @@ CREATE SEQUENCE grupoembalagem_id_grupoembalagem_seq
     CACHE 1;
 
 
-ALTER TABLE public.grupoembalagem_id_grupoembalagem_seq OWNER TO postgres;
+ALTER TABLE public.grupo_embalagem_id_grupo_embalagem_seq OWNER TO postgres;
 
 --
--- TOC entry 2372 (class 0 OID 0)
--- Dependencies: 200
--- Name: grupoembalagem_id_grupoembalagem_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+-- TOC entry 2363 (class 0 OID 0)
+-- Dependencies: 170
+-- Name: grupo_embalagem_id_grupo_embalagem_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
 
-ALTER SEQUENCE grupoembalagem_id_grupoembalagem_seq OWNED BY grupoembalagem.id_grupoembalagem;
+ALTER SEQUENCE grupo_embalagem_id_grupo_embalagem_seq OWNED BY grupo_embalagem.id_grupo_embalagem;
 
 
 --
--- TOC entry 185 (class 1259 OID 26727)
+-- TOC entry 193 (class 1259 OID 62741)
+-- Name: legenda_compatibilidade; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE legenda_compatibilidade (
+    id_legenda_compatibilidade integer NOT NULL,
+    legenda character varying(1) NOT NULL,
+    espec_legenda character varying(60)
+);
+
+
+ALTER TABLE public.legenda_compatibilidade OWNER TO postgres;
+
+--
+-- TOC entry 192 (class 1259 OID 62739)
+-- Name: legenda_compatibilidade_id_legenda_compatibilidade_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE legenda_compatibilidade_id_legenda_compatibilidade_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.legenda_compatibilidade_id_legenda_compatibilidade_seq OWNER TO postgres;
+
+--
+-- TOC entry 2364 (class 0 OID 0)
+-- Dependencies: 192
+-- Name: legenda_compatibilidade_id_legenda_compatibilidade_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE legenda_compatibilidade_id_legenda_compatibilidade_seq OWNED BY legenda_compatibilidade.id_legenda_compatibilidade;
+
+
+--
+-- TOC entry 183 (class 1259 OID 62689)
 -- Name: local_operacao; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
 --
 
 CREATE TABLE local_operacao (
-    id_local_operacao integer NOT NULL,
-    loc_Operacao character varying(40) unique NOT NULL,
-    descricao character varying(255) NOT NULL,
-    compatibilidade varchar(30) not null);
+    id_local_oper integer NOT NULL,
+    desc__local_oper character varying(45),
+    local_oper character varying(45) NOT NULL
+);
 
 
 ALTER TABLE public.local_operacao OWNER TO postgres;
 
 --
--- TOC entry 184 (class 1259 OID 26725)
--- Name: local_operacao_id_local_operacao_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+-- TOC entry 182 (class 1259 OID 62687)
+-- Name: local_operacao_id_local_oper_seq; Type: SEQUENCE; Schema: public; Owner: postgres
 --
 
-CREATE SEQUENCE local_operacao_id_local_operacao_seq
+CREATE SEQUENCE local_operacao_id_local_oper_seq
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -711,75 +840,45 @@ CREATE SEQUENCE local_operacao_id_local_operacao_seq
     CACHE 1;
 
 
-ALTER TABLE public.local_operacao_id_local_operacao_seq OWNER TO postgres;
+ALTER TABLE public.local_operacao_id_local_oper_seq OWNER TO postgres;
 
 --
--- TOC entry 2373 (class 0 OID 0)
--- Dependencies: 184
--- Name: local_operacao_id_local_operacao_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+-- TOC entry 2365 (class 0 OID 0)
+-- Dependencies: 182
+-- Name: local_operacao_id_local_oper_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
 
-ALTER SEQUENCE local_operacao_id_local_operacao_seq OWNED BY local_operacao.id_local_operacao;
-
-
---
--- TOC entry 205 (class 1259 OID 26811)
--- Name: material; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
---
-
-CREATE TABLE material (
-    id_material serial primary key unique NOT NULL,
-    tipo_material integer NOT NULL
-);
-
-
-ALTER TABLE public.material OWNER TO postgres;
-
---
--- TOC entry 204 (class 1259 OID 26809)
--- Name: material_id_material_seq; Type: SEQUENCE; Schema: public; Owner: postgres
---
-
-CREATE SEQUENCE material_id_material_seq
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
-
-
-ALTER TABLE public.material_id_material_seq OWNER TO postgres;
-
---
--- TOC entry 2374 (class 0 OID 0)
--- Dependencies: 204
--- Name: material_id_material_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
---
-
-ALTER SEQUENCE material_id_material_seq OWNED BY material.id_material;
+ALTER SEQUENCE local_operacao_id_local_oper_seq OWNED BY local_operacao.id_local_oper;
 
 
 --
--- TOC entry 187 (class 1259 OID 26739)
+-- TOC entry 229 (class 1259 OID 63102)
 -- Name: movimentacao; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
 --
 
 CREATE TABLE movimentacao (
-    id_movimentacao serial primary key unique NOT NULL,
-    dt_prevista date NOT NULL,
-    dt_realizacao date NOT NULL,
-    qtd_funcionario numeric(19,0) NOT NULL,
-    horario time without time zone,
-    duracao_prevista time without time zone,
-    responsavel integer NOT NULL,
-    local_operacaoid_local_operacao integer NOT NULL
+    id_movimentacao integer NOT NULL,
+    dt_prevista date,
+    dt_entrega date,
+    dt_saida date,
+    quant_funcionarios character varying(25) NOT NULL,
+    responsavel character varying(30) NOT NULL,
+    tempo_previsto time without time zone,
+    duracao time without time zone NOT NULL,
+    id_tipo_equipamento integer,
+    id_funcionario integer,
+    id_produto integer,
+    id_armazem integer,
+    id_endarmazem integer,
+    id_detalhe_nota integer,
+    id_tipo_solicitacao integer
 );
 
 
 ALTER TABLE public.movimentacao OWNER TO postgres;
 
 --
--- TOC entry 186 (class 1259 OID 26737)
+-- TOC entry 228 (class 1259 OID 63100)
 -- Name: movimentacao_id_movimentacao_seq; Type: SEQUENCE; Schema: public; Owner: postgres
 --
 
@@ -794,8 +893,8 @@ CREATE SEQUENCE movimentacao_id_movimentacao_seq
 ALTER TABLE public.movimentacao_id_movimentacao_seq OWNER TO postgres;
 
 --
--- TOC entry 2375 (class 0 OID 0)
--- Dependencies: 186
+-- TOC entry 2366 (class 0 OID 0)
+-- Dependencies: 228
 -- Name: movimentacao_id_movimentacao_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
 
@@ -803,45 +902,60 @@ ALTER SEQUENCE movimentacao_id_movimentacao_seq OWNED BY movimentacao.id_movimen
 
 
 --
--- TOC entry 231 (class 1259 OID 26926)
--- REGRA USUARIO
+-- TOC entry 191 (class 1259 OID 62732)
+-- Name: num_cas; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
 --
 
-CREATE TABLE roler (
-    id_role serial unique primary key unique NOT NULL,
-    nomeRole character varying(20) unique not null
+CREATE TABLE num_cas (
+    id_num_cas integer NOT NULL,
+    num_cas character varying(10) NOT NULL,
+    espc_num_cas character varying(45)
 );
 
 
+ALTER TABLE public.num_cas OWNER TO postgres;
 
-create table users(
+--
+-- TOC entry 190 (class 1259 OID 62730)
+-- Name: num_cas_id_num_cas_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
 
-  id_User serial primary key unique  not null,
-  username  varchar (15) not null unique ,
-  passwords varchar(15) not null);
+CREATE SEQUENCE num_cas_id_num_cas_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
 
 
-create table user_rolers(
+ALTER TABLE public.num_cas_id_num_cas_seq OWNER TO postgres;
 
-  id_User int not null,
-  id_role int not null,
+--
+-- TOC entry 2367 (class 0 OID 0)
+-- Dependencies: 190
+-- Name: num_cas_id_num_cas_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
 
-  constraint FK_id_User_user_rolers foreign key (id_User) REFERENCES users (id_User),
-  constraint FK_id_role_user_rolers foreign key (id_role) REFERENCES ROLER (id_role));
+ALTER SEQUENCE num_cas_id_num_cas_seq OWNED BY num_cas.id_num_cas;
 
-  
+
+--
+-- TOC entry 199 (class 1259 OID 62769)
+-- Name: num_onu; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+--
 
 CREATE TABLE num_onu (
-    id_num_onu serial primary key unique NOT NULL,
-    num_onu integer unique NOT NULL,
-    especificacoes character varying(35) NOT NULL,
-    compatível varchar(40) not null);
+    id_num_onu integer NOT NULL,
+    num_onu integer NOT NULL,
+    nome_prod character varying(80) NOT NULL,
+    desc_prod character varying(100)
+);
 
 
 ALTER TABLE public.num_onu OWNER TO postgres;
 
 --
--- TOC entry 212 (class 1259 OID 26846)
+-- TOC entry 198 (class 1259 OID 62767)
 -- Name: num_onu_id_num_onu_seq; Type: SEQUENCE; Schema: public; Owner: postgres
 --
 
@@ -856,8 +970,8 @@ CREATE SEQUENCE num_onu_id_num_onu_seq
 ALTER TABLE public.num_onu_id_num_onu_seq OWNER TO postgres;
 
 --
--- TOC entry 2377 (class 0 OID 0)
--- Dependencies: 212
+-- TOC entry 2368 (class 0 OID 0)
+-- Dependencies: 198
 -- Name: num_onu_id_num_onu_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
 
@@ -865,25 +979,25 @@ ALTER SEQUENCE num_onu_id_num_onu_seq OWNED BY num_onu.id_num_onu;
 
 
 --
--- TOC entry 219 (class 1259 OID 26875)
+-- TOC entry 181 (class 1259 OID 62680)
 -- Name: pais; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
 --
 
 CREATE TABLE pais (
-    cod_pais integer NOT NULL,
-    sgl_pais character(2) NOT NULL,
-    nom_pais character varying(30) NOT NULL
+    id_pais integer NOT NULL,
+    nome_pais character varying(40) NOT NULL,
+    siglapais character varying(2)
 );
 
 
 ALTER TABLE public.pais OWNER TO postgres;
 
 --
--- TOC entry 218 (class 1259 OID 26873)
--- Name: pais_cod_pais_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+-- TOC entry 180 (class 1259 OID 62678)
+-- Name: pais_id_pais_seq; Type: SEQUENCE; Schema: public; Owner: postgres
 --
 
-CREATE SEQUENCE pais_cod_pais_seq
+CREATE SEQUENCE pais_id_pais_seq
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -891,55 +1005,54 @@ CREATE SEQUENCE pais_cod_pais_seq
     CACHE 1;
 
 
-ALTER TABLE public.pais_cod_pais_seq OWNER TO postgres;
+ALTER TABLE public.pais_id_pais_seq OWNER TO postgres;
 
 --
--- TOC entry 2378 (class 0 OID 0)
--- Dependencies: 218
--- Name: pais_cod_pais_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+-- TOC entry 2369 (class 0 OID 0)
+-- Dependencies: 180
+-- Name: pais_id_pais_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
 
-ALTER SEQUENCE pais_cod_pais_seq OWNED BY pais.cod_pais;
+ALTER SEQUENCE pais_id_pais_seq OWNED BY pais.id_pais;
 
 
 --
--- TOC entry 215 (class 1259 OID 26856)
+-- TOC entry 221 (class 1259 OID 62976)
 -- Name: produto; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
 --
 
 CREATE TABLE produto (
- id_produto integer NOT NULL,
-    nome_produto character varying(120) NOT NULL,
-    nomegenerico character varying(120),
-    rum_onuid_num_onu integer not null,
-    classeid_classe integer not null,
-   
-   --especificações
-	
-    origem character varying(120),
-    numCAS Character varying(10),
-    rotuloproduto character varying(30),
-    painelseg character varying(30),
-    num_Risco character varying(120),
-    acoes_Emergencia character varying(255),
-    numlote character varying(30),
-    dtfabricacao date,
-    dtvalidade date,
-    fornecedorid_fornecedor integer,
-    composprodutotipoproduto integer,
-    descricao character varying(255)
+    id_produto integer NOT NULL,
+    nome_generico character varying(60) NOT NULL,
+    origem character varying(35) NOT NULL,
+    rotulo_produto character varying(25) NOT NULL,
+    painel_seguranca character varying(25) NOT NULL,
+    num_risco integer,
+    acoes_emerg character varying(80),
+    n_lote integer NOT NULL,
+    dt_fab date NOT NULL,
+    dt_val date NOT NULL,
+    composicao character varying(60) NOT NULL,
+    desc_produto character varying(60),
+    formula_produto character varying,
+    odor_produto character varying(25),
+    id_embalagem integer NOT NULL,
+    id_compatibilidade integer NOT NULL,
+    id_num_onu integer,
+    id_est_fisico integer,
+    id_classe integer,
+    id_num_cas integer,
+    id_legenda_compatibilidade integer,
+    id_armazem integer,
+    id_endarmazem integer,
+    armazem_id_armazem integer NOT NULL
 );
-
-
-
-ALTER TABLE ONLY produto
-    ADD CONSTRAINT fk_num_risco_prod FOREIGN KEY (id_num_Risco) REFERENCES num_Risco(id_num_Risco);
 
 
 ALTER TABLE public.produto OWNER TO postgres;
 
 --
--- TOC entry 214 (class 1259 OID 26854)
+-- TOC entry 220 (class 1259 OID 62974)
 -- Name: produto_id_produto_seq; Type: SEQUENCE; Schema: public; Owner: postgres
 --
 
@@ -954,8 +1067,8 @@ CREATE SEQUENCE produto_id_produto_seq
 ALTER TABLE public.produto_id_produto_seq OWNER TO postgres;
 
 --
--- TOC entry 2379 (class 0 OID 0)
--- Dependencies: 214
+-- TOC entry 2370 (class 0 OID 0)
+-- Dependencies: 220
 -- Name: produto_id_produto_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
 
@@ -963,26 +1076,24 @@ ALTER SEQUENCE produto_id_produto_seq OWNED BY produto.id_produto;
 
 
 --
--- TOC entry 179 (class 1259 OID 26703)
--- Name: pt_ebulicao; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+-- TOC entry 175 (class 1259 OID 62653)
+-- Name: roler; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
 --
 
-CREATE TABLE pt_ebulicao (
-    id_pt_ebulicao integer NOT NULL,
-    pt_ebuli_min integer NOT NULL,
-    pt_ebuli_max integer NOT NULL,
-    descricao character varying(40) NOT NULL
+CREATE TABLE roler (
+    id_roler integer NOT NULL,
+    nome_roler character varying(25) NOT NULL
 );
 
 
-ALTER TABLE public.pt_ebulicao OWNER TO postgres;
+ALTER TABLE public.roler OWNER TO postgres;
 
 --
--- TOC entry 178 (class 1259 OID 26701)
--- Name: pt_ebulicao_id_pt_ebulicao_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+-- TOC entry 174 (class 1259 OID 62651)
+-- Name: roler_id_roler_seq; Type: SEQUENCE; Schema: public; Owner: postgres
 --
 
-CREATE SEQUENCE pt_ebulicao_id_pt_ebulicao_seq
+CREATE SEQUENCE roler_id_roler_seq
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -990,75 +1101,33 @@ CREATE SEQUENCE pt_ebulicao_id_pt_ebulicao_seq
     CACHE 1;
 
 
-ALTER TABLE public.pt_ebulicao_id_pt_ebulicao_seq OWNER TO postgres;
+ALTER TABLE public.roler_id_roler_seq OWNER TO postgres;
 
 --
--- TOC entry 2380 (class 0 OID 0)
--- Dependencies: 178
--- Name: pt_ebulicao_id_pt_ebulicao_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+-- TOC entry 2371 (class 0 OID 0)
+-- Dependencies: 174
+-- Name: roler_id_roler_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
 
-ALTER SEQUENCE pt_ebulicao_id_pt_ebulicao_seq OWNED BY pt_ebulicao.id_pt_ebulicao;
-
-
---
--- TOC entry 177 (class 1259 OID 26695)
--- Name: pt_fulgor; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
---
-
-CREATE TABLE pt_fulgor (
-    id_pt_fulgor integer NOT NULL,
-    pt_fulg_min integer NOT NULL,
-    pt_fulg_max integer NOT NULL,
-    descricao character varying(40) NOT NULL
-);
-
-
-ALTER TABLE public.pt_fulgor OWNER TO postgres;
-
---
--- TOC entry 176 (class 1259 OID 26693)
--- Name: pt_fulgor_id_pt_fulgor_seq; Type: SEQUENCE; Schema: public; Owner: postgres
---
-
-CREATE SEQUENCE pt_fulgor_id_pt_fulgor_seq
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
-
-
-ALTER TABLE public.pt_fulgor_id_pt_fulgor_seq OWNER TO postgres;
-
---
--- TOC entry 2381 (class 0 OID 0)
--- Dependencies: 176
--- Name: pt_fulgor_id_pt_fulgor_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
---
-
-ALTER SEQUENCE pt_fulgor_id_pt_fulgor_seq OWNED BY pt_fulgor.id_pt_fulgor;
+ALTER SEQUENCE roler_id_roler_seq OWNED BY roler.id_roler;
 
 
 --
--- TOC entry 173 (class 1259 OID 26679)
+-- TOC entry 187 (class 1259 OID 62706)
 -- Name: status_armazem; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
 --
 
-CREATE TABLE Status_Armazem (
-    id_status_armazem SERIAL unique NOT NULL,
-    status_armazem character varying(30) UNIQUE NOT NULL,
-    descricao character varying(80) NOT NULL,
-    armazemid_armazem integer NOT NULL,
-    movimentacaoid_movimentacao integer NOT NULL,
-    tipo_compatibilidadeid_tipo_compatibilidade integer NOT NULL
+CREATE TABLE status_armazem (
+    id_status_armazem integer NOT NULL,
+    tipo_status_armazem character varying(45) NOT NULL,
+    espec_status_armazem character varying(25) NOT NULL
 );
 
 
 ALTER TABLE public.status_armazem OWNER TO postgres;
 
 --
--- TOC entry 172 (class 1259 OID 26677)
+-- TOC entry 186 (class 1259 OID 62704)
 -- Name: status_armazem_id_status_armazem_seq; Type: SEQUENCE; Schema: public; Owner: postgres
 --
 
@@ -1073,8 +1142,8 @@ CREATE SEQUENCE status_armazem_id_status_armazem_seq
 ALTER TABLE public.status_armazem_id_status_armazem_seq OWNER TO postgres;
 
 --
--- TOC entry 2382 (class 0 OID 0)
--- Dependencies: 172
+-- TOC entry 2372 (class 0 OID 0)
+-- Dependencies: 186
 -- Name: status_armazem_id_status_armazem_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
 
@@ -1082,110 +1151,26 @@ ALTER SEQUENCE status_armazem_id_status_armazem_seq OWNED BY status_armazem.id_s
 
 
 --
--- TOC entry 183 (class 1259 OID 26719)
--- Name: tipo_compatibilidade; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
---
-
-CREATE TABLE tipo_compatibilidade (
-    id_tipo_compatibilidade integer NOT NULL,
-    especificacao character varying(80) NOT NULL,
-    pt_ebulicaoid_pt_ebulicao integer NOT NULL,
-    toxidadeid_toxidade integer NOT NULL,
-    pt_fulgorid_pt_fulgor integer NOT NULL,
-    num_onuid_num_onu integer NOT NULL,
-    classeid_classe integer NOT NULL,
-    tipo_movimentacaoid_tipo_movimentacao integer NOT NULL
-);
-
---criado vincular com 
-create table num_Risco(
- id_num_Risco serial primary key unique not null,
- num_Risco varchar(5) unique not null,
- espec_Risco varchar(100) unique not null);
-
-
-
-
-ALTER TABLE public.tipo_compatibilidade OWNER TO postgres;
-
---
--- TOC entry 182 (class 1259 OID 26717)
--- Name: tipo_compatibilidade_id_tipo_compatibilidade_seq; Type: SEQUENCE; Schema: public; Owner: postgres
---
-
-CREATE SEQUENCE tipo_compatibilidade_id_tipo_compatibilidade_seq
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
-
-
-ALTER TABLE public.tipo_compatibilidade_id_tipo_compatibilidade_seq OWNER TO postgres;
-
---
--- TOC entry 2383 (class 0 OID 0)
--- Dependencies: 182
--- Name: tipo_compatibilidade_id_tipo_compatibilidade_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
---
-
-ALTER SEQUENCE tipo_compatibilidade_id_tipo_compatibilidade_seq OWNED BY tipo_compatibilidade.id_tipo_compatibilidade;
-
-
---
--- TOC entry 203 (class 1259 OID 26803)
--- Name: tipo_embalagem; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
---
-
-CREATE TABLE tipo_embalagem (
-    id_tipo_embalagem serial primary key unique NOT NULL,
-    nometipo character varying(30) unique NOT NULL
-);
-
-
-ALTER TABLE public.tipo_embalagem OWNER TO postgres;
-
---
--- TOC entry 202 (class 1259 OID 26801)
--- Name: tipo_embalagem_id_tipo_embalagem_seq; Type: SEQUENCE; Schema: public; Owner: postgres
---
-
-CREATE SEQUENCE tipo_embalagem_id_tipo_embalagem_seq
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
-
-
-ALTER TABLE public.tipo_embalagem_id_tipo_embalagem_seq OWNER TO postgres;
-
---
--- TOC entry 2384 (class 0 OID 0)
--- Dependencies: 202
--- Name: tipo_embalagem_id_tipo_embalagem_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
---
-
-ALTER SEQUENCE tipo_embalagem_id_tipo_embalagem_seq OWNED BY tipo_embalagem.id_tipo_embalagem;
-
-
---
--- TOC entry 199 (class 1259 OID 26787)
+-- TOC entry 213 (class 1259 OID 62876)
 -- Name: tipo_equipamento; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
 --
 
 CREATE TABLE tipo_equipamento (
-    id_tipo_equipamento serial primary key unique NOT NULL,
-    veiculoid_veiculo integer NOT NULL,
-    epeid_epe integer NOT NULL,
-    epiid_epi integer NOT NULL
+    id_tipo_equipamento integer NOT NULL,
+    nome_tipo_equipamento character varying(50) NOT NULL,
+    espc_tipo_equipamento character varying(35),
+    id_veiculo integer,
+    id_epi integer,
+    id_epe integer,
+    id_embalagem integer,
+    epe_id_epe integer NOT NULL
 );
 
 
 ALTER TABLE public.tipo_equipamento OWNER TO postgres;
 
 --
--- TOC entry 198 (class 1259 OID 26785)
+-- TOC entry 212 (class 1259 OID 62874)
 -- Name: tipo_equipamento_id_tipo_equipamento_seq; Type: SEQUENCE; Schema: public; Owner: postgres
 --
 
@@ -1200,8 +1185,8 @@ CREATE SEQUENCE tipo_equipamento_id_tipo_equipamento_seq
 ALTER TABLE public.tipo_equipamento_id_tipo_equipamento_seq OWNER TO postgres;
 
 --
--- TOC entry 2385 (class 0 OID 0)
--- Dependencies: 198
+-- TOC entry 2373 (class 0 OID 0)
+-- Dependencies: 212
 -- Name: tipo_equipamento_id_tipo_equipamento_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
 
@@ -1209,25 +1194,27 @@ ALTER SEQUENCE tipo_equipamento_id_tipo_equipamento_seq OWNED BY tipo_equipament
 
 
 --
--- TOC entry 181 (class 1259 OID 26711)
--- Name: tipo_movimentacao; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+-- TOC entry 189 (class 1259 OID 62714)
+-- Name: tipo_material; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
 --
 
-CREATE TABLE tipo_movimentacao (
-    id_tipo_movimentacao serial primary key unique NOT NULL,
-    tipo_movimentacao integer NOT NULL,
-    usuarioid_usuario integer NOT NULL
+CREATE TABLE tipo_material (
+    id_material integer NOT NULL,
+    nome_material character varying(45) NOT NULL,
+    espec_material character varying(60),
+    pt_fulgor character varying(20),
+    "pt_ebuliã§ã£o" character varying(20) NOT NULL
 );
 
 
-ALTER TABLE public.tipo_movimentacao OWNER TO postgres;
+ALTER TABLE public.tipo_material OWNER TO postgres;
 
 --
--- TOC entry 180 (class 1259 OID 26709)
--- Name: tipo_movimentacao_id_tipo_movimentacao_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+-- TOC entry 188 (class 1259 OID 62712)
+-- Name: tipo_material_id_material_seq; Type: SEQUENCE; Schema: public; Owner: postgres
 --
 
-CREATE SEQUENCE tipo_movimentacao_id_tipo_movimentacao_seq
+CREATE SEQUENCE tipo_material_id_material_seq
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -1235,40 +1222,42 @@ CREATE SEQUENCE tipo_movimentacao_id_tipo_movimentacao_seq
     CACHE 1;
 
 
-ALTER TABLE public.tipo_movimentacao_id_tipo_movimentacao_seq OWNER TO postgres;
+ALTER TABLE public.tipo_material_id_material_seq OWNER TO postgres;
 
 --
--- TOC entry 2386 (class 0 OID 0)
--- Dependencies: 180
--- Name: tipo_movimentacao_id_tipo_movimentacao_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+-- TOC entry 2374 (class 0 OID 0)
+-- Dependencies: 188
+-- Name: tipo_material_id_material_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
 
-ALTER SEQUENCE tipo_movimentacao_id_tipo_movimentacao_seq OWNED BY tipo_movimentacao.id_tipo_movimentacao;
+ALTER SEQUENCE tipo_material_id_material_seq OWNED BY tipo_material.id_material;
 
 
 --
--- TOC entry 227 (class 1259 OID 26910)
--- Name: tipo_pedido; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+-- TOC entry 227 (class 1259 OID 63078)
+-- Name: tipo_solicitacao; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
 --
 
-CREATE TABLE tipo_pedido (
-    id_tipo_pedido serial primary key unique NOT NULL,
-    tipo_pedido character varying(50) NOT NULL,
-    especif_tipopedido character varying(50) NOT NULL,
-    fornecedor int not null,
-    usuarioid_usuario integer NOT NULL,
-    detalhe_notaid_detalhe_nota integer NOT NULL
+CREATE TABLE tipo_solicitacao (
+    id_tipo_solicitacao integer NOT NULL,
+    tipo_solicitacao character varying(60) NOT NULL,
+    espec_tipo_solicitacao character varying(45),
+    id_funcionario integer,
+    id_fornecedor integer,
+    solicitante character varying(50) NOT NULL,
+    id_armazem integer,
+    fornecedor_id_fornecedor integer NOT NULL
 );
 
 
-ALTER TABLE public.tipo_pedido OWNER TO postgres;
+ALTER TABLE public.tipo_solicitacao OWNER TO postgres;
 
 --
--- TOC entry 226 (class 1259 OID 26908)
--- Name: tipo_pedido_id_tipo_pedido_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+-- TOC entry 226 (class 1259 OID 63076)
+-- Name: tipo_solicitacao_id_tipo_solicitacao_seq; Type: SEQUENCE; Schema: public; Owner: postgres
 --
 
-CREATE SEQUENCE tipo_pedido_id_tipo_pedido_seq
+CREATE SEQUENCE tipo_solicitacao_id_tipo_solicitacao_seq
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -1276,67 +1265,34 @@ CREATE SEQUENCE tipo_pedido_id_tipo_pedido_seq
     CACHE 1;
 
 
-ALTER TABLE public.tipo_pedido_id_tipo_pedido_seq OWNER TO postgres;
+ALTER TABLE public.tipo_solicitacao_id_tipo_solicitacao_seq OWNER TO postgres;
 
 --
--- TOC entry 2387 (class 0 OID 0)
+-- TOC entry 2375 (class 0 OID 0)
 -- Dependencies: 226
--- Name: tipo_pedido_id_tipo_pedido_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+-- Name: tipo_solicitacao_id_tipo_solicitacao_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
 
-ALTER SEQUENCE tipo_pedido_id_tipo_pedido_seq OWNED BY tipo_pedido.id_tipo_pedido;
-
-
---
--- TOC entry 175 (class 1259 OID 26687)
--- Name: toxidade; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
---
-
-CREATE TABLE toxidade (
-    id_toxidade serial primary key unique NOT NULL,
-    tox_min integer NOT NULL,
-    tox_max integer NOT NULL,
-    descricao character varying(40) NOT NULL
-);
-
-
-ALTER TABLE public.toxidade OWNER TO postgres;
-
---
--- TOC entry 174 (class 1259 OID 26685)
--- Name: toxidade_id_toxidade_seq; Type: SEQUENCE; Schema: public; Owner: postgres
---
-
-CREATE SEQUENCE toxidade_id_toxidade_seq
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
-
-
-ALTER TABLE public.toxidade_id_toxidade_seq OWNER TO postgres;
-
---
--- TOC entry 2388 (class 0 OID 0)
--- Dependencies: 174
--- Name: toxidade_id_toxidade_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
---
-
-ALTER SEQUENCE toxidade_id_toxidade_seq OWNED BY toxidade.id_toxidade;
+ALTER SEQUENCE tipo_solicitacao_id_tipo_solicitacao_seq OWNED BY tipo_solicitacao.id_tipo_solicitacao;
 
 
 --
--- TOC entry 233 (class 1259 OID 26934)
+-- TOC entry 209 (class 1259 OID 62838)
 -- Name: usuario; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
 --
 
+CREATE TABLE usuario (
+    id_usuario integer NOT NULL,
+    login character varying(25) NOT NULL,
+    senha character varying(25) NOT NULL,
+    id_roler integer
+);
 
 
 ALTER TABLE public.usuario OWNER TO postgres;
 
 --
--- TOC entry 232 (class 1259 OID 26932)
+-- TOC entry 208 (class 1259 OID 62836)
 -- Name: usuario_id_usuario_seq; Type: SEQUENCE; Schema: public; Owner: postgres
 --
 
@@ -1351,8 +1307,8 @@ CREATE SEQUENCE usuario_id_usuario_seq
 ALTER TABLE public.usuario_id_usuario_seq OWNER TO postgres;
 
 --
--- TOC entry 2389 (class 0 OID 0)
--- Dependencies: 232
+-- TOC entry 2376 (class 0 OID 0)
+-- Dependencies: 208
 -- Name: usuario_id_usuario_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
 
@@ -1360,27 +1316,27 @@ ALTER SEQUENCE usuario_id_usuario_seq OWNED BY usuario.id_usuario;
 
 
 --
--- TOC entry 193 (class 1259 OID 26763)
+-- TOC entry 205 (class 1259 OID 62809)
 -- Name: veiculo; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
 --
 
 CREATE TABLE veiculo (
-    id_veiculo serial primary key unique NOT NULL,
-    nome character varying(70) NOT NULL,
-    modelo character varying(70) NOT NULL,
-    fabricante character varying(70) NOT NULL,
-    chassi character varying(50) NOT NULL,
-    placa character varying(10) unique ,
-    cor character varying(30),
-    ano integer,
-    combustivelid_combustivel integer NOT NULL
+    id_veiculo integer NOT NULL,
+    nome_veiculo character varying(50) NOT NULL,
+    modelo_veiculo character varying(45) NOT NULL,
+    fabricante_veiculo character varying(50) NOT NULL,
+    placa_veiculo character varying(10) NOT NULL,
+    cor_veiculo character varying(30) NOT NULL,
+    ano_veiculo character varying(30) NOT NULL,
+    chassi_veiculo character varying(25) NOT NULL,
+    id_combustivel integer NOT NULL
 );
 
 
 ALTER TABLE public.veiculo OWNER TO postgres;
 
 --
--- TOC entry 192 (class 1259 OID 26761)
+-- TOC entry 204 (class 1259 OID 62807)
 -- Name: veiculo_id_veiculo_seq; Type: SEQUENCE; Schema: public; Owner: postgres
 --
 
@@ -1395,8 +1351,8 @@ CREATE SEQUENCE veiculo_id_veiculo_seq
 ALTER TABLE public.veiculo_id_veiculo_seq OWNER TO postgres;
 
 --
--- TOC entry 2390 (class 0 OID 0)
--- Dependencies: 192
+-- TOC entry 2377 (class 0 OID 0)
+-- Dependencies: 204
 -- Name: veiculo_id_veiculo_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
 
@@ -1404,7 +1360,7 @@ ALTER SEQUENCE veiculo_id_veiculo_seq OWNED BY veiculo.id_veiculo;
 
 
 --
--- TOC entry 2114 (class 2604 OID 26666)
+-- TOC entry 2125 (class 2604 OID 62856)
 -- Name: id_armazem; Type: DEFAULT; Schema: public; Owner: postgres
 --
 
@@ -1412,15 +1368,23 @@ ALTER TABLE ONLY armazem ALTER COLUMN id_armazem SET DEFAULT nextval('armazem_id
 
 
 --
--- TOC entry 2140 (class 2604 OID 26886)
--- Name: cod_cidade; Type: DEFAULT; Schema: public; Owner: postgres
+-- TOC entry 2106 (class 2604 OID 62648)
+-- Name: id_capacidade; Type: DEFAULT; Schema: public; Owner: postgres
 --
 
-ALTER TABLE ONLY cidade ALTER COLUMN cod_cidade SET DEFAULT nextval('cidade_cod_cidade_seq'::regclass);
+ALTER TABLE ONLY capacidade ALTER COLUMN id_capacidade SET DEFAULT nextval('capacidade_id_capacidade_seq'::regclass);
 
 
 --
--- TOC entry 2135 (class 2604 OID 26843)
+-- TOC entry 2108 (class 2604 OID 62665)
+-- Name: id_cidade; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY cidade ALTER COLUMN id_cidade SET DEFAULT nextval('cidade_id_cidade_seq'::regclass);
+
+
+--
+-- TOC entry 2117 (class 2604 OID 62752)
 -- Name: id_classe; Type: DEFAULT; Schema: public; Owner: postgres
 --
 
@@ -1428,7 +1392,7 @@ ALTER TABLE ONLY classe ALTER COLUMN id_classe SET DEFAULT nextval('classe_id_cl
 
 
 --
--- TOC entry 2125 (class 2604 OID 26758)
+-- TOC entry 2112 (class 2604 OID 62701)
 -- Name: id_combustivel; Type: DEFAULT; Schema: public; Owner: postgres
 --
 
@@ -1436,39 +1400,47 @@ ALTER TABLE ONLY combustivel ALTER COLUMN id_combustivel SET DEFAULT nextval('co
 
 
 --
--- TOC entry 2134 (class 2604 OID 26832)
--- Name: tipoproduto; Type: DEFAULT; Schema: public; Owner: postgres
+-- TOC entry 2123 (class 2604 OID 62827)
+-- Name: id_compatibilidade; Type: DEFAULT; Schema: public; Owner: postgres
 --
 
-ALTER TABLE ONLY composproduto ALTER COLUMN tipoproduto SET DEFAULT nextval('composproduto_tipoproduto_seq'::regclass);
+ALTER TABLE ONLY compatibilidade ALTER COLUMN id_compatibilidade SET DEFAULT nextval('compatibilidade_id_compatibilidade_seq'::regclass);
 
 
 --
--- TOC entry 2144 (class 2604 OID 26921)
+-- TOC entry 2118 (class 2604 OID 62761)
+-- Name: id_contato; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY contatos ALTER COLUMN id_contato SET DEFAULT nextval('contatos_id_contato_seq'::regclass);
+
+
+--
+-- TOC entry 2132 (class 2604 OID 63057)
 -- Name: id_detalhe_nota; Type: DEFAULT; Schema: public; Owner: postgres
 --
 
-ALTER TABLE ONLY detalhe_nota ALTER COLUMN id_detalhe_nota SET DEFAULT nextval('detalhe_nota_id_detalhe_nota_seq'::regclass);
+ALTER TABLE ONLY det_nota ALTER COLUMN id_detalhe_nota SET DEFAULT nextval('det_nota_id_detalhe_nota_seq'::regclass);
 
 
 --
--- TOC entry 2133 (class 2604 OID 26822)
--- Name: id_embalgem; Type: DEFAULT; Schema: public; Owner: postgres
+-- TOC entry 2129 (class 2604 OID 62951)
+-- Name: id_embalagem; Type: DEFAULT; Schema: public; Owner: postgres
 --
 
-ALTER TABLE ONLY embalagem ALTER COLUMN id_embalgem SET DEFAULT nextval('embalagem_id_embalgem_seq'::regclass);
-
-
---
--- TOC entry 2115 (class 2604 OID 26674)
--- Name: id_enderecamento; Type: DEFAULT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY end_armazem ALTER COLUMN id_enderecamento SET DEFAULT nextval('end_armazem_id_enderecamento_seq'::regclass);
+ALTER TABLE ONLY embalagem ALTER COLUMN id_embalagem SET DEFAULT nextval('embalagem_id_embalagem_seq'::regclass);
 
 
 --
--- TOC entry 2141 (class 2604 OID 26894)
+-- TOC entry 2104 (class 2604 OID 62630)
+-- Name: id_endarmazem; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY end_armazem ALTER COLUMN id_endarmazem SET DEFAULT nextval('end_armazem_id_endarmazem_seq'::regclass);
+
+
+--
+-- TOC entry 2127 (class 2604 OID 62903)
 -- Name: id_endereco; Type: DEFAULT; Schema: public; Owner: postgres
 --
 
@@ -1476,7 +1448,7 @@ ALTER TABLE ONLY endereco ALTER COLUMN id_endereco SET DEFAULT nextval('endereco
 
 
 --
--- TOC entry 2127 (class 2604 OID 26774)
+-- TOC entry 2121 (class 2604 OID 62798)
 -- Name: id_epe; Type: DEFAULT; Schema: public; Owner: postgres
 --
 
@@ -1484,7 +1456,7 @@ ALTER TABLE ONLY epe ALTER COLUMN id_epe SET DEFAULT nextval('epe_id_epe_seq'::r
 
 
 --
--- TOC entry 2128 (class 2604 OID 26782)
+-- TOC entry 2120 (class 2604 OID 62781)
 -- Name: id_epi; Type: DEFAULT; Schema: public; Owner: postgres
 --
 
@@ -1492,15 +1464,23 @@ ALTER TABLE ONLY epi ALTER COLUMN id_epi SET DEFAULT nextval('epi_id_epi_seq'::r
 
 
 --
--- TOC entry 2138 (class 2604 OID 26870)
--- Name: cod_estado; Type: DEFAULT; Schema: public; Owner: postgres
+-- TOC entry 2135 (class 2604 OID 63204)
+-- Name: id_est_fisico; Type: DEFAULT; Schema: public; Owner: postgres
 --
 
-ALTER TABLE ONLY estado ALTER COLUMN cod_estado SET DEFAULT nextval('estado_cod_estado_seq'::regclass);
+ALTER TABLE ONLY est_fisico ALTER COLUMN id_est_fisico SET DEFAULT nextval('est_fisico_id_est_fisico_seq'::regclass);
 
 
 --
--- TOC entry 2142 (class 2604 OID 26902)
+-- TOC entry 2109 (class 2604 OID 62674)
+-- Name: id_estado; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY estado ALTER COLUMN id_estado SET DEFAULT nextval('estado_id_estado_seq'::regclass);
+
+
+--
+-- TOC entry 2131 (class 2604 OID 63036)
 -- Name: id_fornecedor; Type: DEFAULT; Schema: public; Owner: postgres
 --
 
@@ -1508,7 +1488,7 @@ ALTER TABLE ONLY fornecedor ALTER COLUMN id_fornecedor SET DEFAULT nextval('forn
 
 
 --
--- TOC entry 2124 (class 2604 OID 26750)
+-- TOC entry 2128 (class 2604 OID 62926)
 -- Name: id_funcionario; Type: DEFAULT; Schema: public; Owner: postgres
 --
 
@@ -1516,31 +1496,31 @@ ALTER TABLE ONLY funcionario ALTER COLUMN id_funcionario SET DEFAULT nextval('fu
 
 
 --
--- TOC entry 2130 (class 2604 OID 26798)
--- Name: id_grupoembalagem; Type: DEFAULT; Schema: public; Owner: postgres
+-- TOC entry 2105 (class 2604 OID 62639)
+-- Name: id_grupo_embalagem; Type: DEFAULT; Schema: public; Owner: postgres
 --
 
-ALTER TABLE ONLY grupoembalagem ALTER COLUMN id_grupoembalagem SET DEFAULT nextval('grupoembalagem_id_grupoembalagem_seq'::regclass);
-
-
---
--- TOC entry 2122 (class 2604 OID 26730)
--- Name: id_local_operacao; Type: DEFAULT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY local_operacao ALTER COLUMN id_local_operacao SET DEFAULT nextval('local_operacao_id_local_operacao_seq'::regclass);
+ALTER TABLE ONLY grupo_embalagem ALTER COLUMN id_grupo_embalagem SET DEFAULT nextval('grupo_embalagem_id_grupo_embalagem_seq'::regclass);
 
 
 --
--- TOC entry 2132 (class 2604 OID 26814)
--- Name: id_material; Type: DEFAULT; Schema: public; Owner: postgres
+-- TOC entry 2116 (class 2604 OID 62744)
+-- Name: id_legenda_compatibilidade; Type: DEFAULT; Schema: public; Owner: postgres
 --
 
-ALTER TABLE ONLY material ALTER COLUMN id_material SET DEFAULT nextval('material_id_material_seq'::regclass);
+ALTER TABLE ONLY legenda_compatibilidade ALTER COLUMN id_legenda_compatibilidade SET DEFAULT nextval('legenda_compatibilidade_id_legenda_compatibilidade_seq'::regclass);
 
 
 --
--- TOC entry 2123 (class 2604 OID 26742)
+-- TOC entry 2111 (class 2604 OID 62692)
+-- Name: id_local_oper; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY local_operacao ALTER COLUMN id_local_oper SET DEFAULT nextval('local_operacao_id_local_oper_seq'::regclass);
+
+
+--
+-- TOC entry 2134 (class 2604 OID 63105)
 -- Name: id_movimentacao; Type: DEFAULT; Schema: public; Owner: postgres
 --
 
@@ -1548,15 +1528,15 @@ ALTER TABLE ONLY movimentacao ALTER COLUMN id_movimentacao SET DEFAULT nextval('
 
 
 --
--- TOC entry 2145 (class 2604 OID 26929)
--- Name: id_nivelusuario; Type: DEFAULT; Schema: public; Owner: postgres
+-- TOC entry 2115 (class 2604 OID 62735)
+-- Name: id_num_cas; Type: DEFAULT; Schema: public; Owner: postgres
 --
 
-
+ALTER TABLE ONLY num_cas ALTER COLUMN id_num_cas SET DEFAULT nextval('num_cas_id_num_cas_seq'::regclass);
 
 
 --
--- TOC entry 2136 (class 2604 OID 26851)
+-- TOC entry 2119 (class 2604 OID 62772)
 -- Name: id_num_onu; Type: DEFAULT; Schema: public; Owner: postgres
 --
 
@@ -1564,15 +1544,15 @@ ALTER TABLE ONLY num_onu ALTER COLUMN id_num_onu SET DEFAULT nextval('num_onu_id
 
 
 --
--- TOC entry 2139 (class 2604 OID 26878)
--- Name: cod_pais; Type: DEFAULT; Schema: public; Owner: postgres
+-- TOC entry 2110 (class 2604 OID 62683)
+-- Name: id_pais; Type: DEFAULT; Schema: public; Owner: postgres
 --
 
-ALTER TABLE ONLY pais ALTER COLUMN cod_pais SET DEFAULT nextval('pais_cod_pais_seq'::regclass);
+ALTER TABLE ONLY pais ALTER COLUMN id_pais SET DEFAULT nextval('pais_id_pais_seq'::regclass);
 
 
 --
--- TOC entry 2137 (class 2604 OID 26859)
+-- TOC entry 2130 (class 2604 OID 62979)
 -- Name: id_produto; Type: DEFAULT; Schema: public; Owner: postgres
 --
 
@@ -1580,23 +1560,15 @@ ALTER TABLE ONLY produto ALTER COLUMN id_produto SET DEFAULT nextval('produto_id
 
 
 --
--- TOC entry 2119 (class 2604 OID 26706)
--- Name: id_pt_ebulicao; Type: DEFAULT; Schema: public; Owner: postgres
+-- TOC entry 2107 (class 2604 OID 62656)
+-- Name: id_roler; Type: DEFAULT; Schema: public; Owner: postgres
 --
 
-ALTER TABLE ONLY pt_ebulicao ALTER COLUMN id_pt_ebulicao SET DEFAULT nextval('pt_ebulicao_id_pt_ebulicao_seq'::regclass);
-
-
---
--- TOC entry 2118 (class 2604 OID 26698)
--- Name: id_pt_fulgor; Type: DEFAULT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY pt_fulgor ALTER COLUMN id_pt_fulgor SET DEFAULT nextval('pt_fulgor_id_pt_fulgor_seq'::regclass);
+ALTER TABLE ONLY roler ALTER COLUMN id_roler SET DEFAULT nextval('roler_id_roler_seq'::regclass);
 
 
 --
--- TOC entry 2116 (class 2604 OID 26682)
+-- TOC entry 2113 (class 2604 OID 62709)
 -- Name: id_status_armazem; Type: DEFAULT; Schema: public; Owner: postgres
 --
 
@@ -1604,23 +1576,7 @@ ALTER TABLE ONLY status_armazem ALTER COLUMN id_status_armazem SET DEFAULT nextv
 
 
 --
--- TOC entry 2121 (class 2604 OID 26722)
--- Name: id_tipo_compatibilidade; Type: DEFAULT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY tipo_compatibilidade ALTER COLUMN id_tipo_compatibilidade SET DEFAULT nextval('tipo_compatibilidade_id_tipo_compatibilidade_seq'::regclass);
-
-
---
--- TOC entry 2131 (class 2604 OID 26806)
--- Name: id_tipo_embalagem; Type: DEFAULT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY tipo_embalagem ALTER COLUMN id_tipo_embalagem SET DEFAULT nextval('tipo_embalagem_id_tipo_embalagem_seq'::regclass);
-
-
---
--- TOC entry 2129 (class 2604 OID 26790)
+-- TOC entry 2126 (class 2604 OID 62879)
 -- Name: id_tipo_equipamento; Type: DEFAULT; Schema: public; Owner: postgres
 --
 
@@ -1628,31 +1584,23 @@ ALTER TABLE ONLY tipo_equipamento ALTER COLUMN id_tipo_equipamento SET DEFAULT n
 
 
 --
--- TOC entry 2120 (class 2604 OID 26714)
--- Name: id_tipo_movimentacao; Type: DEFAULT; Schema: public; Owner: postgres
+-- TOC entry 2114 (class 2604 OID 62717)
+-- Name: id_material; Type: DEFAULT; Schema: public; Owner: postgres
 --
 
-ALTER TABLE ONLY tipo_movimentacao ALTER COLUMN id_tipo_movimentacao SET DEFAULT nextval('tipo_movimentacao_id_tipo_movimentacao_seq'::regclass);
-
-
---
--- TOC entry 2143 (class 2604 OID 26913)
--- Name: id_tipo_pedido; Type: DEFAULT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY tipo_pedido ALTER COLUMN id_tipo_pedido SET DEFAULT nextval('tipo_pedido_id_tipo_pedido_seq'::regclass);
+ALTER TABLE ONLY tipo_material ALTER COLUMN id_material SET DEFAULT nextval('tipo_material_id_material_seq'::regclass);
 
 
 --
--- TOC entry 2117 (class 2604 OID 26690)
--- Name: id_toxidade; Type: DEFAULT; Schema: public; Owner: postgres
+-- TOC entry 2133 (class 2604 OID 63081)
+-- Name: id_tipo_solicitacao; Type: DEFAULT; Schema: public; Owner: postgres
 --
 
-ALTER TABLE ONLY toxidade ALTER COLUMN id_toxidade SET DEFAULT nextval('toxidade_id_toxidade_seq'::regclass);
+ALTER TABLE ONLY tipo_solicitacao ALTER COLUMN id_tipo_solicitacao SET DEFAULT nextval('tipo_solicitacao_id_tipo_solicitacao_seq'::regclass);
 
 
 --
--- TOC entry 2146 (class 2604 OID 26937)
+-- TOC entry 2124 (class 2604 OID 62841)
 -- Name: id_usuario; Type: DEFAULT; Schema: public; Owner: postgres
 --
 
@@ -1660,7 +1608,7 @@ ALTER TABLE ONLY usuario ALTER COLUMN id_usuario SET DEFAULT nextval('usuario_id
 
 
 --
--- TOC entry 2126 (class 2604 OID 26766)
+-- TOC entry 2122 (class 2604 OID 62812)
 -- Name: id_veiculo; Type: DEFAULT; Schema: public; Owner: postgres
 --
 
@@ -1668,590 +1616,542 @@ ALTER TABLE ONLY veiculo ALTER COLUMN id_veiculo SET DEFAULT nextval('veiculo_id
 
 
 --
--- TOC entry 2285 (class 0 OID 26663)
--- Dependencies: 169
+-- TOC entry 2317 (class 0 OID 62853)
+-- Dependencies: 211
 -- Data for Name: armazem; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-COPY armazem (id_armazem, tipo, capacidade, especificacao, certificacao) FROM stdin;
+COPY armazem (id_armazem, tipo_armazem, capacidade_armazem, certificacao_armazem, espec_armazem, estoque_max, estoque_min, id_status_armazem, id_endarmazem, status_armazem_id_status_armazem, id_local_oper, local_operacao_id_local_oper) FROM stdin;
 \.
 
 
-
-
-
-
-
-
-CREATE INDEX cidade_nom_cidade ON cidade USING btree (nom_cidade);
-
-
---
--- TOC entry 2179 (class 1259 OID 27141)
--- Name: combustivel_nome_combustivel; Type: INDEX; Schema: public; Owner: postgres; Tablespace: 
---
-
-CREATE INDEX combustivel_nome_combustivel ON combustivel USING btree (nome_combustivel);
-
-
---
--- TOC entry 2205 (class 1259 OID 27149)
--- Name: composproduto_formaproduto; Type: INDEX; Schema: public; Owner: postgres; Tablespace: 
---
-
-CREATE INDEX composproduto_formaproduto ON composproduto USING btree (formaproduto);
-
-
---
--- TOC entry 2206 (class 1259 OID 27148)
--- Name: composproduto_formulaproduto; Type: INDEX; Schema: public; Owner: postgres; Tablespace: 
---
-
-CREATE INDEX composproduto_formulaproduto ON composproduto USING btree (formulaproduto);
-
-
---
--- TOC entry 2236 (class 1259 OID 27159)
--- Name: detalhe_nota_num_nota; Type: INDEX; Schema: public; Owner: postgres; Tablespace: 
---
-
-CREATE INDEX detalhe_nota_num_nota ON detalhe_nota USING btree (num_nota);
-
-
---
--- TOC entry 2227 (class 1259 OID 27156)
--- Name: endereco_cep; Type: INDEX; Schema: public; Owner: postgres; Tablespace: 
---
-
-CREATE INDEX endereco_cep ON endereco USING btree (cep);
-
-
---
--- TOC entry 2187 (class 1259 OID 27167)
--- Name: epe_classe_epe; Type: INDEX; Schema: public; Owner: postgres; Tablespace: 
---
-
-CREATE INDEX epe_classe_epe ON epe USING btree (classe_epe);
-
-
---
--- TOC entry 2220 (class 1259 OID 27153)
--- Name: estado_sgl_estado; Type: INDEX; Schema: public; Owner: postgres; Tablespace: 
---
-
-CREATE UNIQUE INDEX estado_sgl_estado ON estado USING btree (sgl_estado);
-
-
---
--- TOC entry 2230 (class 1259 OID 27157)
--- Name: fornecedor_cnpj; Type: INDEX; Schema: public; Owner: postgres; Tablespace: 
---
-
-CREATE INDEX fornecedor_cnpj ON fornecedor USING btree (cnpj);
-
-
---
--- TOC entry 2173 (class 1259 OID 27140)
--- Name: funcionario_cargo; Type: INDEX; Schema: public; Owner: postgres; Tablespace: 
---
-
-CREATE INDEX funcionario_cargo ON funcionario USING btree (cargo);
-
-
---
--- TOC entry 2174 (class 1259 OID 27139)
--- Name: funcionario_matricula; Type: INDEX; Schema: public; Owner: postgres; Tablespace: 
---
-
-CREATE UNIQUE INDEX funcionario_matricula ON funcionario USING btree (matricula);
-
-
 --
--- TOC entry 2175 (class 1259 OID 27137)
--- Name: funcionario_nome; Type: INDEX; Schema: public; Owner: postgres; Tablespace: 
+-- TOC entry 2378 (class 0 OID 0)
+-- Dependencies: 210
+-- Name: armazem_id_armazem_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-CREATE INDEX funcionario_nome ON funcionario USING btree (nome);
+SELECT pg_catalog.setval('armazem_id_armazem_seq', 1, false);
 
 
 --
--- TOC entry 2178 (class 1259 OID 27138)
--- Name: funcionario_sobrenome; Type: INDEX; Schema: public; Owner: postgres; Tablespace: 
+-- TOC entry 2279 (class 0 OID 62645)
+-- Dependencies: 173
+-- Data for Name: capacidade; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-CREATE INDEX funcionario_sobrenome ON funcionario USING btree (sobrenome);
+COPY capacidade (id_capacidade, tipo_capacidade) FROM stdin;
+\.
 
 
 --
--- TOC entry 2200 (class 1259 OID 27147)
--- Name: material_tipo_material; Type: INDEX; Schema: public; Owner: postgres; Tablespace: 
+-- TOC entry 2379 (class 0 OID 0)
+-- Dependencies: 172
+-- Name: capacidade_id_capacidade_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-CREATE INDEX material_tipo_material ON material USING btree (tipo_material);
+SELECT pg_catalog.setval('capacidade_id_capacidade_seq', 1, false);
 
 
 --
--- TOC entry 2239 (class 1259 OID 27160)
--- Name: nivelusuario_nomenivel; Type: INDEX; Schema: public; Owner: postgres; Tablespace: 
+-- TOC entry 2283 (class 0 OID 62662)
+-- Dependencies: 177
+-- Data for Name: cidade; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
+COPY cidade (id_cidade, nome_cidade) FROM stdin;
+\.
 
 
-
 --
--- TOC entry 2211 (class 1259 OID 27151)
--- Name: num_onu_especificacoes; Type: INDEX; Schema: public; Owner: postgres; Tablespace: 
+-- TOC entry 2380 (class 0 OID 0)
+-- Dependencies: 176
+-- Name: cidade_id_cidade_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-CREATE INDEX num_onu_especificacoes ON num_onu USING btree (especificacoes);
+SELECT pg_catalog.setval('cidade_id_cidade_seq', 1, false);
 
 
 --
--- TOC entry 2212 (class 1259 OID 27150)
--- Name: num_onu_num_onu; Type: INDEX; Schema: public; Owner: postgres; Tablespace: 
+-- TOC entry 2301 (class 0 OID 62749)
+-- Dependencies: 195
+-- Data for Name: classe; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-CREATE UNIQUE INDEX num_onu_num_onu ON num_onu USING btree (num_onu);
+COPY classe (id_classe, num_classe, num_subclasse, espec_classe) FROM stdin;
+\.
 
 
 --
--- TOC entry 2221 (class 1259 OID 27154)
--- Name: pais_nom_pais; Type: INDEX; Schema: public; Owner: postgres; Tablespace: 
+-- TOC entry 2381 (class 0 OID 0)
+-- Dependencies: 194
+-- Name: classe_id_classe_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-CREATE INDEX pais_nom_pais ON pais USING btree (nom_pais);
+SELECT pg_catalog.setval('classe_id_classe_seq', 1, false);
 
 
 --
--- TOC entry 2215 (class 1259 OID 27152)
--- Name: produto_nome_produto; Type: INDEX; Schema: public; Owner: postgres; Tablespace: 
+-- TOC entry 2291 (class 0 OID 62698)
+-- Dependencies: 185
+-- Data for Name: combustivel; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-CREATE INDEX produto_nome_produto ON produto USING btree (nome_produto);
+COPY combustivel (id_combustivel, nome_combustivel, espec_combustivel) FROM stdin;
+\.
 
 
 --
--- TOC entry 2153 (class 1259 OID 27135)
--- Name: status_armazem_status_armazem; Type: INDEX; Schema: public; Owner: postgres; Tablespace: 
+-- TOC entry 2382 (class 0 OID 0)
+-- Dependencies: 184
+-- Name: combustivel_id_combustivel_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-CREATE INDEX status_armazem_status_armazem ON status_armazem USING btree (status_armazem);
+SELECT pg_catalog.setval('combustivel_id_combustivel_seq', 2, true);
 
 
 --
--- TOC entry 2162 (class 1259 OID 27136)
--- Name: tipo_movimentacao_tipo_movimentacao; Type: INDEX; Schema: public; Owner: postgres; Tablespace: 
+-- TOC entry 2313 (class 0 OID 62824)
+-- Dependencies: 207
+-- Data for Name: compatibilidade; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-CREATE INDEX tipo_movimentacao_tipo_movimentacao ON tipo_movimentacao USING btree (tipo_movimentacao);
+COPY compatibilidade (id_compatibilidade, grupo_compatibilidade, desc_compatibilidade, cod_classifi, id_legenda_compatibilidade) FROM stdin;
+\.
 
 
 --
--- TOC entry 2235 (class 1259 OID 27158)
--- Name: tipo_pedido_tipo_pedido; Type: INDEX; Schema: public; Owner: postgres; Tablespace: 
+-- TOC entry 2383 (class 0 OID 0)
+-- Dependencies: 206
+-- Name: compatibilidade_id_compatibilidade_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-CREATE INDEX tipo_pedido_tipo_pedido ON tipo_pedido USING btree (tipo_pedido);
+SELECT pg_catalog.setval('compatibilidade_id_compatibilidade_seq', 1, false);
 
 
 --
--- TOC entry 2242 (class 1259 OID 27161)
--- Name: usuario_login; Type: INDEX; Schema: public; Owner: postgres; Tablespace: 
+-- TOC entry 2303 (class 0 OID 62758)
+-- Dependencies: 197
+-- Data for Name: contatos; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-CREATE INDEX usuario_login ON usuario USING btree (login);
+COPY contatos (id_contato, tel, email, celular, site, radio) FROM stdin;
+\.
 
 
 --
--- TOC entry 2182 (class 1259 OID 27144)
--- Name: veiculo_fabricante; Type: INDEX; Schema: public; Owner: postgres; Tablespace: 
+-- TOC entry 2384 (class 0 OID 0)
+-- Dependencies: 196
+-- Name: contatos_id_contato_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-CREATE INDEX veiculo_fabricante ON veiculo USING btree (fabricante);
+SELECT pg_catalog.setval('contatos_id_contato_seq', 1, false);
 
 
 --
--- TOC entry 2183 (class 1259 OID 27143)
--- Name: veiculo_modelo; Type: INDEX; Schema: public; Owner: postgres; Tablespace: 
+-- TOC entry 2331 (class 0 OID 63054)
+-- Dependencies: 225
+-- Data for Name: det_nota; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-CREATE INDEX veiculo_modelo ON veiculo USING btree (modelo);
+COPY det_nota (id_detalhe_nota, num_nota, dt_pedido, valor_total, id_fornecedor, id_tipo_equipamento, valor_unitario, tipo_equipamento_id_tipo_equipamento, fornecedor_id_fornecedor, id_produto) FROM stdin;
+\.
 
 
 --
--- TOC entry 2184 (class 1259 OID 27142)
--- Name: veiculo_nome; Type: INDEX; Schema: public; Owner: postgres; Tablespace: 
+-- TOC entry 2385 (class 0 OID 0)
+-- Dependencies: 224
+-- Name: det_nota_id_detalhe_nota_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-CREATE INDEX veiculo_nome ON veiculo USING btree (nome);
+SELECT pg_catalog.setval('det_nota_id_detalhe_nota_seq', 1, false);
 
 
 --
--- TOC entry 2273 (class 2606 OID 27115)
--- Name: fk_cod_estado_cidade; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+-- TOC entry 2325 (class 0 OID 62948)
+-- Dependencies: 219
+-- Data for Name: embalagem; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-ALTER TABLE ONLY cidade
-    ADD CONSTRAINT fk_cod_estado_cidade FOREIGN KEY (cod_estado) REFERENCES estado(cod_estado) ON DELETE CASCADE;
+COPY embalagem (id_embalagem, espec_emabalagem, id_capacidade, id_grupo_embalagem, id_compatibilidade, id_material) FROM stdin;
+\.
 
 
 --
--- TOC entry 2272 (class 2606 OID 27110)
--- Name: fk_cod_pais_estado; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+-- TOC entry 2386 (class 0 OID 0)
+-- Dependencies: 218
+-- Name: embalagem_id_embalagem_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-ALTER TABLE ONLY estado
-    ADD CONSTRAINT fk_cod_pais_estado FOREIGN KEY (cod_pais) REFERENCES pais(cod_pais) ON DELETE CASCADE;
+SELECT pg_catalog.setval('embalagem_id_embalagem_seq', 1, false);
 
 
 --
--- TOC entry 2281 (class 2606 OID 26970)
--- Name: fkdetalhe_no389960; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+-- TOC entry 2275 (class 0 OID 62627)
+-- Dependencies: 169
+-- Data for Name: end_armazem; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-ALTER TABLE ONLY detalhe_nota
-    ADD CONSTRAINT fkdetalhe_no389960 FOREIGN KEY (tipo_equipamentoid_tipo_equipamento) REFERENCES tipo_equipamento(id_tipo_equipamento);
+COPY end_armazem (id_endarmazem, cor_end_armazem, rua_end_armazem, lado_end_armazem, nivel_end_armazem, posicao_end_armazem) FROM stdin;
+\.
 
 
 --
--- TOC entry 2280 (class 2606 OID 26965)
--- Name: fkdetalhe_no429338; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+-- TOC entry 2387 (class 0 OID 0)
+-- Dependencies: 168
+-- Name: end_armazem_id_endarmazem_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-ALTER TABLE ONLY detalhe_nota
-    ADD CONSTRAINT fkdetalhe_no429338 FOREIGN KEY (embalagemid_embalgem) REFERENCES embalagem(id_embalgem);
+SELECT pg_catalog.setval('end_armazem_id_endarmazem_seq', 1, false);
 
 
 --
--- TOC entry 2282 (class 2606 OID 26975)
--- Name: fkdetalhe_no514306; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+-- TOC entry 2321 (class 0 OID 62900)
+-- Dependencies: 215
+-- Data for Name: endereco; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-ALTER TABLE ONLY detalhe_nota
-    ADD CONSTRAINT fkdetalhe_no514306 FOREIGN KEY (fornecedorid_fornecedor) REFERENCES fornecedor(id_fornecedor);
+COPY endereco (id_endereco, id_cidade, id_pais, id_estado, id_logradouro, estado_id_estado, bairro, cep, numero) FROM stdin;
+\.
 
 
 --
--- TOC entry 2265 (class 2606 OID 27010)
--- Name: fkembalagem42760; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+-- TOC entry 2388 (class 0 OID 0)
+-- Dependencies: 214
+-- Name: endereco_id_endereco_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-ALTER TABLE ONLY embalagem
-    ADD CONSTRAINT fkembalagem42760 FOREIGN KEY (tipo_embalagemid_tipo_embalagem) REFERENCES tipo_embalagem(id_tipo_embalagem);
+SELECT pg_catalog.setval('endereco_id_endereco_seq', 1, false);
 
 
 --
--- TOC entry 2264 (class 2606 OID 26940)
--- Name: fkembalagem826860; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+-- TOC entry 2309 (class 0 OID 62795)
+-- Dependencies: 203
+-- Data for Name: epe; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-ALTER TABLE ONLY embalagem
-    ADD CONSTRAINT fkembalagem826860 FOREIGN KEY (grupoembalagemid_grupoembalagem) REFERENCES grupoembalagem(id_grupoembalagem) ON UPDATE CASCADE ON DELETE CASCADE;
+COPY epe (id_epe, nome_epe, classe_epe, agente_epe, tipo_material_id_material) FROM stdin;
+\.
 
 
 --
--- TOC entry 2266 (class 2606 OID 27015)
--- Name: fkembalagem869935; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+-- TOC entry 2389 (class 0 OID 0)
+-- Dependencies: 202
+-- Name: epe_id_epe_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-ALTER TABLE ONLY embalagem
-    ADD CONSTRAINT fkembalagem869935 FOREIGN KEY (classeid_classe) REFERENCES classe(id_classe);
+SELECT pg_catalog.setval('epe_id_epe_seq', 1, false);
 
 
 --
--- TOC entry 2267 (class 2606 OID 27020)
--- Name: fkembalagem881335; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+-- TOC entry 2307 (class 0 OID 62778)
+-- Dependencies: 201
+-- Data for Name: epi; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-ALTER TABLE ONLY embalagem
-    ADD CONSTRAINT fkembalagem881335 FOREIGN KEY (materialid_material) REFERENCES material(id_material);
+COPY epi (id_epi, nome_epi, grupo_epi, espec_epi, id_material) FROM stdin;
+\.
 
 
 --
--- TOC entry 2245 (class 2606 OID 27005)
--- Name: fkend_armaze757676; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+-- TOC entry 2390 (class 0 OID 0)
+-- Dependencies: 200
+-- Name: epi_id_epi_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-ALTER TABLE ONLY end_armazem
-    ADD CONSTRAINT fkend_armaze757676 FOREIGN KEY (armazemid_armazem) REFERENCES armazem(id_armazem);
+SELECT pg_catalog.setval('epi_id_epi_seq', 1, false);
 
 
 --
--- TOC entry 2274 (class 2606 OID 27095)
--- Name: fkenderecocidade; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+-- TOC entry 2337 (class 0 OID 63201)
+-- Dependencies: 231
+-- Data for Name: est_fisico; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-ALTER TABLE ONLY endereco
-    ADD CONSTRAINT fkenderecocidade FOREIGN KEY (cod_cidade) REFERENCES cidade(cod_cidade);
+COPY est_fisico (id_est_fisico, nome_est_fisico, esp_est_fisico) FROM stdin;
+\.
 
 
 --
--- TOC entry 2275 (class 2606 OID 27100)
--- Name: fkenderecoestado; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+-- TOC entry 2391 (class 0 OID 0)
+-- Dependencies: 230
+-- Name: est_fisico_id_est_fisico_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-ALTER TABLE ONLY endereco
-    ADD CONSTRAINT fkenderecoestado FOREIGN KEY (cod_estado) REFERENCES estado(cod_estado);
+SELECT pg_catalog.setval('est_fisico_id_est_fisico_seq', 1, false);
 
 
 --
--- TOC entry 2276 (class 2606 OID 27105)
--- Name: fkenderecopais; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+-- TOC entry 2285 (class 0 OID 62671)
+-- Dependencies: 179
+-- Data for Name: estado; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-ALTER TABLE ONLY endereco
-    ADD CONSTRAINT fkenderecopais FOREIGN KEY (cod_pais) REFERENCES pais(cod_pais);
+COPY estado (id_estado, nome_estado, sigla_estado) FROM stdin;
+1	Rio de Janeiro	RJ
+\.
 
 
 --
--- TOC entry 2277 (class 2606 OID 27308)
--- Name: fkfornecedor553224; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+-- TOC entry 2392 (class 0 OID 0)
+-- Dependencies: 178
+-- Name: estado_id_estado_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-ALTER TABLE ONLY fornecedor
-    ADD CONSTRAINT fkfornecedor553224 FOREIGN KEY (enderecoid_endereco) REFERENCES endereco(id_endereco);
+SELECT pg_catalog.setval('estado_id_estado_seq', 1, true);
 
 
 --
--- TOC entry 2258 (class 2606 OID 27274)
--- Name: fkfuncionari250135; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+-- TOC entry 2329 (class 0 OID 63033)
+-- Dependencies: 223
+-- Data for Name: fornecedor; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-ALTER TABLE ONLY funcionario
-    ADD CONSTRAINT fkfuncionari250135 FOREIGN KEY (usuarioid_usuario) REFERENCES usuario(id_usuario);
+COPY fornecedor (id_fornecedor, nome_fantasia, razao_social, cnpj, insc_social, id_contato, contatos_id_contato, id_endereco) FROM stdin;
+\.
 
 
 --
--- TOC entry 2259 (class 2606 OID 27279)
--- Name: fkfuncionari302242; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+-- TOC entry 2393 (class 0 OID 0)
+-- Dependencies: 222
+-- Name: fornecedor_id_fornecedor_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-ALTER TABLE ONLY funcionario
-    ADD CONSTRAINT fkfuncionari302242 FOREIGN KEY (enderecoid_endereco) REFERENCES endereco(id_endereco);
+SELECT pg_catalog.setval('fornecedor_id_fornecedor_seq', 1, false);
 
 
 --
--- TOC entry 2256 (class 2606 OID 27055)
--- Name: fkmovimentac248538; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+-- TOC entry 2323 (class 0 OID 62923)
+-- Dependencies: 217
+-- Data for Name: funcionario; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-ALTER TABLE ONLY movimentacao
-    ADD CONSTRAINT fkmovimentac248538 FOREIGN KEY (local_operacaoid_local_operacao) REFERENCES local_operacao(id_local_operacao);
+COPY funcionario (id_funcionario, nome_funcionario, sb_nome_funcionario, sexo, cpf, rg, dt_nasc, mat_funcionario, dt_admissao, funcao, cargo, nivel_funcionario, especializacao, id_contato, id_usuario, contatos_id_contato, id_endereco, endereco_id_endereco) FROM stdin;
+\.
 
 
 --
--- TOC entry 2257 (class 2606 OID 27060)
--- Name: fkmovimentac633926; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+-- TOC entry 2394 (class 0 OID 0)
+-- Dependencies: 216
+-- Name: funcionario_id_funcionario_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-ALTER TABLE ONLY movimentacao
-    ADD CONSTRAINT fkmovimentac633926 FOREIGN KEY (responsavel) REFERENCES funcionario(id_funcionario);
+SELECT pg_catalog.setval('funcionario_id_funcionario_seq', 1, false);
 
 
 --
--- TOC entry 2268 (class 2606 OID 27231)
--- Name: fkproduto455130; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+-- TOC entry 2277 (class 0 OID 62636)
+-- Dependencies: 171
+-- Data for Name: grupo_embalagem; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-ALTER TABLE ONLY produto
-    ADD CONSTRAINT fkproduto455130 FOREIGN KEY (fornecedorid_fornecedor) REFERENCES fornecedor(id_fornecedor);
+COPY grupo_embalagem (id_grupo_embalagem, nome_grupo_embalagem, espec_grupo_embalagem) FROM stdin;
+\.
 
 
 --
--- TOC entry 2269 (class 2606 OID 27236)
--- Name: fkproduto598144; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+-- TOC entry 2395 (class 0 OID 0)
+-- Dependencies: 170
+-- Name: grupo_embalagem_id_grupo_embalagem_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-ALTER TABLE ONLY produto
-    ADD CONSTRAINT fkproduto598144 FOREIGN KEY (rum_onuid_num_onu) REFERENCES num_onu(id_num_onu);
+SELECT pg_catalog.setval('grupo_embalagem_id_grupo_embalagem_seq', 1, false);
 
 
 --
--- TOC entry 2270 (class 2606 OID 27241)
--- Name: fkproduto774052; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+-- TOC entry 2299 (class 0 OID 62741)
+-- Dependencies: 193
+-- Data for Name: legenda_compatibilidade; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-ALTER TABLE ONLY produto
-    ADD CONSTRAINT fkproduto774052 FOREIGN KEY (composprodutotipoproduto) REFERENCES composproduto(tipoproduto);
+COPY legenda_compatibilidade (id_legenda_compatibilidade, legenda, espec_legenda) FROM stdin;
+\.
 
 
 --
--- TOC entry 2271 (class 2606 OID 27246)
--- Name: fkproduto872538; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+-- TOC entry 2396 (class 0 OID 0)
+-- Dependencies: 192
+-- Name: legenda_compatibilidade_id_legenda_compatibilidade_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-ALTER TABLE ONLY produto
-    ADD CONSTRAINT fkproduto872538 FOREIGN KEY (classeid_classe) REFERENCES classe(id_classe);
+SELECT pg_catalog.setval('legenda_compatibilidade_id_legenda_compatibilidade_seq', 1, false);
 
 
 --
--- TOC entry 2247 (class 2606 OID 26955)
--- Name: fkstatus_arm431886; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+-- TOC entry 2289 (class 0 OID 62689)
+-- Dependencies: 183
+-- Data for Name: local_operacao; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-ALTER TABLE ONLY status_armazem
-    ADD CONSTRAINT fkstatus_arm431886 FOREIGN KEY (movimentacaoid_movimentacao) REFERENCES movimentacao(id_movimentacao);
+COPY local_operacao (id_local_oper, desc__local_oper, local_oper) FROM stdin;
+\.
 
 
 --
--- TOC entry 2246 (class 2606 OID 26950)
--- Name: fkstatus_arm65354; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+-- TOC entry 2397 (class 0 OID 0)
+-- Dependencies: 182
+-- Name: local_operacao_id_local_oper_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-ALTER TABLE ONLY status_armazem
-    ADD CONSTRAINT fkstatus_arm65354 FOREIGN KEY (tipo_compatibilidadeid_tipo_compatibilidade) REFERENCES tipo_compatibilidade(id_tipo_compatibilidade);
+SELECT pg_catalog.setval('local_operacao_id_local_oper_seq', 1, false);
 
 
 --
--- TOC entry 2248 (class 2606 OID 27000)
--- Name: fkstatus_arm906906; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+-- TOC entry 2335 (class 0 OID 63102)
+-- Dependencies: 229
+-- Data for Name: movimentacao; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-ALTER TABLE ONLY status_armazem
-    ADD CONSTRAINT fkstatus_arm906906 FOREIGN KEY (armazemid_armazem) REFERENCES armazem(id_armazem);
+COPY movimentacao (id_movimentacao, dt_prevista, dt_entrega, dt_saida, quant_funcionarios, responsavel, tempo_previsto, duracao, id_tipo_equipamento, id_funcionario, id_produto, id_armazem, id_endarmazem, id_detalhe_nota, id_tipo_solicitacao) FROM stdin;
+\.
 
 
 --
--- TOC entry 2251 (class 2606 OID 27030)
--- Name: fktipo_compa167919; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+-- TOC entry 2398 (class 0 OID 0)
+-- Dependencies: 228
+-- Name: movimentacao_id_movimentacao_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-ALTER TABLE ONLY tipo_compatibilidade
-    ADD CONSTRAINT fktipo_compa167919 FOREIGN KEY (classeid_classe) REFERENCES classe(id_classe);
+SELECT pg_catalog.setval('movimentacao_id_movimentacao_seq', 1, false);
 
 
 --
--- TOC entry 2254 (class 2606 OID 27045)
--- Name: fktipo_compa196324; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+-- TOC entry 2297 (class 0 OID 62732)
+-- Dependencies: 191
+-- Data for Name: num_cas; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-ALTER TABLE ONLY tipo_compatibilidade
-    ADD CONSTRAINT fktipo_compa196324 FOREIGN KEY (toxidadeid_toxidade) REFERENCES toxidade(id_toxidade);
+COPY num_cas (id_num_cas, num_cas, espc_num_cas) FROM stdin;
+\.
 
 
 --
--- TOC entry 2255 (class 2606 OID 27050)
--- Name: fktipo_compa247719; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+-- TOC entry 2399 (class 0 OID 0)
+-- Dependencies: 190
+-- Name: num_cas_id_num_cas_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-ALTER TABLE ONLY tipo_compatibilidade
-    ADD CONSTRAINT fktipo_compa247719 FOREIGN KEY (pt_ebulicaoid_pt_ebulicao) REFERENCES pt_ebulicao(id_pt_ebulicao);
+SELECT pg_catalog.setval('num_cas_id_num_cas_seq', 1, false);
 
 
 --
--- TOC entry 2253 (class 2606 OID 27040)
--- Name: fktipo_compa498016; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+-- TOC entry 2305 (class 0 OID 62769)
+-- Dependencies: 199
+-- Data for Name: num_onu; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-ALTER TABLE ONLY tipo_compatibilidade
-    ADD CONSTRAINT fktipo_compa498016 FOREIGN KEY (pt_fulgorid_pt_fulgor) REFERENCES pt_fulgor(id_pt_fulgor);
+COPY num_onu (id_num_onu, num_onu, nome_prod, desc_prod) FROM stdin;
+\.
 
 
 --
--- TOC entry 2250 (class 2606 OID 27025)
--- Name: fktipo_compa55366; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+-- TOC entry 2400 (class 0 OID 0)
+-- Dependencies: 198
+-- Name: num_onu_id_num_onu_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-ALTER TABLE ONLY tipo_compatibilidade
-    ADD CONSTRAINT fktipo_compa55366 FOREIGN KEY (tipo_movimentacaoid_tipo_movimentacao) REFERENCES tipo_movimentacao(id_tipo_movimentacao);
+SELECT pg_catalog.setval('num_onu_id_num_onu_seq', 1, false);
 
 
 --
--- TOC entry 2252 (class 2606 OID 27035)
--- Name: fktipo_compa830296; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+-- TOC entry 2287 (class 0 OID 62680)
+-- Dependencies: 181
+-- Data for Name: pais; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-ALTER TABLE ONLY tipo_compatibilidade
-    ADD CONSTRAINT fktipo_compa830296 FOREIGN KEY (num_onuid_num_onu) REFERENCES num_onu(id_num_onu);
+COPY pais (id_pais, nome_pais, siglapais) FROM stdin;
+\.
 
 
 --
--- TOC entry 2263 (class 2606 OID 26990)
--- Name: fktipo_equip249345; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+-- TOC entry 2401 (class 0 OID 0)
+-- Dependencies: 180
+-- Name: pais_id_pais_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-ALTER TABLE ONLY tipo_equipamento
-    ADD CONSTRAINT fktipo_equip249345 FOREIGN KEY (veiculoid_veiculo) REFERENCES veiculo(id_veiculo);
+SELECT pg_catalog.setval('pais_id_pais_seq', 1, false);
 
 
 --
--- TOC entry 2262 (class 2606 OID 26985)
--- Name: fktipo_equip369144; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+-- TOC entry 2327 (class 0 OID 62976)
+-- Dependencies: 221
+-- Data for Name: produto; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-ALTER TABLE ONLY tipo_equipamento
-    ADD CONSTRAINT fktipo_equip369144 FOREIGN KEY (epeid_epe) REFERENCES epe(id_epe);
+COPY produto (id_produto, nome_generico, origem, rotulo_produto, painel_seguranca, num_risco, acoes_emerg, n_lote, dt_fab, dt_val, composicao, desc_produto, formula_produto, odor_produto, id_embalagem, id_compatibilidade, id_num_onu, id_est_fisico, id_classe, id_num_cas, id_legenda_compatibilidade, id_armazem, id_endarmazem, armazem_id_armazem) FROM stdin;
+\.
 
 
 --
--- TOC entry 2261 (class 2606 OID 26980)
--- Name: fktipo_equip415839; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+-- TOC entry 2402 (class 0 OID 0)
+-- Dependencies: 220
+-- Name: produto_id_produto_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-ALTER TABLE ONLY tipo_equipamento
-    ADD CONSTRAINT fktipo_equip415839 FOREIGN KEY (epiid_epi) REFERENCES epi(id_epi);
+SELECT pg_catalog.setval('produto_id_produto_seq', 1, false);
 
 
 --
--- TOC entry 2249 (class 2606 OID 26945)
--- Name: fktipo_movim283820; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+-- TOC entry 2281 (class 0 OID 62653)
+-- Dependencies: 175
+-- Data for Name: roler; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-ALTER TABLE ONLY tipo_movimentacao
-    ADD CONSTRAINT fktipo_movim283820 FOREIGN KEY (usuarioid_usuario) REFERENCES usuario(id_usuario);
+COPY roler (id_roler, nome_roler) FROM stdin;
+\.
 
 
 --
--- TOC entry 2278 (class 2606 OID 26960)
--- Name: fktipo_pedid346042; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+-- TOC entry 2403 (class 0 OID 0)
+-- Dependencies: 174
+-- Name: roler_id_roler_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-ALTER TABLE ONLY tipo_pedido
-    ADD CONSTRAINT fktipo_pedid346042 FOREIGN KEY (detalhe_notaid_detalhe_nota) REFERENCES detalhe_nota(id_detalhe_nota);
+SELECT pg_catalog.setval('roler_id_roler_seq', 1, false);
 
 
 --
--- TOC entry 2279 (class 2606 OID 27080)
--- Name: fktipo_pedid963845; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+-- TOC entry 2293 (class 0 OID 62706)
+-- Dependencies: 187
+-- Data for Name: status_armazem; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-ALTER TABLE ONLY tipo_pedido
-    ADD CONSTRAINT fktipo_pedid963845 FOREIGN KEY (usuarioid_usuario) REFERENCES usuario(id_usuario);
+COPY status_armazem (id_status_armazem, tipo_status_armazem, espec_status_armazem) FROM stdin;
+\.
 
 
 --
--- TOC entry 2283 (class 2606 OID 27085)
--- Name: fkusuario537265; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+-- TOC entry 2404 (class 0 OID 0)
+-- Dependencies: 186
+-- Name: status_armazem_id_status_armazem_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-ALTER TABLE ONLY usuario
-    ADD CONSTRAINT fkusuario537265 FOREIGN KEY (nivelusuarioid_nivelusuario) REFERENCES nivelusuario(id_nivelusuario);
+SELECT pg_catalog.setval('status_armazem_id_status_armazem_seq', 1, false);
 
 
 --
--- TOC entry 2260 (class 2606 OID 26995)
--- Name: fkveiculo384253; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+-- TOC entry 2319 (class 0 OID 62876)
+-- Dependencies: 213
+-- Data for Name: tipo_equipamento; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-ALTER TABLE ONLY veiculo
-    ADD CONSTRAINT fkveiculo384253 FOREIGN KEY (combustivelid_combustivel) REFERENCES combustivel(id_combustivel);
+COPY tipo_equipamento (id_tipo_equipamento, nome_tipo_equipamento, espc_tipo_equipamento, id_veiculo, id_epi, id_epe, id_embalagem, epe_id_epe) FROM stdin;
+\.
 
 
 --
--- TOC entry 2356 (class 0 OID 0)
--- Dependencies: 5
--- Name: public; Type: ACL; Schema: -; Owner: postgres
+-- TOC entry 2405 (class 0 OID 0)
+-- Dependencies: 212
+-- Name: tipo_equipamento_id_tipo_equipamento_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
-
-REVOKE ALL ON SCHEMA public FROM PUBLIC;
-REVOKE ALL ON SCHEMA public FROM postgres;
-GRANT ALL ON SCHEMA public TO postgres;
-GRANT ALL ON SCHEMA public TO PUBLIC;
 
+SELECT pg_catalog.setval('tipo_equipamento_id_tipo_equipamento_seq', 1, false);
 
--- Completed on 2014-06-16 22:34:16
 
 --
--- PostgreSQL database dump complete
+-- TOC entry 2295 (class 0 OID 62714)
+-- Dependencies: 189
+-- Data for Name: tipo_material; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
+COPY tipo_material (id_material, nome_material, espec_material, pt_fulgor, "pt_ebuliã§ã£o") FROM stdin;

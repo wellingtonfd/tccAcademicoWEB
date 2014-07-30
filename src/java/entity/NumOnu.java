@@ -135,7 +135,7 @@ public class NumOnu implements Serializable {
 
     @Override
     public String toString() {
-        return "entity.NumOnu[ idNumOnu=" + idNumOnu + " ]";
+        return "br.com.scpp.NumOnu[ idNumOnu=" + idNumOnu + " ]";
     }
 
 }

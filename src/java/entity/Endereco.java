@@ -208,7 +208,7 @@ public class Endereco implements Serializable {
 
     @Override
     public String toString() {
-        return "entity.Endereco[ idEndereco=" + idEndereco + " ]";
+        return "br.com.scpp.Endereco[ idEndereco=" + idEndereco + " ]";
     }
 
 }

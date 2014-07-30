@@ -109,7 +109,7 @@ public class Roler implements Serializable {
 
     @Override
     public String toString() {
-        return "entity.Roler[ idRoler=" + idRoler + " ]";
+        return "br.com.scpp.Roler[ idRoler=" + idRoler + " ]";
     }
 
 }

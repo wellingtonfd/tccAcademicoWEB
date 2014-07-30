@@ -125,7 +125,7 @@ public class Estado implements Serializable {
 
     @Override
     public String toString() {
-        return "entity.Estado[ idEstado=" + idEstado + " ]";
+        return "br.com.scpp.Estado[ idEstado=" + idEstado + " ]";
     }
 
 }

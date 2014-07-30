@@ -35,7 +35,7 @@ public class RolerController extends AbstractController<Roler> {
         if (this.getSelected() != null) {
             FacesContext.getCurrentInstance().getExternalContext().getRequestMap().put("Usuario_items", this.getSelected().getUsuarioCollection());
         }
-        return "/entities/usuario/index";
+        return "/entity/usuario/index";
     }
 
 }

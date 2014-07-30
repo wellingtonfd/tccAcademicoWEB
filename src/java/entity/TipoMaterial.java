@@ -171,7 +171,7 @@ public class TipoMaterial implements Serializable {
 
     @Override
     public String toString() {
-        return "entity.TipoMaterial[ idMaterial=" + idMaterial + " ]";
+        return "br.com.scpp.TipoMaterial[ idMaterial=" + idMaterial + " ]";
     }
 
 }

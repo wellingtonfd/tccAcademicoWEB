@@ -35,7 +35,7 @@ public class NumOnuController extends AbstractController<NumOnu> {
         if (this.getSelected() != null) {
             FacesContext.getCurrentInstance().getExternalContext().getRequestMap().put("Produto_items", this.getSelected().getProdutoCollection());
         }
-        return "/entities/produto/index";
+        return "/entity/produto/index";
     }
 
 }

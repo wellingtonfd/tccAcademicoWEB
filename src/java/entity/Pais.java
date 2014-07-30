@@ -122,7 +122,7 @@ public class Pais implements Serializable {
 
     @Override
     public String toString() {
-        return "entity.Pais[ idPais=" + idPais + " ]";
+        return "br.com.scpp.Pais[ idPais=" + idPais + " ]";
     }
 
 }

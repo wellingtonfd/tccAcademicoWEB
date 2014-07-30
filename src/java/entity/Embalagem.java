@@ -148,7 +148,7 @@ public class Embalagem implements Serializable {
 
     @Override
     public String toString() {
-        return "entity.Embalagem[ idEmbalagem=" + idEmbalagem + " ]";
+        return "br.com.scpp.Embalagem[ idEmbalagem=" + idEmbalagem + " ]";
     }
 
 }

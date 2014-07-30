@@ -35,7 +35,7 @@ public class ClasseController extends AbstractController<Classe> {
         if (this.getSelected() != null) {
             FacesContext.getCurrentInstance().getExternalContext().getRequestMap().put("Produto_items", this.getSelected().getProdutoCollection());
         }
-        return "/entities/produto/index";
+        return "/entity/produto/index";
     }
 
 }

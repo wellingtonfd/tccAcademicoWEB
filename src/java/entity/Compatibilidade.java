@@ -164,7 +164,7 @@ public class Compatibilidade implements Serializable {
 
     @Override
     public String toString() {
-        return "entity.Compatibilidade[ idCompatibilidade=" + idCompatibilidade + " ]";
+        return "br.com.scpp.Compatibilidade[ idCompatibilidade=" + idCompatibilidade + " ]";
     }
 
 }

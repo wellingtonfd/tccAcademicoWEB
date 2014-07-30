@@ -45,7 +45,7 @@ public class DetNotaController extends AbstractController<DetNota> {
         if (this.getSelected() != null) {
             FacesContext.getCurrentInstance().getExternalContext().getRequestMap().put("Movimentacao_items", this.getSelected().getMovimentacaoCollection());
         }
-        return "/entities/movimentacao/index";
+        return "/entity/movimentacao/index";
     }
 
     /**

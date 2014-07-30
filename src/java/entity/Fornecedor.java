@@ -201,7 +201,7 @@ public class Fornecedor implements Serializable {
 
     @Override
     public String toString() {
-        return "entity.Fornecedor[ idFornecedor=" + idFornecedor + " ]";
+        return "br.com.scpp.Fornecedor[ idFornecedor=" + idFornecedor + " ]";
     }
 
 }

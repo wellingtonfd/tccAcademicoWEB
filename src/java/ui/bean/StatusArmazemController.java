@@ -36,7 +36,7 @@ public class StatusArmazemController extends AbstractController<StatusArmazem> {
         if (this.getSelected() != null) {
             FacesContext.getCurrentInstance().getExternalContext().getRequestMap().put("Armazem_items", this.getSelected().getArmazemCollection());
         }
-        return "/entities/armazem/index";
+        return "/entity/armazem/index";
     }
 
 }

@@ -182,7 +182,7 @@ public class Contatos implements Serializable {
 
     @Override
     public String toString() {
-        return "entity.Contatos[ idContato=" + idContato + " ]";
+        return "br.com.scpp.Contatos[ idContato=" + idContato + " ]";
     }
 
 }

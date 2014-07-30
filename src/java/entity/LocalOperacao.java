@@ -122,7 +122,7 @@ public class LocalOperacao implements Serializable {
 
     @Override
     public String toString() {
-        return "entity.LocalOperacao[ idLocalOper=" + idLocalOper + " ]";
+        return "br.com.scpp.LocalOperacao[ idLocalOper=" + idLocalOper + " ]";
     }
 
 }

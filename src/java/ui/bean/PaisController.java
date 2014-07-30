@@ -35,7 +35,7 @@ public class PaisController extends AbstractController<Pais> {
         if (this.getSelected() != null) {
             FacesContext.getCurrentInstance().getExternalContext().getRequestMap().put("Endereco_items", this.getSelected().getEnderecoCollection());
         }
-        return "/entities/endereco/index";
+        return "/entity/endereco/index";
     }
 
 }

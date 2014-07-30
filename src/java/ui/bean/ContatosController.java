@@ -37,7 +37,7 @@ public class ContatosController extends AbstractController<Contatos> {
         if (this.getSelected() != null) {
             FacesContext.getCurrentInstance().getExternalContext().getRequestMap().put("Fornecedor_items", this.getSelected().getFornecedorCollection());
         }
-        return "/entities/fornecedor/index";
+        return "/entity/fornecedor/index";
     }
 
     /**
@@ -50,7 +50,7 @@ public class ContatosController extends AbstractController<Contatos> {
         if (this.getSelected() != null) {
             FacesContext.getCurrentInstance().getExternalContext().getRequestMap().put("Funcionario_items", this.getSelected().getFuncionarioCollection());
         }
-        return "/entities/funcionario/index";
+        return "/entity/funcionario/index";
     }
 
 }

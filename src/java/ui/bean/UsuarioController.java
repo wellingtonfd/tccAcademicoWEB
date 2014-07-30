@@ -50,7 +50,7 @@ public class UsuarioController extends AbstractController<Usuario> {
         if (this.getSelected() != null) {
             FacesContext.getCurrentInstance().getExternalContext().getRequestMap().put("Funcionario_items", this.getSelected().getFuncionarioCollection());
         }
-        return "/entities/funcionario/index";
+        return "/entity/funcionario/index";
     }
 
 }

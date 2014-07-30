@@ -44,7 +44,7 @@ public class FornecedorController extends AbstractController<Fornecedor> {
         if (this.getSelected() != null) {
             FacesContext.getCurrentInstance().getExternalContext().getRequestMap().put("TipoSolicitacao_items", this.getSelected().getTipoSolicitacaoCollection());
         }
-        return "/entities/tipoSolicitacao/index";
+        return "/entity/tipoSolicitacao/index";
     }
 
     /**
@@ -57,7 +57,7 @@ public class FornecedorController extends AbstractController<Fornecedor> {
         if (this.getSelected() != null) {
             FacesContext.getCurrentInstance().getExternalContext().getRequestMap().put("DetNota_items", this.getSelected().getDetNotaCollection());
         }
-        return "/entities/detNota/index";
+        return "/entity/detNota/index";
     }
 
     /**

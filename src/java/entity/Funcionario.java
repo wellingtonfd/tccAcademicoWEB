@@ -341,7 +341,7 @@ public class Funcionario implements Serializable {
 
     @Override
     public String toString() {
-        return "entity.Funcionario[ idFuncionario=" + idFuncionario + " ]";
+        return "br.com.scpp.Funcionario[ idFuncionario=" + idFuncionario + " ]";
     }
 
 }

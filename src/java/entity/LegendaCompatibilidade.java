@@ -132,7 +132,7 @@ public class LegendaCompatibilidade implements Serializable {
 
     @Override
     public String toString() {
-        return "entity.LegendaCompatibilidade[ idLegendaCompatibilidade=" + idLegendaCompatibilidade + " ]";
+        return "br.com.scpp.LegendaCompatibilidade[ idLegendaCompatibilidade=" + idLegendaCompatibilidade + " ]";
     }
 
 }

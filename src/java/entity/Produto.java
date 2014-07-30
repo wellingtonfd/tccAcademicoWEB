@@ -52,7 +52,6 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Produto.findByDescProduto", query = "SELECT p FROM Produto p WHERE p.descProduto = :descProduto"),
     @NamedQuery(name = "Produto.findByFormulaProduto", query = "SELECT p FROM Produto p WHERE p.formulaProduto = :formulaProduto"),
     @NamedQuery(name = "Produto.findByOdorProduto", query = "SELECT p FROM Produto p WHERE p.odorProduto = :odorProduto"),
-    @NamedQuery(name = "Produto.findByIdEstFisico", query = "SELECT p FROM Produto p WHERE p.idEstFisico = :idEstFisico"),
     @NamedQuery(name = "Produto.findByIdArmazem", query = "SELECT p FROM Produto p WHERE p.idArmazem = :idArmazem")})
 public class Produto implements Serializable {
     private static final long serialVersionUID = 1L;
@@ -114,8 +113,6 @@ public class Produto implements Serializable {
     @Size(max = 25)
     @Column(name = "odor_produto")
     private String odorProduto;
-    @Column(name = "id_est_fisico")
-    private Integer idEstFisico;
     @Column(name = "id_armazem")
     private Integer idArmazem;
     @JoinColumn(name = "id_num_onu", referencedColumnName = "id_num_onu")
@@ -127,6 +124,9 @@ public class Produto implements Serializable {
     @JoinColumn(name = "id_legenda_compatibilidade", referencedColumnName = "id_legenda_compatibilidade")
     @ManyToOne
     private LegendaCompatibilidade idLegendaCompatibilidade;
+    @JoinColumn(name = "id_est_fisico", referencedColumnName = "id_est_fisico")
+    @ManyToOne
+    private EstFisico idEstFisico;
     @JoinColumn(name = "id_endarmazem", referencedColumnName = "id_endarmazem")
     @ManyToOne
     private EndArmazem idEndarmazem;
@@ -278,14 +278,6 @@ public class Produto implements Serializable {
         this.odorProduto = odorProduto;
     }
 
-    public Integer getIdEstFisico() {
-        return idEstFisico;
-    }
-
-    public void setIdEstFisico(Integer idEstFisico) {
-        this.idEstFisico = idEstFisico;
-    }
-
     public Integer getIdArmazem() {
         return idArmazem;
     }
@@ -316,6 +308,14 @@ public class Produto implements Serializable {
 
     public void setIdLegendaCompatibilidade(LegendaCompatibilidade idLegendaCompatibilidade) {
         this.idLegendaCompatibilidade = idLegendaCompatibilidade;
+    }
+
+    public EstFisico getIdEstFisico() {
+        return idEstFisico;
+    }
+
+    public void setIdEstFisico(EstFisico idEstFisico) {
+        this.idEstFisico = idEstFisico;
     }
 
     public EndArmazem getIdEndarmazem() {
@@ -398,7 +398,7 @@ public class Produto implements Serializable {
 
     @Override
     public String toString() {
-        return "entity.Produto[ idProduto=" + idProduto + " ]";
+        return "br.com.scpp.Produto[ idProduto=" + idProduto + " ]";
     }
 
 }

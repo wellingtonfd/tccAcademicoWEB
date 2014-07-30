@@ -48,7 +48,7 @@ public class ArmazemController extends AbstractController<Armazem> {
         if (this.getSelected() != null) {
             FacesContext.getCurrentInstance().getExternalContext().getRequestMap().put("Produto_items", this.getSelected().getProdutoCollection());
         }
-        return "/entities/produto/index";
+        return "/entity/produto/index";
     }
 
     /**
@@ -62,7 +62,7 @@ public class ArmazemController extends AbstractController<Armazem> {
         if (this.getSelected() != null) {
             FacesContext.getCurrentInstance().getExternalContext().getRequestMap().put("TipoSolicitacao_items", this.getSelected().getTipoSolicitacaoCollection());
         }
-        return "/entities/tipoSolicitacao/index";
+        return "/entity/tipoSolicitacao/index";
     }
 
     /**
@@ -76,7 +76,7 @@ public class ArmazemController extends AbstractController<Armazem> {
         if (this.getSelected() != null) {
             FacesContext.getCurrentInstance().getExternalContext().getRequestMap().put("Movimentacao_items", this.getSelected().getMovimentacaoCollection());
         }
-        return "/entities/movimentacao/index";
+        return "/entity/movimentacao/index";
     }
 
     /**

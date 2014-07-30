@@ -121,7 +121,7 @@ public class GrupoEmbalagem implements Serializable {
 
     @Override
     public String toString() {
-        return "entity.GrupoEmbalagem[ idGrupoEmbalagem=" + idGrupoEmbalagem + " ]";
+        return "br.com.scpp.GrupoEmbalagem[ idGrupoEmbalagem=" + idGrupoEmbalagem + " ]";
     }
 
 }

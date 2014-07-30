@@ -137,7 +137,7 @@ public class Classe implements Serializable {
 
     @Override
     public String toString() {
-        return "entity.Classe[ idClasse=" + idClasse + " ]";
+        return "br.com.scpp.Classe[ idClasse=" + idClasse + " ]";
     }
 
 }

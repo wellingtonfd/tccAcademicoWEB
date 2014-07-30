@@ -121,7 +121,7 @@ public class NumCas implements Serializable {
 
     @Override
     public String toString() {
-        return "entity.NumCas[ idNumCas=" + idNumCas + " ]";
+        return "br.com.scpp.NumCas[ idNumCas=" + idNumCas + " ]";
     }
 
 }

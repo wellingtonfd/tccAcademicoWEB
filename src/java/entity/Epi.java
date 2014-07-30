@@ -149,7 +149,7 @@ public class Epi implements Serializable {
 
     @Override
     public String toString() {
-        return "entity.Epi[ idEpi=" + idEpi + " ]";
+        return "br.com.scpp.Epi[ idEpi=" + idEpi + " ]";
     }
 
 }

@@ -258,7 +258,7 @@ public class Armazem implements Serializable {
 
     @Override
     public String toString() {
-        return "entity.Armazem[ idArmazem=" + idArmazem + " ]";
+        return "br.com.scpp.Armazem[ idArmazem=" + idArmazem + " ]";
     }
 
 }

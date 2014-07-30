@@ -38,7 +38,7 @@ public class LegendaCompatibilidadeController extends AbstractController<Legenda
         if (this.getSelected() != null) {
             FacesContext.getCurrentInstance().getExternalContext().getRequestMap().put("Produto_items", this.getSelected().getProdutoCollection());
         }
-        return "/entities/produto/index";
+        return "/entity/produto/index";
     }
 
     /**
@@ -52,7 +52,7 @@ public class LegendaCompatibilidadeController extends AbstractController<Legenda
         if (this.getSelected() != null) {
             FacesContext.getCurrentInstance().getExternalContext().getRequestMap().put("Compatibilidade_items", this.getSelected().getCompatibilidadeCollection());
         }
-        return "/entities/compatibilidade/index";
+        return "/entity/compatibilidade/index";
     }
 
 }

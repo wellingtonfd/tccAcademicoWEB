@@ -153,7 +153,7 @@ public class Epe implements Serializable {
 
     @Override
     public String toString() {
-        return "entity.Epe[ idEpe=" + idEpe + " ]";
+        return "br.com.scpp.Epe[ idEpe=" + idEpe + " ]";
     }
 
 }

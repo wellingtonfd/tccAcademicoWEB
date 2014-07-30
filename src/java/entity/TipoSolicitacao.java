@@ -182,7 +182,7 @@ public class TipoSolicitacao implements Serializable {
 
     @Override
     public String toString() {
-        return "entity.TipoSolicitacao[ idTipoSolicitacao=" + idTipoSolicitacao + " ]";
+        return "br.com.scpp.TipoSolicitacao[ idTipoSolicitacao=" + idTipoSolicitacao + " ]";
     }
 
 }

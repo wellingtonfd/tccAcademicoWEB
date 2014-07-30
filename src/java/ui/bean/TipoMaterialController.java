@@ -39,7 +39,7 @@ public class TipoMaterialController extends AbstractController<TipoMaterial> {
         if (this.getSelected() != null) {
             FacesContext.getCurrentInstance().getExternalContext().getRequestMap().put("Epe_items", this.getSelected().getEpeCollection());
         }
-        return "/entities/epe/index";
+        return "/entity/epe/index";
     }
 
     /**
@@ -53,7 +53,7 @@ public class TipoMaterialController extends AbstractController<TipoMaterial> {
         if (this.getSelected() != null) {
             FacesContext.getCurrentInstance().getExternalContext().getRequestMap().put("Embalagem_items", this.getSelected().getEmbalagemCollection());
         }
-        return "/entities/embalagem/index";
+        return "/entity/embalagem/index";
     }
 
     /**
@@ -66,7 +66,7 @@ public class TipoMaterialController extends AbstractController<TipoMaterial> {
         if (this.getSelected() != null) {
             FacesContext.getCurrentInstance().getExternalContext().getRequestMap().put("Epi_items", this.getSelected().getEpiCollection());
         }
-        return "/entities/epi/index";
+        return "/entity/epi/index";
     }
 
 }

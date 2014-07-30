@@ -18,6 +18,8 @@ public class ProdutoController extends AbstractController<Produto> {
     @Inject
     private LegendaCompatibilidadeController idLegendaCompatibilidadeController;
     @Inject
+    private EstFisicoController idEstFisicoController;
+    @Inject
     private EndArmazemController idEndarmazemController;
     @Inject
     private EmbalagemController idEmbalagemController;
@@ -44,6 +46,7 @@ public class ProdutoController extends AbstractController<Produto> {
         idNumOnuController.setSelected(null);
         idNumCasController.setSelected(null);
         idLegendaCompatibilidadeController.setSelected(null);
+        idEstFisicoController.setSelected(null);
         idEndarmazemController.setSelected(null);
         idEmbalagemController.setSelected(null);
         idCompatibilidadeController.setSelected(null);
@@ -87,6 +90,19 @@ public class ProdutoController extends AbstractController<Produto> {
     public void prepareIdLegendaCompatibilidade(ActionEvent event) {
         if (this.getSelected() != null && idLegendaCompatibilidadeController.getSelected() == null) {
             idLegendaCompatibilidadeController.setSelected(this.getSelected().getIdLegendaCompatibilidade());
+        }
+    }
+
+    /**
+     * Sets the "selected" attribute of the EstFisico controller in order to
+     * display its data in a dialog. This is reusing existing the existing View
+     * dialog.
+     *
+     * @param event Event object for the widget that triggered an action
+     */
+    public void prepareIdEstFisico(ActionEvent event) {
+        if (this.getSelected() != null && idEstFisicoController.getSelected() == null) {
+            idEstFisicoController.setSelected(this.getSelected().getIdEstFisico());
         }
     }
 
@@ -166,7 +182,7 @@ public class ProdutoController extends AbstractController<Produto> {
         if (this.getSelected() != null) {
             FacesContext.getCurrentInstance().getExternalContext().getRequestMap().put("Movimentacao_items", this.getSelected().getMovimentacaoCollection());
         }
-        return "/entities/movimentacao/index";
+        return "/entity/movimentacao/index";
     }
 
     /**
@@ -179,7 +195,7 @@ public class ProdutoController extends AbstractController<Produto> {
         if (this.getSelected() != null) {
             FacesContext.getCurrentInstance().getExternalContext().getRequestMap().put("DetNota_items", this.getSelected().getDetNotaCollection());
         }
-        return "/entities/detNota/index";
+        return "/entity/detNota/index";
     }
 
 }

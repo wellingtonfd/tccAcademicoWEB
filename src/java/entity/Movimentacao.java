@@ -255,7 +255,7 @@ public class Movimentacao implements Serializable {
 
     @Override
     public String toString() {
-        return "entity.Movimentacao[ idMovimentacao=" + idMovimentacao + " ]";
+        return "br.com.scpp.Movimentacao[ idMovimentacao=" + idMovimentacao + " ]";
     }
 
 }
